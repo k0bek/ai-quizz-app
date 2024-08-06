@@ -24,5 +24,3 @@ export const signInSchema = z.object({
     }),
   rememberMe: z.boolean(),
 });
-
-export type User = z.infer<typeof signInSchema>;

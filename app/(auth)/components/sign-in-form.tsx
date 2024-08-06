@@ -18,7 +18,6 @@ export default function LoginForm() {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: true,
     },
   });
 
@@ -78,7 +77,12 @@ export default function LoginForm() {
       </div>
 
       <div className="flex mt-6 items-center ml-2">
-        <Checkbox defaultSelected color="default" radius="none" size="sm">
+        <Checkbox
+          color="default"
+          radius="none"
+          size="sm"
+          {...register("rememberMe")}
+        >
           <span className="text-primary text-sm">Remember me</span>
         </Checkbox>
       </div>
