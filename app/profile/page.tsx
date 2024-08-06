@@ -8,16 +8,15 @@ const ProfileSettings = () => {
     const router = useRouter();
 
     const handleUpdate = () => {
-        // Logika aktualizacji profilu
+        // profile update
         console.log('Update profile with name:', name);
     };
 
     const handleDelete = () => {
-        // Logika usuwania konta
+        // remove account logic
         if (window.confirm('Are you sure you want to delete your account?')) {
             console.log('Delete account');
-            // Wywołanie API do usunięcia konta
-            // Po usunięciu przekierowanie na stronę logowania lub główną
+          
             router.push('/login');
         }
     };
