@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "./components/NavBar";
 import Dashboard from "./components/Dashboard";
 import SideNav from "./components/SideNav";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,7 @@ export default function RootLayout({
         <div className="flex">
           <SideNav />
           <main className="flex-1">
-            
-            {children}
+            <Providers>{children}</Providers>
           </main>
         </div>
       </body>
