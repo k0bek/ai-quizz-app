@@ -1,7 +1,5 @@
 'use client';
 
-
-
 import Link from 'next/link';
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -37,7 +35,6 @@ const NavBar = () => {
 
   return (
     <nav className='flex justify-between items-center border-b border-gray-200 bg-white px-5 h-14 border-none shadow-none !shadow-none'>
-      {/*  logo 's place */}
       <div className='flex items-center'>
         <ul className='flex space-x-6'>
           {/* Link to profile */}

@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import trashIcon from '../img/bin.svg';
 
 interface QuizCardProps {
@@ -12,7 +12,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ title, description, status, questio
   const statusColor = status === 'Active' ? '#17c964' : '#f31260';
   const textColor = status === 'Active' ? '#000' : '#fff'; 
   return (
-    <div className='border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-4 flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-auto' style={{ minHeight: '200px' }}>
+    <div className='border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-4 flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full h-auto rounded-lg' style={{ minHeight: '200px' }}>
       <button className='absolute top-2 right-2 p-1 bg-[#f4f4f5] rounded-full hover:bg-gray-200 transition-colors'>
         <img src={(trashIcon as any).src} alt='Delete' className='w-6 h-6' />
       </button>
@@ -36,3 +36,47 @@ const QuizCard: React.FC<QuizCardProps> = ({ title, description, status, questio
 };
 
 export default QuizCard;
+
+*/
+
+import React from 'react';
+import trashIcon from '../img/bin.svg';
+
+interface QuizCardProps {
+  title: string;
+  description: string;
+  status: string;
+  questions: number;
+}
+
+const QuizCard: React.FC<QuizCardProps> = ({ title, description, status, questions }) => {
+  const statusColor = status === 'Active' ? '#17c964' : '#f31260';
+  const textColor = status === 'Active' ? '#000' : '#fff';
+
+  return (
+    <div className='border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-4 flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg' style={{ minHeight: '200px', maxWidth: '600px' }}>
+      <button className='absolute top-2 right-2 p-1 bg-[#f4f4f5] rounded-full hover:bg-gray-200 transition-colors'>
+        <img src={(trashIcon as any).src} alt='Delete' className='w-6 h-6' />
+      </button>
+      <div className='flex-1'>
+        <h2 className='text-lg font-semibold break-words'>{title}</h2>
+        <p className='text-gray-500 mb-2 break-words'>{description}</p>
+      </div>
+      <div className='flex flex-col sm:flex-row items-start sm:items-center justify-start mt-4 space-y-2 sm:space-y-0 sm:space-x-4 w-full'>
+        <div className='flex items-center bg-blue-600 text-white px-2 py-1 rounded w-full sm:w-auto'>
+          <p className='text-white'>Total {questions} questions</p>
+        </div>
+        <span
+          className='inline-block px-3 py-1 rounded text-sm font-medium w-full sm:w-auto text-center'
+          style={{ backgroundColor: statusColor, color: textColor }}
+        >
+          {status}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default QuizCard;
+
+
