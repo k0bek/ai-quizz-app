@@ -19,19 +19,8 @@ export const SignupSchema = z
         message: "Password must contain at least one special character",
       }),
     repeatPassword: z.string(),
-    rememberMe: z.boolean(),
   })
   .refine((data) => data.password === data.repeatPassword, {
     message: "Passwords don't match",
     path: ["repeatPassword"],
   });
-try {
-  SignupSchema.parse({
-    email: "test@email.com",
-    password: "password123",
-    repeatPassword: "password123",
-  });
-  console.log("Validation passed");
-} catch (errors: any) {
-  console.log("Validation failed", errors);
-}

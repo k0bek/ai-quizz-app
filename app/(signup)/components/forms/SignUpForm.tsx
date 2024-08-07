@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@nextui-org/input";
 import React from "react";
-import { Checkbox } from "@nextui-org/checkbox";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema } from "../../schemas/signup-schema";
@@ -14,12 +13,6 @@ function SignUpForm() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(SignupSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      repeatPassword: "",
-      rememberMe: false,
-    },
   });
   type FormData = z.infer<typeof SignupSchema>;
   const onSubmit = (data: FormData) => {
@@ -35,7 +28,6 @@ function SignUpForm() {
           {...register("email", { required: "Email is required" })}
           id="email"
           type="email"
-          label="E-mail"
           name="email"
           disabled={isSubmitting}
         />
@@ -52,7 +44,6 @@ function SignUpForm() {
           {...register("password", { required: "Password is required" })}
           type="password"
           id="password"
-          label="Password"
           name="password"
           disabled={isSubmitting}
         />
@@ -74,7 +65,6 @@ function SignUpForm() {
           })}
           type="password"
           id="repeatPassword"
-          label="Repeat password"
           name="repeatPassword"
           disabled={isSubmitting}
         />
@@ -82,15 +72,6 @@ function SignUpForm() {
           <span className="text-red-600">{errors.repeatPassword.message}</span>
         )}
       </div>
-
-      <Checkbox
-        {...register("rememberMe")}
-        color="default"
-        className="block md:hidden"
-        type="checkbox"
-      >
-        <span className="text-foreground-100">Remember Me</span>
-      </Checkbox>
 
       <Button type="submit" disabled={isSubmitting}>
         Register
