@@ -30,6 +30,7 @@ function SignUpForm() {
           type="email"
           name="email"
           disabled={isSubmitting}
+          placeholder="E-mail"
         />
         {errors?.email && (
           <span className="text-red-600">{errors.email.message}</span>
@@ -46,6 +47,7 @@ function SignUpForm() {
           id="password"
           name="password"
           disabled={isSubmitting}
+          placeholder="Password"
         />
         {errors?.password && (
           <span className="text-red-600">{errors.password.message}</span>
@@ -67,6 +69,7 @@ function SignUpForm() {
           id="repeatPassword"
           name="repeatPassword"
           disabled={isSubmitting}
+          placeholder="Repeat password"
         />
         {errors?.repeatPassword && (
           <span className="text-red-600">{errors.repeatPassword.message}</span>
