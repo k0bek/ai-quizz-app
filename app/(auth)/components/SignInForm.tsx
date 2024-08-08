@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { signInSchema } from "../schemas/sign-in-schema";
+import { signInSchema } from "../schemas/signInSchema";
 import { Button, Checkbox, Input } from "@nextui-org/react";
 import Link from "next/link";
 

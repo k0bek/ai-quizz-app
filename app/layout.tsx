@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex-1">
-          <Providers>{children}</Providers>
-        </main>
+        <Providers>
+          <main className="flex-1">{children}</main>
+        </Providers>
       </body>
     </html>
   );
