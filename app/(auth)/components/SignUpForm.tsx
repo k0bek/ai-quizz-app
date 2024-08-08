@@ -3,7 +3,7 @@ import { Input } from "@nextui-org/input";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignupSchema } from "../../schemas/signup-schema";
+import { SignupSchema } from "../schemas/sign-up-schema";
 import { Button } from "@nextui-org/button";
 import { z } from "zod";
 function SignUpForm() {

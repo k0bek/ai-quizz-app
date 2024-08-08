@@ -13,6 +13,7 @@ const config: Config = {
       colors: {
         "primary-foreground": "#18181B",
         primary: "#FFFFFF",
+        "base-primary": "#155EEF",
       },
     },
   },
