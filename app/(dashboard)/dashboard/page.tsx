@@ -7,13 +7,13 @@ const quizzes = [
     title: "Identify your biggest roadblock to succeeding in cryptocurrency",
     description: "Quiz description",
     status: "Active",
-    questions: 5,
+    questions: 15,
   },
   {
     title: "Identify your biggest roadblock to succeeding in cryptocurrency",
     description: "Quiz description",
     status: "Disabled",
-    questions: 5,
+    questions: 10,
   },
   {
     title: "Identify your biggest roadblock to succeeding in cryptocurrency",

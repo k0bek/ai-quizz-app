@@ -1,6 +1,7 @@
 import { cn } from "@/lib";
 import Image from "next/image";
 import React from "react";
+import { useModalStore } from "@/store/modalStore";
 
 interface QuizCardProps {
   title: string;
@@ -15,6 +16,18 @@ const QuizCard: React.FC<QuizCardProps> = ({
   status,
   questions,
 }) => {
+  const { openModal, setModalData } = useModalStore();
+
+  const handleOpenDeleteModal = () => {
+    openModal("deleteQuizz");
+    setModalData({
+      title,
+      description,
+      status,
+      questions,
+    });
+  };
+
   return (
     <div className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between  flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg">
       <div className="flex flex-row justify-between items-start">
@@ -24,7 +37,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
             {description}
           </p>
         </div>
-        <button className="ml-5 cursor-pointer">
+        <button className="ml-5 cursor-pointer" onClick={handleOpenDeleteModal}>
           <Image
             src="/assets/bin.svg"
             width={20}
