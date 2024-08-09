@@ -5,6 +5,7 @@ import * as z from "zod";
 import { signInSchema } from "../schemas/signInSchema";
 import { Button, Checkbox, Input } from "@nextui-org/react";
 import Link from "next/link";
+import { routes } from "@/routes";
 
 type FormData = z.infer<typeof signInSchema>;
 
@@ -107,7 +108,7 @@ export default function LoginForm() {
           color="primary"
           disabled={isSubmitting}
         >
-          <Link href="sign-up">Create account</Link>
+          <Link href={routes.signUp}>Create account</Link>
         </Button>
         <Button
           variant="ghost"
