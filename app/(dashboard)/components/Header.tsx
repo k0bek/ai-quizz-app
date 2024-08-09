@@ -1,6 +1,7 @@
 "use client";
 
 import Container from "@/components/shared/Container";
+import { routes } from "@/routes";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 
@@ -64,7 +65,7 @@ const Header = () => {
                 </span>
                 <hr className=" w-[85%] mx-auto" />
                 <Link
-                  href="/profile"
+                  href={routes.profile}
                   className="block w-full text-left px-4 py-2 hover:bg-white hover:text-gray-900 transition-colors text-foreground-600 text-medium"
                 >
                   Profile
