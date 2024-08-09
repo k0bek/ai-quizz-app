@@ -1,8 +1,7 @@
 import { cn } from "@/lib";
 import Image from "next/image";
 import React from "react";
-import { useDisclosure } from "@nextui-org/react";
-import DeleteModal from "./modals/DeleteModal";
+import { useModalStore } from "@/store/modalStore";
 
 interface QuizCardProps {
   title: string;
@@ -17,9 +16,17 @@ const QuizCard: React.FC<QuizCardProps> = ({
   status,
   questions,
 }) => {
-  const { onOpen, isOpen, onOpenChange } = useDisclosure();
+  const { openModal, setModalData } = useModalStore();
 
-  const handleOpenDeleteModal = () => {};
+  const handleOpenDeleteModal = () => {
+    openModal("deleteQuizz");
+    setModalData({
+      title,
+      description,
+      status,
+      questions,
+    });
+  };
 
   return (
     <div className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between  flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg">
@@ -30,7 +37,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
             {description}
           </p>
         </div>
-        <button className="ml-5 cursor-pointer" onClick={onOpen}>
+        <button className="ml-5 cursor-pointer" onClick={handleOpenDeleteModal}>
           <Image
             src="/assets/bin.svg"
             width={20}
@@ -39,7 +46,6 @@ const QuizCard: React.FC<QuizCardProps> = ({
             alt="bin icon"
           />
         </button>
-        {<DeleteModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       </div>
       <div className="flex items-center justify-start gap-4 mt-4">
         <div className="flex items-center bg-blue-600 text-white px-2 py-1 rounded-lg">
