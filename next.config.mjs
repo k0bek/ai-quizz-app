@@ -1,11 +1,9 @@
-import { routes } from "./routes";
-
 const nextConfig = {
   async redirects() {
     return [
       {
-        source: routes.root,
-        destination: routes.signIn,
+        source: "/",
+        destination: "/sign-in",
         permanent: true,
       },
     ];
