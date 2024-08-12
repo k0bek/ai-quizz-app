@@ -24,11 +24,11 @@ export default function Layout({
               {/* links*/}
             </nav>
           </aside>
-          {/* Main Content */}
+          {}
           <main className="flex-1 p-4">
             {children}
           </main>
-          {/* Profile Section */}
+          {}
           
         </div>
       </Container>
