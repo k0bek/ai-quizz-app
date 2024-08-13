@@ -1,8 +1,8 @@
 
 import React from 'react';
 import "@/app/globals.css";
-import Container from "@/../../components/shared/Container";
-import Header from "@/../../components/shared/Header";
+import Container from "@/components/shared/Container";
+import Header from "@/components/shared/Header";
 
 export default function Layout({
   children,

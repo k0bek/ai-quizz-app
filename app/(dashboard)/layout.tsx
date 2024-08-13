@@ -1,4 +1,4 @@
-import Header from "@/../../components/shared/Header";
+import Header from "@/components/shared/Header";
 import "@/app/globals.css";
 import Container from "@/components/shared/Container";
 import Navbar from "@/components/shared/Navbar";
