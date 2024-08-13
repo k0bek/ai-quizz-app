@@ -8,6 +8,9 @@ import {
 } from "@nextui-org/react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
+import polandFlag from "@/public/assets/poland-flag.svg";
+import ukFlag from "@/public/assets/uk-flag.svg";
+import Image from "next/image";
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
@@ -40,7 +43,15 @@ export default function LanguageSwitcher() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button variant="bordered" className="capitalize">
+        <Button
+          variant="bordered"
+          className="flex items-center gap-2 capitalize"
+        >
+          <Image
+            src={Array.from(selectedKeys)[0] === "polish" ? polandFlag : ukFlag}
+            alt="flag"
+            className="w-7 h-7"
+          />
           {getDisplayName(Array.from(selectedKeys)[0])}
         </Button>
       </DropdownTrigger>
@@ -53,8 +64,18 @@ export default function LanguageSwitcher() {
         // @ts-expect-error
         onSelectionChange={setSelectedKeys}
       >
-        <DropdownItem key="english">English</DropdownItem>
-        <DropdownItem key="polish">Polish</DropdownItem>
+        <DropdownItem key="english">
+          <div className="flex items-center gap-2">
+            <Image src={ukFlag} alt="uk flag" className="w-9 h-9" />
+            <p>English</p>
+          </div>
+        </DropdownItem>
+        <DropdownItem key="polish">
+          <div className="flex items-center gap-2">
+            <Image src={polandFlag} alt="uk flag" className="w-9 h-9" />
+            <p>Polish</p>
+          </div>
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );

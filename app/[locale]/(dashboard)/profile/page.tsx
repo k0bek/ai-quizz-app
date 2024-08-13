@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
+import React from "react";
 
 const ProfilePage = () => {
   const router = useRouter();
