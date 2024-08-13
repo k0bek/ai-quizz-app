@@ -1,6 +1,7 @@
 "use client";
 
 import Container from "@/components/shared/Container";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
@@ -46,7 +47,8 @@ const Header = () => {
       </div>
       <Container>
         <div className="flex items-center justify-end">
-          <div className="relative">
+          <div className="relative flex gap-2">
+            <LanguageSwitcher />
             <img
               src={user.avatar}
               alt="User Avatar"
