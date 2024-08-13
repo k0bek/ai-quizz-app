@@ -1,3 +1,4 @@
+import CancelQuizModal from "@/app/(create-quizz)/components/CancelQuizModal";
 import { useModalStore } from "@/store/modalStore";
 import { Button } from "@nextui-org/react";
 import React from "react";
@@ -8,15 +9,18 @@ function CancelButton() {
     openModal("cancelCreateQuizz");
   };
   return (
-    <Button
-      onClick={handleOpenModal}
-      variant="flat"
-      color="primary"
-      size="lg"
-      radius="sm"
-    >
-      Cancel
-    </Button>
+    <>
+      <Button
+        onClick={handleOpenModal}
+        variant="flat"
+        color="primary"
+        size="lg"
+        radius="sm"
+      >
+        Cancel
+      </Button>
+      <CancelQuizModal />
+    </>
   );
 }
 

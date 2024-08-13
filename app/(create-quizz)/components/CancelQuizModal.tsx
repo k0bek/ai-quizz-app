@@ -1,6 +1,8 @@
+import { routes } from "@/routes";
 import { useModalStore } from "@/store/modalStore";
 import {
   Button,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -16,6 +18,8 @@ function CancelQuizModal() {
     <Modal
       onOpenChange={closeModal}
       isOpen={isModalOpen}
+      size="5xl"
+      className="bg-content2 "
       closeButton={
         <button
           style={{
@@ -44,31 +48,21 @@ function CancelQuizModal() {
               Are you sure?
             </p>
             <p className="text-base text-foreground-500 font-medium mt-1">
-              This action cannot be undone. Once you delete the quizz, there is
-              no going back.
+              You are about to quit the quiz creation process. Any progress made
+              so far will be lost. The action cannot be undone
             </p>
           </div>
         </ModalHeader>
-        <ModalBody>
-          <div className="bg-white py-2 px-4 rounded-lg border-dashed border-2">
-            <p className="text-foreground-700 font-semibold">
-              {modalData.title}
-            </p>
-            <p className="text-foreground-600">{modalData.description}</p>
-          </div>
-          <div className=" bg-blue-600 text-white px-2 py-1 rounded-lg max-w-36 text-center">
-            <p className="text-white text-small">
-              Total {modalData.questions} questions
-            </p>
-          </div>
-        </ModalBody>
+        <ModalBody></ModalBody>
         <ModalFooter>
-          <Button variant="bordered" onPress={closeModal}>
+          <Button variant="flat" color="primary" onPress={closeModal}>
             Cancel
           </Button>
-          <Button color="danger" onPress={closeModal}>
-            Delete
-          </Button>
+          <Link href={routes.dashboard}>
+            <Button color="danger" onPress={closeModal}>
+              Yes, I quit
+            </Button>
+          </Link>
         </ModalFooter>
       </ModalContent>
     </Modal>
