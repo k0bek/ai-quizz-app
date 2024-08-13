@@ -1,10 +1,12 @@
+"use client";
 import React from "react";
 import { Chip } from "@nextui-org/chip";
 import QuizItem from "./Quiz/QuizItem";
-
 import { Switch } from "@nextui-org/switch";
 import { Button } from "@nextui-org/react";
-import NextButton from "../../create-quizz-page/components/buttons/NextButton";
+import SaveQuiz from "../../create-quizz/components/buttons/SaveQuiz";
+import NavigationControls from "../../create-quizz/components/buttons/NavigationControls";
+import { useRouter } from "next/navigation";
 function Preview() {
   const mockQuestions = [
     {
@@ -38,9 +40,14 @@ function Preview() {
       answers: ["Joe Biden", "Stephen McCain", "John Cena", "Michael Douglas"],
     },
   ];
+  const router = useRouter();
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push("/create-quizz-success");
+  };
   return (
     <>
-      <article className=" p-4 flex-col flex gap-4 rounded-lg md:w-[55rem] mx-auto">
+      <form onSubmit={onSubmit} className=" flex-col flex  rounded-lg">
         <h1 className="text-4xl font-semibold pt-5 pb-5">Preview</h1>
         <h1
           className="text-lg
@@ -48,7 +55,7 @@ function Preview() {
         >
           Here, you can create quizz based on your prompt
         </h1>
-        <aside className="bg-content2 p-6 gap-6 flex flex-col">
+        <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
           <div className="flex justify-between items-center ">
             <Chip color="primary" size="md" radius="sm">
               Total 5 questions
@@ -71,9 +78,10 @@ function Preview() {
             <QuizItem key={index} {...question} />
           ))}
         </aside>
-      </article>
-
-      <NextButton />
+        <NavigationControls>
+          <SaveQuiz />
+        </NavigationControls>
+      </form>
     </>
   );
 }
