@@ -3,9 +3,8 @@ import { Button } from "@nextui-org/react";
 import React from "react";
 
 function CancelButton() {
-  const { openModal, setModalData } = useModalStore();
+  const { openModal } = useModalStore();
   const handleOpenModal = () => {
-    console.log();
     openModal("cancelCreateQuizz");
   };
   return (
