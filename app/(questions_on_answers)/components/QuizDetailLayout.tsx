@@ -1,9 +1,8 @@
-import Header from "../../../components/shared/Header";
+import Header from "@/../../components/shared/Header";
 import "@/app/globals.css";
-import Container from '../../../components/shared/Container';
-
-import Navbar from '../../../components/shared/Navbar';
 import React from "react";
+import Container from "@/../../components/shared/Container";
+import  Navbar  from "@/../../components/shared/Navbar";
 
 export default function QuizDetailLayout({
   children,

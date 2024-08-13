@@ -1,7 +1,7 @@
-import Header from "./components/Header";
+import Header from "@/../../components/shared/Header";
 import "@/app/globals.css";
 import Container from "@/components/shared/Container";
-import Navbar from "./components/Navbar";
+import Navbar from "@/components/shared/Navbar";
 
 export default function DashboardLayout({
   children,

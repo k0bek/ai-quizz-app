@@ -1,12 +1,14 @@
-
-
 "use client";
 import React, { useState } from 'react';
-import { Switch } from '@nextui-org/react';
+import Switch from '../components/Switch';
 import Image from "next/image";
+import editIcon from '/public/assets/edit.svg';
+import binIcon from '/public/assets/bin.svg';
 
 const QuizDetail = () => {
+ 
   const [enabled, setEnabled] = useState(false);
+  const [activeTab, setActiveTab] = useState('Questions');
 
   const quizData = [
     {
@@ -19,13 +21,13 @@ const QuizDetail = () => {
       question: '2. What is another key feature of cryptocurrencies?',
       description: 'Quiz description',
       options: ['Physical existence', 'Test1', 'test2', 'test3'],
-      selected: 'Test1',
+      selected: 'test3',
     },
     {
       question: '3. What is a third key feature of cryptocurrencies?',
       description: 'Quiz description',
       options: ['Physical existence', 'Test1', 'test2', 'test3'],
-      selected: 'Test1',
+      selected: 'test2',
     },
     {
       question: '4. What is a fourth key feature of cryptocurrencies?',
@@ -57,10 +59,34 @@ const QuizDetail = () => {
         </div>
 
         <nav className="flex space-x-6 mb-6 bg-gray-100 p-2 rounded-lg overflow-x-auto">
-          <a href="#" className="text-gray-600 font-semibold px-2 py-2 rounded-lg bg-white whitespace-nowrap">Questions</a>
-          <a href="#" className="text-gray-600 px-2 py-2 rounded-lg bg-gray-100 whitespace-nowrap">Settings</a>
-          <a href="#" className="text-gray-600 px-2 py-2 rounded-lg bg-gray-100 whitespace-nowrap">Statistics</a>
-          <a href="#" className="text-gray-600 px-2 py-2 rounded-lg bg-gray-100 whitespace-nowrap">General</a>
+          <a
+            href="#"
+            className={`px-2 py-2 rounded-lg whitespace-nowrap ${activeTab === 'Questions' ? 'bg-white font-semibold text-gray-600' : 'bg-gray-100 text-gray-600'}`}
+            onClick={() => setActiveTab('Questions')}
+          >
+            Questions
+          </a>
+          <a
+            href="#"
+            className={`px-2 py-2 rounded-lg whitespace-nowrap ${activeTab === 'Settings' ? 'bg-white font-semibold text-gray-600' : 'bg-gray-100 text-gray-600'}`}
+            onClick={() => setActiveTab('Settings')}
+          >
+            Settings
+          </a>
+          <a
+            href="#"
+            className={`px-2 py-2 rounded-lg whitespace-nowrap ${activeTab === 'Statistics' ? 'bg-white font-semibold text-gray-600' : 'bg-gray-100 text-gray-600'}`}
+            onClick={() => setActiveTab('Statistics')}
+          >
+            Statistics
+          </a>
+          <a
+            href="#"
+            className={`px-2 py-2 rounded-lg whitespace-nowrap ${activeTab === 'General' ? 'bg-white font-semibold text-gray-600' : 'bg-gray-100 text-gray-600'}`}
+            onClick={() => setActiveTab('General')}
+          >
+            General
+          </a>
         </nav>
 
         <div className="mb-6">
@@ -74,19 +100,7 @@ const QuizDetail = () => {
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-500">Answers</span>
-              <Switch 
-                checked={enabled} 
-                onChange={(e) => setEnabled(e.target.checked)}
-                 className={`relative inline-flex h-6 w-11 items-center rounded-full ${
-                 enabled ? 'bg-blue-500' : 'bg-gray-300'
-                }`} 
-                >
-  <span
-    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
-      enabled ? 'translate-x-5' : 'translate-x-1'
-    }`}
-  />
-</Switch>
+                <Switch enabled={enabled} setEnabled={setEnabled} />
             </div>
           </div>
 
@@ -94,46 +108,35 @@ const QuizDetail = () => {
             <button className="bg-blue-300 text-blue-600 py-2 px-2 rounded-lg ml-auto">Add new question</button>
           </div>
 
-          {quizData.map((data, index) => (
+         {quizData.map((data, index) => (
             <div key={index} className="bg-gray-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm">
               <div className="w-full">
                 <h3 className="font-bold mb-2">{data.question}</h3>
                 <p className="text-gray-500 mb-4">{data.description}</p>
+
                 <div className="space-y-2">
                   {data.options.map((option, i) => (
                     <div
                       key={i}
-                      className={`flex items-center p-2 rounded-lg cursor-pointer ${data.selected === option ? 'bg-green-100' : 'bg-white'}`}
+                      className={`flex items-center p-2 rounded-lg cursor-pointer ${
+                        enabled && data.selected === option ? 'bg-green-100' : 'bg-white'
+                      }`}
                     >
-                      <span 
-                        className="font-medium" 
-                        style={{ 
-                          textShadow: '1px 0 5px rgba(0, 0, 0, 0.5)' 
-                        }}
-                      >
-                        {String.fromCharCode(65 + i)}
-                      </span>
-                      <span className="ml-3">{option}</span>
+                      <span className="font-medium text-gray-700">{String.fromCharCode(65 + i)}</span>
+                      <div className="border-l border-gray-300 h-6 mx-2"></div>
+                      <span className="text-gray-700">{option}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="flex space-x-2 mt-2">
                 <button className="text-gray-500 hover:text-gray-700">
-                  <Image
-                    src="/assets/edit.svg"
-                    width={20}
-                    height={20}
-                    alt="edit icon"
-                  />
+                <Image src={editIcon} alt="edit icon" />
+
                 </button>
                 <button className="text-gray-500 hover:text-gray-700">
-                  <Image
-                    src="/assets/bin.svg"
-                    width={20}
-                    height={20}
-                    alt="bin icon"
-                  />
+                <Image src={binIcon} alt="bin icon" />
+
                 </button>
               </div>
             </div>
@@ -145,3 +148,4 @@ const QuizDetail = () => {
 };
 
 export default QuizDetail;
+
