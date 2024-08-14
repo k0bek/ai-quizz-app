@@ -14,6 +14,7 @@ const config: Config = {
         "primary-foreground": "#18181B",
         primary: "#FFFFFF",
         "base-primary": "#155EEF",
+        "primary-flat": "#006FEE33",
       },
     },
   },
