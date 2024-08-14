@@ -1,5 +1,4 @@
 import { create } from "zustand";
-
 type ModalDataT = {
   title: string;
   description: string;
@@ -16,7 +15,7 @@ interface ModalStore {
   setModalData: (data: ModalDataT) => void;
 }
 
-export type ModalType = "deleteQuizz" | "";
+export type ModalType = "deleteQuizz" | "cancelCreateQuizz" | "";
 
 export const useModalStore = create<ModalStore>((set) => ({
   type: "",
