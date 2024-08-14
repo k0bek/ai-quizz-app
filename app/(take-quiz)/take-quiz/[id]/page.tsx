@@ -1,12 +1,12 @@
 import React from "react";
-import TakeQuizBox from "../components/TakeQuizBox";
 import Container from "@/components/shared/Container";
+import SingleQuizQuestion from "../../components/SingleQuizQuestion";
 
 const TakeQuiz = () => {
   return (
     <Container>
       <section className="flex items-center justify-center h-screen">
-        <TakeQuizBox />
+        <SingleQuizQuestion />
       </section>
     </Container>
   );
