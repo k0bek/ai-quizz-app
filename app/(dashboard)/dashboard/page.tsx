@@ -1,4 +1,6 @@
 "use client";
+import { routes } from "@/routes";
+import Link from "next/link";
 import React from "react";
 import QuizCard from "../components/QuizCard";
 
@@ -31,7 +33,7 @@ const DashboardPage = () => {
           Quizzes
         </h2>
         <button className="text-small text-white font-normal py-2 px-4 rounded-xl transition-colors bg-base-primary">
-          Create new Quiz
+          <Link href={routes.createQuiz[0].route}>Create new Quiz</Link>
         </button>
       </div>
       <p className="text-foreground-600 mb-4 text-medium md:text-large">
@@ -48,10 +50,12 @@ const DashboardPage = () => {
           />
         ))}
         <div className="border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
-          <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">
-            <span className="text-4xl mb-2">+</span>
-            <span>Add new quiz</span>
-          </button>
+          <Link href={routes.createQuiz[0].route}>
+            <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">
+              <span className="text-4xl mb-2">+</span>
+              <span>Add new quizz</span>
+            </button>
+          </Link>
         </div>
       </div>
     </section>
