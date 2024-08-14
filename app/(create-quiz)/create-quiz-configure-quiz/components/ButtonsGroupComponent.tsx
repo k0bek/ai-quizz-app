@@ -4,9 +4,9 @@ import { Button, ButtonGroup } from "@nextui-org/button";
 import TickCircle from "./TickCircle";
 import EmptyCircle from "./EmptyCircle";
 import NextButton from "../../create-quiz/components/buttons/NextButton";
-import { createQuizRoutes } from "@/constants";
 import { useRouter } from "next/navigation";
 import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
+import { routes } from "@/routes";
 
 function ButtonGroupComponent() {
   // State to track the selected button in each group
@@ -25,7 +25,7 @@ function ButtonGroupComponent() {
   const router = useRouter();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(createQuizRoutes[2].route);
+    router.push(routes.createQuiz[2].route);
     // API call here
   };
   return (

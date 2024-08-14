@@ -1,8 +1,8 @@
 import React from "react";
 import Prompt from "./components/StatusIndicator/Prompt";
 
-function page() {
+function Page() {
   return <Prompt />;
 }
 
-export default page;
+export default Page;

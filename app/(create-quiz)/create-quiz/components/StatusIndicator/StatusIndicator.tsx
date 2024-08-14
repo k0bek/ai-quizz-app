@@ -1,6 +1,5 @@
 "use client";
-import { useStep } from "@/app/context/StepContext";
-import { createQuizRoutes } from "@/constants";
+import { routes } from "@/routes";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Dot from "./Dot/Dot";
@@ -39,7 +38,7 @@ const StatusIndicator = () => {
 
   return (
     <aside className="mx-auto flex justify-center items-center">
-      {createQuizRoutes.slice(1, 4).map((routeObj, index) => (
+      {routes.createQuiz.slice(1, 4).map((routeObj, index) => (
         <Dot
           key={index}
           currentRouteProp={routeObj.route}

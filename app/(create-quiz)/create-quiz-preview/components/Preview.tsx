@@ -7,7 +7,7 @@ import { Button } from "@nextui-org/react";
 import SaveQuiz from "../../create-quiz/components/buttons/SaveQuiz";
 import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 import { useRouter } from "next/navigation";
-import { createQuizRoutes } from "@/constants";
+import { routes } from "@/routes";
 function Preview() {
   const mockQuestions = [
     {
@@ -44,7 +44,7 @@ function Preview() {
   const router = useRouter();
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(createQuizRoutes[3].route);
+    router.push(routes.createQuiz[3].route);
   };
   return (
     <>

@@ -1,10 +1,9 @@
 "use client";
 import { PromptSchema } from "@/app/(create-quiz)/schemas/PromptSchema";
-import { createQuizRoutes } from "@/constants";
+import { routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,7 +19,7 @@ const PromptForm = () => {
   const router = useRouter();
   const onSubmit = (data: FormValue) => {
     console.log(data);
-    router.push(createQuizRoutes[1].route);
+    router.push(routes.createQuiz[1].route);
     // Call your API here
   };
   return (

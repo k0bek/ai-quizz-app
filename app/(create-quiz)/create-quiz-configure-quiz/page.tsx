@@ -1,7 +1,7 @@
 import React from "react";
 import ConfigureQuiz from "./components/ConfigureQuiz";
-function page() {
+function Page() {
   return <ConfigureQuiz />;
 }
 
-export default page;
+export default Page;
