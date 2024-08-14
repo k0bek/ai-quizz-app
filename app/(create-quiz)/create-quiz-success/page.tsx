@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import documentIcon from "../../../public/assets/WEB/vuesax/bold/vuesax/bold/document-copy.svg";
-import BackToDashboard from "../create-quizz/components/buttons/BackToDashboard";
+import BackToDashboard from "../create-quiz/components/buttons/BackToDashboard";
 const page = () => {
   return (
     <>

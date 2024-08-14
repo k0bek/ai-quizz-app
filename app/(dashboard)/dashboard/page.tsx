@@ -33,7 +33,7 @@ const DashboardPage = () => {
           Quizzes
         </h2>
         <button className="text-small text-white font-normal py-2 px-4 rounded-xl transition-colors bg-base-primary">
-          <Link href={"/create-quizz"}>Create new Quiz</Link>
+          <Link href={createQuizRoutes[0].route}>Create new Quiz</Link>
         </button>
       </div>
       <p className="text-foreground-600 mb-4 text-medium md:text-large">

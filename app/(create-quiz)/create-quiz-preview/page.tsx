@@ -1,6 +1,4 @@
 import React from "react";
-import StatusIndicator from "../create-quizz/components/StatusIndicator/StatusIndicator";
-import User from "../create-quizz/components/User";
 import Preview from "./components/Preview";
 
 const page = () => {

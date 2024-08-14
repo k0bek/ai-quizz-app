@@ -2,7 +2,6 @@
 import React from "react";
 import { Button } from "@nextui-org/button";
 import RightArrow from "./RightArrow";
-import { useStep } from "@/app/context/StepContext";
 import { useFormStatus } from "react-dom";
 const NextButton = () => {
   const { pending } = useFormStatus();

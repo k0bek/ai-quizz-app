@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import Dot from "./Dot/Dot";
 
 const StatusIndicator = () => {
-  const { currentStep, decrementStep } = useStep();
   const currentRoute = usePathname();
   const [visitedRoutes, setVisitedRoutes] = useState<string[]>([]);
 

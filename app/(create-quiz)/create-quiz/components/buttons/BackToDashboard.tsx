@@ -1,4 +1,4 @@
-import { createQuizRoutes, navbarLinks } from "@/constants";
+import { navbarLinks } from "@/constants";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";

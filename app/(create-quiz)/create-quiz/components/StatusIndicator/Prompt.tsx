@@ -1,6 +1,5 @@
 import React from "react";
 import PromptSection from "../PromptSection";
-import StatusIndicator from "./StatusIndicator";
 
 function Prompt() {
   return (

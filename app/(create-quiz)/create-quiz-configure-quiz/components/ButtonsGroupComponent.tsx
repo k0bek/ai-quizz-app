@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
 import TickCircle from "./TickCircle";
 import EmptyCircle from "./EmptyCircle";
-import NextButton from "../../create-quizz/components/buttons/NextButton";
+import NextButton from "../../create-quiz/components/buttons/NextButton";
 import { createQuizRoutes } from "@/constants";
 import { useRouter } from "next/navigation";
-import NavigationControls from "../../create-quizz/components/buttons/NavigationControls";
+import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 
 function ButtonGroupComponent() {
   // State to track the selected button in each group

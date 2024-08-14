@@ -1,5 +1,5 @@
 "use client";
-import { PromptSchema } from "@/app/(create-quizz)/schemas/PromptSchema";
+import { PromptSchema } from "@/app/(create-quiz)/schemas/PromptSchema";
 import { createQuizRoutes } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@nextui-org/react";
@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import CancelButton from "../buttons/CancelButton";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 const PromptForm = () => {
@@ -17,7 +16,7 @@ const PromptForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValue>({ resolver: zodResolver<FormValue>(PromptSchema) });
+  } = useForm<FormValue>({ resolver: zodResolver(PromptSchema) });
   const router = useRouter();
   const onSubmit = (data: FormValue) => {
     console.log(data);

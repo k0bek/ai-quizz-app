@@ -4,9 +4,10 @@ import { Chip } from "@nextui-org/chip";
 import QuizItem from "./Quiz/QuizItem";
 import { Switch } from "@nextui-org/switch";
 import { Button } from "@nextui-org/react";
-import SaveQuiz from "../../create-quizz/components/buttons/SaveQuiz";
-import NavigationControls from "../../create-quizz/components/buttons/NavigationControls";
+import SaveQuiz from "../../create-quiz/components/buttons/SaveQuiz";
+import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 import { useRouter } from "next/navigation";
+import { createQuizRoutes } from "@/constants";
 function Preview() {
   const mockQuestions = [
     {
@@ -43,7 +44,7 @@ function Preview() {
   const router = useRouter();
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/create-quizz-success");
+    router.push(createQuizRoutes[3].route);
   };
   return (
     <>

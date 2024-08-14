@@ -1,5 +1,4 @@
 import React from "react";
-import StatusIndicator from "../../create-quizz/components/StatusIndicator/StatusIndicator";
 import ButtonGroupComponent from "./ButtonsGroupComponent";
 
 function ConfigureQuiz() {

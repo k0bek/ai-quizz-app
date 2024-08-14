@@ -13,18 +13,18 @@ export const navbarLinks = [
 export const createQuizRoutes = [
   {
     label: "Create Quizz",
-    route: "/create-quizz",
+    route: "/create-quiz",
   },
   {
     label: "Configure Quizz",
-    route: "/create-quizz-configure-quizz",
+    route: "/create-quiz-configure-quiz",
   },
   {
     label: " Quizz Preview",
-    route: "/create-quizz-preview",
+    route: "/create-quiz-preview",
   },
   {
     label: "Quizz Success",
-    route: "/create-quizz-success",
+    route: "/create-quiz-success",
   },
 ];

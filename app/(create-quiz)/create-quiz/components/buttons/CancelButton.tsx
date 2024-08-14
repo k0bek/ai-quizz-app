@@ -1,4 +1,4 @@
-import CancelQuizModal from "@/app/(create-quizz)/components/CancelQuizModal";
+import CancelQuizModal from "@/app/(create-quiz)/components/CancelQuizModal";
 import { useModalStore } from "@/store/modalStore";
 import { Button } from "@nextui-org/react";
 import React from "react";
