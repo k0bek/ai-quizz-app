@@ -1,5 +1,5 @@
+import Header from "@/components/shared/Header";
 import React, { ReactNode } from "react";
-import Header from "../(dashboard)/components/Header";
 import StepContextProvider from "../context/StepContext";
 import StatusIndicator from "./create-quizz/components/StatusIndicator/StatusIndicator";
 

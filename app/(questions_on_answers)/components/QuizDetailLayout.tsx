@@ -1,13 +1,14 @@
 import Header from "@/components/shared/Header";
 import "@/app/globals.css";
+import React from "react";
 import Container from "@/components/shared/Container";
-import Navbar from "@/components/shared/Navbar";
+import  Navbar  from "@/components/shared/Navbar";
 
-export default function DashboardLayout({
+export default function QuizDetailLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <>
       <Header />
