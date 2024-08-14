@@ -76,7 +76,15 @@ function SignUpForm() {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button
+        variant="solid"
+        color="primary"
+        size="lg"
+        radius="sm"
+        type="submit"
+        disabled={isSubmitting}
+        className="mt-5"
+      >
         Register
       </Button>
     </form>
