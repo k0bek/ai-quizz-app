@@ -1,1 +1,5 @@
-{ "XD": "XD" }
+{
+  "DashboardPage": {
+    "createNewQuizButton": "Stwórz nowy Quiz"
+  }
+}

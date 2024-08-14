@@ -1,6 +1,6 @@
-"use client";
 import React from "react";
 import QuizCard from "../components/QuizCard";
+import { getTranslations } from "next-intl/server";
 
 const quizzes = [
   {
@@ -23,7 +23,8 @@ const quizzes = [
   },
 ];
 
-const DashboardPage = () => {
+const DashboardPage = async () => {
+  const t = await getTranslations("DashboardPage");
   return (
     <section className="py-8 w-full md:max-w-7xl">
       <div className="flex flex-col sm:flex-row justify-between items-start mb-5 font-semibold">
@@ -31,7 +32,7 @@ const DashboardPage = () => {
           Quizzes
         </h2>
         <button className="text-small text-white font-normal py-2 px-4 rounded-xl transition-colors bg-base-primary">
-          Create new Quiz
+          {t("createNewQuizButton")}
         </button>
       </div>
       <p className="text-foreground-600 mb-4 text-medium md:text-large">
