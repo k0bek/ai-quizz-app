@@ -1,9 +1,7 @@
 import { Button } from "@nextui-org/react";
 import React from "react";
 
-type Props = {};
-
-const DetailsButton = (props: Props) => {
+const DetailsButton = () => {
   return (
     <Button
       variant="solid"

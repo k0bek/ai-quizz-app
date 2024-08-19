@@ -12,7 +12,6 @@ import {
 import DetailsButton from "../components/buttons/DetailsButton";
 import StatusChip from "../components/StatusChip/StatusChip";
 import EventDuration from "../components/QuizDurationTIme/QuizDurationTime";
-import QuizDurationTime from "../components/QuizDurationTIme/QuizDurationTime";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 
 function Statistics() {

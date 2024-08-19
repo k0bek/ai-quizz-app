@@ -1,4 +1,3 @@
-import TickCircle from "@/app/(create-quiz)/create-quiz-configure-quiz/components/TickCircle";
 import { Chip } from "@nextui-org/react";
 import React from "react";
 import CheckIcon from "../CheckIcon";
