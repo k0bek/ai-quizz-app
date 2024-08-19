@@ -9,7 +9,7 @@ import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 
 const Header = () => {
-  const t = useTranslations("Header");
+  const t = useTranslations("Dashboard");
   const [user, setUser] = useState({
     email: "robbie@mlab.com",
     avatar: "https://via.placeholder.com/50",
