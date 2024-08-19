@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import General from "../NavbarContent/General";
 import Questions from "../NavbarContent/Questions";
 import Settings from "../NavbarContent/Settings";
@@ -35,10 +35,14 @@ const QuizDetail = () => {
       selected: "Test1",
     },
   ];
+  const navRef = useRef(null);
+
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
     const target = e.target.getAttribute("data-navbar-item");
-    console.log(target);
-    setActiveTab(target);
+    if (target && target !== activeTab) {
+      console.log(target);
+      setActiveTab(target);
+    }
   };
   const renderTabContent = function (activeTab: string) {
     switch (activeTab) {
@@ -89,8 +93,9 @@ const QuizDetail = () => {
         </div>
 
         <nav
+          ref={navRef}
           onClick={(e) => handleNavbarChange(e)}
-          className="flex space-x-6 mb-6 bg-gray-100 p-2 rounded-lg overflow-x-auto"
+          className="flex gap-2 md:w-1/2 w-full space-x-6 mb-6 bg-gray-100 p-2 rounded-lg overflow-x-auto"
         >
           <a
             href="#"
@@ -137,6 +142,7 @@ const QuizDetail = () => {
             General
           </a>
         </nav>
+
         {renderTabContent(activeTab)}
       </div>
     </div>
