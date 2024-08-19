@@ -1,0 +1,75 @@
+{
+  "AuthPages": {
+    "password": "Hasło",
+    "rememberMe": "Zapamiętaj mnie",
+    "login": "Zaloguj się",
+    "createAccount": "Utwórz konto",
+    "forgotPassword": "Zapomniałem hasła",
+    "emailRequired": "Wymagany jest email",
+    "repeatPassword": "Powtórz hasło",
+    "pleaseRepeatPassword": "Proszę powtórzyć hasło",
+    "register": "Zarejestruj się",
+    "signInEnterText": "Proszę wprowadzić swoje dane.",
+    "signUpEnterText": "Proszę wprowadzić swoje dane."
+  },
+  "AuthSchemas": {
+    "enterValidEmail": "Proszę wprowadzić prawidłowy adres e-mail",
+    "emailMaxLength": "Adres e-mail nie może przekraczać 100 znaków",
+    "passwordMinLength": "Hasło musi mieć co najmniej 8 znaków",
+    "passwordMaxLength": "Hasło nie może przekraczać 100 znaków",
+    "passwordLowercase": "Hasło musi zawierać co najmniej jedną małą literę",
+    "passwordUpprecase": "Hasło musi zawierać co najmniej jedną dużą literę",
+    "passwordNumber": "Hasło musi zawierać co najmniej jedną cyfrę",
+    "passwordSpecialChar": "Hasło musi zawierać co najmniej jeden znak specjalny",
+    "passwordsDontMatch": "Hasła nie pasują do siebie",
+    "repeatPassword": "Powtórz hasło"
+  },
+  "Dashboard": {
+    "areYouSureText": "Jesteś pewien?",
+    "deleteWarning": "Tej akcji nie można cofnąć. Po usunięciu quizu nie będzie można go przywrócić.",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "questions": "pytań",
+    "total": "Łącznie",
+    "userAvatar": "Awatar użytkownika",
+    "profile": "Profil",
+    "logOut": "Wyloguj się",
+    "createNewQuizButton": "Utwórz nowy Quiz",
+    "quizzes": "Quizy",
+    "manageQuizz": "Tutaj możesz łatwo wyświetlać, usuwać, edytować i tworzyć nowe egzaminy.",
+    "addQuizzButton": "Dodaj nowy quiz",
+    "areYouSure": "Czy na pewno chcesz usunąć swoje konto?",
+    "manageSettings": "Zarządzaj ustawieniami swojego profilu tutaj.",
+    "name": "Nazwa",
+    "displayName": "To jest twoja publiczna nazwa wyświetlana.",
+    "updateButton": "Zaktualizuj",
+    "deleteAccount": "Usuń konto",
+    "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się."
+  },
+  "QuestionsOnAnswers": {
+    "detailQuizzHeading": "Szczegóły Quizu",
+    "shareQuizzButton": "Udostępnij ten quiz",
+    "questions": "Pytania",
+    "settings": "Ustawienia",
+    "statistics": "Statystyki",
+    "general": "Ogólne",
+    "manageText": "Zarządzaj pytaniami w quizie tutaj. Możesz edytować i usuwać pytania. Ta strona jest podglądem dla twojego pytania.",
+    "total": "Łącznie",
+    "questionsSmall": "pytania",
+    "answers": "Odpowiedzi",
+    "addNewButton": "Dodaj nowe pytanie"
+  },
+  "Header": {
+    "userAvatar": "Awatar użytkownika",
+    "profile": "Profil",
+    "logOut": "Wyloguj się"
+  },
+  "Navbar": {
+    "profile": "Profil"
+  },
+  "LanguageSwitcher": {
+    "english": "Angielski",
+    "polish": "Polski",
+    "selectLanguage": "Wybierz język"
+  }
+}
