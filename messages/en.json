@@ -1,0 +1,75 @@
+{
+  "AuthPages": {
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "login": "Login",
+    "createAccount": "Create account",
+    "forgotPassword": "I forgot password",
+    "emailRequired": "Email is required",
+    "repeatPassword": "Repeat password",
+    "pleaseRepeatPassword": "Please repeat your password",
+    "register": "Register",
+    "signInEnterText": "Please enter your user information.",
+    "signUpEnterText": "Please enter your user information."
+  },
+  "AuthSchemas": {
+    "enterValidEmail": "Please enter a valid email",
+    "emailMaxLength": "Email cannot exceed 100 characters",
+    "passwordMinLength": "Password must be at least 8 characters long",
+    "passwordMaxLength": "Password cannot exceed 100 characters",
+    "passwordLowercase": "Password must contain at least one lowercase letter",
+    "passwordUpprecase": "Password must contain at least one uppercase letter",
+    "passwordNumber": "Password must contain at least one number",
+    "passwordSpecialChar": "Password must contain at least one special character",
+    "passwordsDontMatch": "Passwords do not match",
+    "repeatPassword": "Repeate password"
+  },
+  "Dashboard": {
+    "areYouSureText": "Are you sure?",
+    "deleteWarning": "This action cannot be undone. Once you delete the quizz, there is no going back.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "questions": "questions",
+    "total": "Total",
+    "userAvatar": "User avatar",
+    "profile": "Profile",
+    "logOut": "Log out",
+    "createNewQuizButton": "Create new Quiz",
+    "quizzes": "Quizzes",
+    "manageQuizz": "Here, you can effortlessly list, delete, edit, and create new exams.",
+    "addQuizzButton": "Add new quiz",
+    "areYouSure": "Are you sure you want to delete your account?",
+    "manageSettings": "Manage your profile settings here.",
+    "name": "Name",
+    "displayName": "This is your public display name.",
+    "updateButton": "Update",
+    "deleteAccount": "Delete account",
+    "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain."
+  },
+  "QuestionsOnAnswers": {
+    "detailQuizzHeading": "Quiz Detail",
+    "shareQuizzButton": "Share this quiz",
+    "questions": "Questions",
+    "settings": "Settings",
+    "statistics": "Statistics",
+    "general": "General",
+    "manageText": "Manage your quiz questions here. You can edit and delete questions. This page is a preview page for your question.",
+    "total": "Total",
+    "questionsSmall": "questions",
+    "answers": "Answers",
+    "addNewButton": "Add new question"
+  },
+  "Header": {
+    "userAvatar": "User avatar",
+    "profile": "Profile",
+    "logOut": "Log out"
+  },
+  "Navbar": {
+    "profile": "Profile"
+  },
+  "LanguageSwitcher": {
+    "english": "English",
+    "polish": "Polish",
+    "selectLanguage":"Select language"
+  }
+}
