@@ -4,13 +4,16 @@ import Switch from '../components/Switch';
 import Image from "next/image";
 import editIcon from '/public/assets/edit.svg';
 import binIcon from '/public/assets/bin.svg';
+import EditQuestion from '../modals/EditQuestion';  
+import DeleteQuestion from '../modals/DeleteQuestion'; 
 
 const QuizDetail = () => {
- 
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState('Questions');
-
-  const quizData = [
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);  
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);  
+  const [quizData, setQuizData] = useState([
     {
       question: '1. What is one of the key features of cryptocurrencies?',
       description: 'Quiz description',
@@ -35,11 +38,38 @@ const QuizDetail = () => {
       options: ['Physical existence', 'Test1', 'test2', 'test3'],
       selected: 'Test1',
     },
-  ];
+  ]);
+
+  const handleEditQuestion = (index: number) => {
+    setCurrentQuestionIndex(index);  
+    setIsEditModalOpen(true);  
+  };
+
+  const handleSaveQuestion = (updatedQuestion: any) => {
+    const updatedQuizData = [...quizData];
+    if (currentQuestionIndex !== null) {
+      updatedQuizData[currentQuestionIndex] = updatedQuestion;
+      setQuizData(updatedQuizData);  
+      setIsEditModalOpen(false);  
+    }
+  };
+
+  const handleDeleteQuestion = (index: number) => {
+    setCurrentQuestionIndex(index); 
+    setIsDeleteModalOpen(true);     
+  };
+  
+  const confirmDeleteQuestion = () => {
+    if (currentQuestionIndex !== null) {
+      const updatedQuizData = quizData.filter((_, i) => i !== currentQuestionIndex);
+      setQuizData(updatedQuizData); 
+      setIsDeleteModalOpen(false);  
+    }
+  };
 
   return (
-    <div className=" bg-white  w-full md:max-w-7xl">
-      <div className="bg-white p-4 md:p-6 rounded-lg ">
+    <div className="bg-white w-full md:max-w-7xl">
+      <div className="bg-white p-4 md:p-6 rounded-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-semibold">Quiz Detail</h1>
           <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
@@ -52,9 +82,7 @@ const QuizDetail = () => {
             Title: Understanding Cryptocurrencies and Their Impact on Finance
           </h2>
           <p className="text-gray-600">
-            Explore how cryptocurrencies like Bitcoin and Ethereum are transforming the financial landscape
-            through decentralization, blockchain technology, and the potential for high returns, while also 
-            discussing risks and regulatory challenges.
+            Explore how cryptocurrencies like Bitcoin and Ethereum are transforming the financial landscape through decentralization, blockchain technology, and the potential for high returns, while also discussing risks and regulatory challenges.
           </p>
         </div>
 
@@ -96,11 +124,11 @@ const QuizDetail = () => {
         <div className="bg-gray-200 py-4 px-4 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <div className="flex justify-end items-center mb-4">
-              <button className="bg-blue-600 text-white py-2 px-2 rounded-lg ml-auto">Total 5 question</button>
+              <button className="bg-blue-600 text-white py-2 px-2 rounded-lg ml-auto">Total {quizData.length} questions</button>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-500">Answers</span>
-                <Switch enabled={enabled} setEnabled={setEnabled} />
+              <Switch enabled={enabled} setEnabled={setEnabled} />
             </div>
           </div>
 
@@ -108,7 +136,7 @@ const QuizDetail = () => {
             <button className="bg-blue-300 text-blue-600 py-2 px-2 rounded-lg ml-auto">Add new question</button>
           </div>
 
-         {quizData.map((data, index) => (
+          {quizData.map((data, index) => (
             <div key={index} className="bg-gray-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm">
               <div className="w-full">
                 <h3 className="font-bold mb-2">{data.question}</h3>
@@ -130,19 +158,37 @@ const QuizDetail = () => {
                 </div>
               </div>
               <div className="flex space-x-2 mt-2">
-                <button className="text-gray-500 hover:text-gray-700">
-                <Image src={editIcon} alt="edit icon" />
-
+                <button onClick={() => handleEditQuestion(index)} className="text-gray-500 hover:text-gray-700">
+                  <Image src={editIcon} alt="edit icon" />
                 </button>
-                <button className="text-gray-500 hover:text-gray-700">
-                <Image src={binIcon} alt="bin icon" />
-
+                <button onClick={() => handleDeleteQuestion(index)} className="text-gray-500 hover:text-gray-700">
+                  <Image src={binIcon} alt="bin icon" />
                 </button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {isEditModalOpen && currentQuestionIndex !== null && (
+        <EditQuestion
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          questionData={quizData[currentQuestionIndex]}
+          onSave={handleSaveQuestion}
+        />
+      )}
+
+{isDeleteModalOpen && currentQuestionIndex !== null && (
+  <DeleteQuestion
+    isOpen={isDeleteModalOpen}
+    onClose={() => setIsDeleteModalOpen(false)}
+    onConfirmDelete={confirmDeleteQuestion}
+    questionTitle={quizData[currentQuestionIndex].question}  
+    questionDescription={quizData[currentQuestionIndex].description}  
+  />
+)}
+
     </div>
   );
 };
