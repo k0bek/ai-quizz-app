@@ -3,18 +3,21 @@ import { Input } from "@nextui-org/input";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignupSchema } from "../schemas/signUpSchema";
 import { Button } from "@nextui-org/button";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
+import authSchemas from "../schemas/authSchemas";
 function SignUpForm() {
+  const { signUpSchema } = authSchemas();
+  const t = useTranslations("AuthPages");
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
-    resolver: zodResolver(SignupSchema),
+    resolver: zodResolver(signUpSchema),
   });
-  type FormData = z.infer<typeof SignupSchema>;
+  type FormData = z.infer<typeof signUpSchema>;
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
@@ -25,7 +28,7 @@ function SignUpForm() {
           E-mail
         </label>
         <Input
-          {...register("email", { required: "Email is required" })}
+          {...register("email", { required: t("Email is required") })}
           id="email"
           type="email"
           name="email"
@@ -39,7 +42,7 @@ function SignUpForm() {
 
       <div className="flex flex-col gap-2">
         <label htmlFor="password" className="text-foreground-100 text-medium">
-          Password
+          {t("password")}
         </label>
         <Input
           {...register("password", { required: "Password is required" })}
@@ -47,7 +50,7 @@ function SignUpForm() {
           id="password"
           name="password"
           disabled={isSubmitting}
-          placeholder="Password"
+          placeholder={t("password")}
         />
         {errors?.password && (
           <span className="text-red-600">{errors.password.message}</span>
@@ -59,17 +62,17 @@ function SignUpForm() {
           htmlFor="repeatPassword"
           className="text-foreground-100 text-medium"
         >
-          Repeat password
+          {t("repeatPassword")}
         </label>
         <Input
           {...register("repeatPassword", {
-            required: "Please repeat the password",
+            required: t("pleaseRepeatPassword"),
           })}
           type="password"
           id="repeatPassword"
           name="repeatPassword"
           disabled={isSubmitting}
-          placeholder="Repeat password"
+          placeholder={t("repeatPassword")}
         />
         {errors?.repeatPassword && (
           <span className="text-red-600">{errors.repeatPassword.message}</span>
@@ -77,7 +80,7 @@ function SignUpForm() {
       </div>
 
       <Button type="submit" disabled={isSubmitting}>
-        Register
+        {t("register")}
       </Button>
     </form>
   );

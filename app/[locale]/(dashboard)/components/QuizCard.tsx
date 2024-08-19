@@ -4,6 +4,7 @@ import { cn } from "@/lib";
 import Image from "next/image";
 import React from "react";
 import { useModalStore } from "@/store/modalStore";
+import { useTranslations } from "next-intl";
 
 interface QuizCardProps {
   title: string;
@@ -19,6 +20,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
   questions,
 }) => {
   const { openModal, setModalData } = useModalStore();
+  const t = useTranslations("Dashboard");
 
   const handleOpenDeleteModal = () => {
     openModal("deleteQuizz");
@@ -51,7 +53,9 @@ const QuizCard: React.FC<QuizCardProps> = ({
       </div>
       <div className="flex items-center justify-start gap-4 mt-4">
         <div className="flex items-center bg-blue-600 text-white px-2 py-1 rounded-lg">
-          <p className="text-white text-small">Total {questions} questions</p>
+          <p className="text-white text-small">
+            {t("total")} {questions} {t("questions")}
+          </p>
         </div>
         <div
           className={cn(

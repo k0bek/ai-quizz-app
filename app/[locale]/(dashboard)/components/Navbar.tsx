@@ -8,11 +8,12 @@ import { navbarLinks } from "@/constants";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const navbarLinksList = navbarLinks();
 
   return (
     <nav className="w-full md:w-min">
       <ul className="flex flex-row md:flex-col gap-2 justify-between md:justify-start w-full md:w-min mt-10">
-        {navbarLinks.map((link) => {
+        {navbarLinksList.map((link) => {
           const isActive = link.route === pathname;
           return (
             <li key={link.route} className="w-1/2 md:w-40">

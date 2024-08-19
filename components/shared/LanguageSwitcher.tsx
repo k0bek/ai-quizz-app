@@ -6,13 +6,15 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import polandFlag from "@/public/assets/poland-flag.svg";
 import ukFlag from "@/public/assets/uk-flag.svg";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 export default function LanguageSwitcher() {
+  const t = useTranslations("LanguageSwitcher");
   const locale = useLocale();
   const router = useRouter();
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(
@@ -21,11 +23,11 @@ export default function LanguageSwitcher() {
   const getDisplayName = (key: string) => {
     switch (key) {
       case "polish":
-        return "Polish";
+        return t("polish");
       case "english":
-        return "English";
+        return t("english");
       default:
-        return "Select Language";
+        return t("selectLanguage");
     }
   };
 
@@ -67,13 +69,13 @@ export default function LanguageSwitcher() {
         <DropdownItem key="english">
           <div className="flex items-center gap-2">
             <Image src={ukFlag} alt="uk flag" className="w-9 h-9" />
-            <p>English</p>
+            <p>{t("english")}</p>
           </div>
         </DropdownItem>
         <DropdownItem key="polish">
           <div className="flex items-center gap-2">
             <Image src={polandFlag} alt="uk flag" className="w-9 h-9" />
-            <p>Polish</p>
+            <p>{t("polish")}</p>
           </div>
         </DropdownItem>
       </DropdownMenu>

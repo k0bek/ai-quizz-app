@@ -3,11 +3,13 @@
 import Container from "@/components/shared/Container";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
+import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 
 const Header = () => {
+  const t = useTranslations("Dashboard");
   const [user, setUser] = useState({
     email: "robbie@mlab.com",
     avatar: "https://via.placeholder.com/50",
@@ -52,7 +54,7 @@ const Header = () => {
             <LanguageSwitcher />
             <img
               src={user.avatar}
-              alt="User Avatar"
+              alt={t("userAvatar")}
               className="rounded-full cursor-pointer w-10"
               onClick={(event) => {
                 toggleDropdown(event);
@@ -71,14 +73,14 @@ const Header = () => {
                   href={routes.profile}
                   className="block w-full text-left px-4 py-2 hover:bg-white hover:text-gray-900 transition-colors text-foreground-600 text-medium"
                 >
-                  Profile
+                  {t("profile")}
                 </Link>
                 <hr className=" w-[85%] mx-auto" />
                 <button
                   className="block w-full text-left px-4 py-2 hover:text-gray-900 transition-colors text-foreground-600 text-medium"
                   onClick={handleLogout}
                 >
-                  Log out
+                  {t("logOut")}
                 </button>
               </div>
             )}

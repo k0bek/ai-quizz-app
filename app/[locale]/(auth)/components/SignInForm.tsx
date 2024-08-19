@@ -2,14 +2,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { signInSchema } from "../schemas/signInSchema";
 import { Button, Checkbox, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { routes } from "@/routes";
-
-type FormData = z.infer<typeof signInSchema>;
+import { useTranslations } from "next-intl";
+import authSchemas from "../schemas/authSchemas";
 
 export default function LoginForm() {
+  const { signInSchema } = authSchemas();
+  const t = useTranslations("AuthPages");
+  type FormData = z.infer<typeof signInSchema>;
   const {
     handleSubmit,
     register,
@@ -57,7 +59,7 @@ export default function LoginForm() {
 
       <div className="relative mt-6">
         <label htmlFor="password" className="text-medium text-foreground-100">
-          Password
+          {t("password")}
         </label>
         <Input
           variant="flat"
@@ -66,7 +68,7 @@ export default function LoginForm() {
           type="password"
           name="password"
           className="text-foreground-500 mt-1 text-sm"
-          placeholder="Password"
+          placeholder={t("password")}
           autoComplete="off"
           disabled={isSubmitting}
         />
@@ -84,7 +86,7 @@ export default function LoginForm() {
           size="sm"
           {...register("rememberMe")}
         >
-          <span className="text-primary text-sm">Remember me</span>
+          <span className="text-primary text-sm">{t("rememberMe")}</span>
         </Checkbox>
       </div>
 
@@ -97,7 +99,7 @@ export default function LoginForm() {
         className="w-full mt-10 bg-primary text-primary-foreground cursor-pointer text-medium disabled:opacity-50"
         disabled={isSubmitting}
       >
-        Login
+        {t("login")}
       </Button>
       <div className="flex justify-between mt-6 gap-2">
         <Button
@@ -108,7 +110,7 @@ export default function LoginForm() {
           color="primary"
           disabled={isSubmitting}
         >
-          <Link href={routes.signUp}>Create account</Link>
+          <Link href={routes.signUp}>{t("createAccount")}</Link>
         </Button>
         <Button
           variant="ghost"
@@ -118,7 +120,7 @@ export default function LoginForm() {
           className="text-tiny sm:text-medium disabled:opacity-50"
           disabled={isSubmitting}
         >
-          I forgot password
+          {t("forgotPassword")}
         </Button>
       </div>
     </form>
