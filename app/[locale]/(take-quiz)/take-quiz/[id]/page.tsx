@@ -54,14 +54,6 @@ export const quizData = {
       correctAnswer:
         "To include padding and border in the element’s total width and height",
     },
-    {
-      id: 5,
-      question: "Which HTML element is used to embed JavaScript code?",
-      description:
-        "Learn how to include JavaScript within your HTML documents.",
-      answers: ["<js>", "<javascript>", "<script>", "<code>"],
-      correctAnswer: "<script>",
-    },
   ],
 };
 
@@ -156,6 +148,7 @@ const TakeQuiz = () => {
             setIsTakeQuizBoxVisible={setIsTakeQuizBoxVisible}
             quizTitle={quizData.title}
             quizDescription={quizData.description}
+            quizLength={questions.length}
           />
         )}
         {!isTakeQuizBoxVisible && !showResult && (

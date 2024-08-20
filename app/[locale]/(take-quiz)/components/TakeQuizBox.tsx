@@ -11,12 +11,14 @@ interface TakeQuizBoxProps {
   setIsTakeQuizBoxVisible: (value: boolean) => void;
   quizTitle: string;
   quizDescription: string;
+  quizLength: number;
 }
 
 const TakeQuizBox = ({
   setIsTakeQuizBoxVisible,
   quizDescription,
   quizTitle,
+  quizLength,
 }: TakeQuizBoxProps) => {
   const t = useTranslations("TakeQuiz");
   const takeQuizSchema = z.object({
@@ -77,7 +79,7 @@ const TakeQuizBox = ({
         <div className="flex items-center justify-start">
           <div className="flex items-center -mt-3 py-1 rounded-lg bg-primary/20 px-3">
             <p className="text-base-primary text-small">
-              {t("total")} 5 {t("questions")}
+              {t("total")} {quizLength} {t("questions")}
             </p>
           </div>
         </div>
