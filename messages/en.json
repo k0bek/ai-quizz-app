@@ -57,7 +57,16 @@
     "total": "Total",
     "questionsSmall": "questions",
     "answers": "Answers",
-    "addNewButton": "Add new question"
+    "addNewButton": "Add new question",
+    "questionDescription":"Quizz description",
+    "optional":"optional",
+    "cancel":"Cancel",
+    "save":"Save",
+    "questionTitle":"Question Title",
+    "areYouSure":"Are you sure ?",
+    "delete":"Delete",
+    "cannotUndo":"This action cannot be undone. Once you delete the question, there is no going back."
+
   },
   "Header": {
     "userAvatar": "User avatar",

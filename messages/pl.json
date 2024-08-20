@@ -1,3 +1,4 @@
+
 {
   "AuthPages": {
     "password": "Hasło",
@@ -57,7 +58,16 @@
     "total": "Łącznie",
     "questionsSmall": "pytania",
     "answers": "Odpowiedzi",
-    "addNewButton": "Dodaj nowe pytanie"
+    "addNewButton": "Dodaj nowe pytanie",
+    "questionTitle":"Tytuł pytania",
+    "questionDescription":"Opis quizu",
+    "optional":"opcjonalnie",
+    "cancel":"Anuluj",
+    "save":"Zapisz",
+    "areYouSure":"Czy  jesteś pewien?",
+    "delete":"Usuń",
+    "cannotUndo":"Wprowadzone zmiany nie można będzie cofnąć"
+
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",

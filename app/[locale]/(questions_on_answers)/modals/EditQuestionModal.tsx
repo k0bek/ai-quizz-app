@@ -1,6 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image'; 
-import closeIcon from "/public/assets/closeIcon.svg";
+import Image from 'next/image';
+import closeIcon from '/public/assets/closeIcon.svg';
+import { useTranslations } from 'next-intl';
+import { useModalStore } from '@/store/modalStore2';
 
 interface QuestionData {
   question: string;
@@ -9,15 +12,22 @@ interface QuestionData {
   selected: string;
 }
 
-
-interface EditQuestionProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface EditQuestionModalProps {
   questionData: QuestionData;
   onSave: (updatedQuestion: QuestionData) => void;
 }
 
-const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionData, onSave }) => {
+const EditQuestionModal: React.FC<EditQuestionModalProps> = ({
+  questionData,
+  onSave,
+}) => {
+  const t = useTranslations('QuestionsOnAnswers');
+  const { type, isOpen, closeModal } = useModalStore((state) => ({
+    type: state.type,
+    isOpen: state.isOpen,
+    closeModal: state.closeModal,
+  }));
+
   const [question, setQuestion] = useState(questionData.question);
   const [description, setDescription] = useState(questionData.description);
   const [options, setOptions] = useState(questionData.options);
@@ -35,20 +45,19 @@ const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionDa
       question,
       description,
       options,
-      selected: selectedOption
+      selected: selectedOption,
     };
     onSave(updatedQuestion);
+    closeModal();
   };
 
-  if (!isOpen) return null;
+  if (!(isOpen && type === 'editQuestion')) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-     
       <div className="bg-gray-100 p-6 rounded-lg shadow-lg w-[800px] min-h-[400px] relative">
-       
         <button
-          onClick={onClose}
+          onClick={closeModal}
           className="absolute top-3 right-3 p-1 bg-transparent hover:bg-gray-200 rounded-full transition"
         >
           <Image src={closeIcon} alt="close icon" />
@@ -56,7 +65,7 @@ const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionDa
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">
-            Question Title <span className="text-red-500">*</span>:
+            {t('questionTitle')} <span className="text-red-500">*</span>:
           </label>
           <input
             type="text"
@@ -68,7 +77,7 @@ const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionDa
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">
-            Question Description (optional):
+            {t('questionDescription')} ({t('optional')}):
           </label>
           <input
             type="text"
@@ -79,7 +88,7 @@ const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionDa
         </div>
 
         <div className="mb-4">
-          <label className="block font-semibold mb-2">Answers:</label>
+          <label className="block font-semibold mb-2">{t('answers')}:</label>
           {options.map((option, index) => (
             <div key={index} className="flex items-center space-x-2 mb-2">
               <div
@@ -102,13 +111,13 @@ const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionDa
 
         <div className="flex justify-end space-x-2">
           <button
-            onClick={onClose}
+            onClick={closeModal}
             className="bg-primary-200 text-primary-600 py-2 px-4 rounded-md "
           >
-            Cancel
+            {t('cancel')}
           </button>
           <button onClick={handleSave} className="bg-blue-600 text-white py-2 px-4 rounded-lg">
-            Save
+            {t('save')}
           </button>
         </div>
       </div>
@@ -116,4 +125,4 @@ const EditQuestion: React.FC<EditQuestionProps> = ({ isOpen, onClose, questionDa
   );
 };
 
-export default EditQuestion;
+export default EditQuestionModal;

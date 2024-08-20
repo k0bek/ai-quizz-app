@@ -5,16 +5,15 @@ import Image from "next/image";
 import editIcon from "/public/assets/edit.svg";
 import binIcon from "/public/assets/bin.svg";
 import { useTranslations } from "next-intl";
-import EditQuestion from "../modals/EditQuestion";  
-import DeleteQuestion from "../modals/DeleteQuestion";  
+import EditQuestionModal from "../modals/EditQuestionModal";
+import DeleteQuestionModal from "../modals/DeleteQuestionModal";
+import { useModalStore } from "@/store/modalStore2";
 
 const QuizDetail = () => {
   const t = useTranslations("QuestionsOnAnswers");
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState("Questions");
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);  
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);  
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);  
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
   const [quizData, setQuizData] = useState([
     {
       question: "1. What is one of the key features of cryptocurrencies?",
@@ -42,36 +41,41 @@ const QuizDetail = () => {
     },
   ]);
 
-  const handleEditQuestion = (index: number) => {
-    setCurrentQuestionIndex(index);  
-    setIsEditModalOpen(true);  
+  const { openModal, setModalData } = useModalStore();
+
+  const handleEdit = (index: number) => {
+    setCurrentQuestionIndex(index);
+    openModal("editQuestion");
   };
 
-  const handleSaveQuestion = (updatedQuestion: any) => {
-    const updatedQuizData = [...quizData];
+  const handleDelete = (index: number) => {
+    setCurrentQuestionIndex(index);
+    setModalData({
+      title: quizData[index].question,
+      description: quizData[index].description,
+      status: "Error",
+      questions: 2,
+      onConfirmDelete: () => handleConfirmDelete(index),
+    });
+    openModal("deleteQuestion");
+  };
+
+  const handleConfirmDelete = (index: number) => {
+    const updatedQuizData = quizData.filter((_, i) => i !== index);
+    setQuizData(updatedQuizData);
+  };
+
+  const handleSaveEdit = (updatedQuestion: any) => {
     if (currentQuestionIndex !== null) {
+      const updatedQuizData = [...quizData];
       updatedQuizData[currentQuestionIndex] = updatedQuestion;
-      setQuizData(updatedQuizData);  
-      setIsEditModalOpen(false);  
-    }
-  };
-
-  const handleDeleteQuestion = (index: number) => {
-    setCurrentQuestionIndex(index); 
-    setIsDeleteModalOpen(true);     
-  };
-  
-  const confirmDeleteQuestion = () => {
-    if (currentQuestionIndex !== null) {
-      const updatedQuizData = quizData.filter((_, i) => i !== currentQuestionIndex);
-      setQuizData(updatedQuizData); 
-      setIsDeleteModalOpen(false);  
+      setQuizData(updatedQuizData);
     }
   };
 
   return (
-    <div className=" bg-white  w-full md:max-w-7xl">
-      <div className="bg-white p-4 md:p-6 rounded-lg ">
+    <div className="bg-white w-full md:max-w-7xl">
+      <div className="bg-white p-4 md:p-6 rounded-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-semibold">{t("detailQuizzHeading")}</h1>
           <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
@@ -84,10 +88,7 @@ const QuizDetail = () => {
             Title: Understanding Cryptocurrencies and Their Impact on Finance
           </h2>
           <p className="text-gray-600">
-            Explore how cryptocurrencies like Bitcoin and Ethereum are
-            transforming the financial landscape through decentralization,
-            blockchain technology, and the potential for high returns, while
-            also discussing risks and regulatory challenges.
+            Explore how cryptocurrencies like Bitcoin and Ethereum are transforming the financial landscape through decentralization, blockchain technology, and the potential for high returns, while also discussing risks and regulatory challenges.
           </p>
         </div>
 
@@ -190,10 +191,10 @@ const QuizDetail = () => {
                 </div>
               </div>
               <div className="flex space-x-2 mt-2">
-                <button onClick={() => handleEditQuestion(index)} className="text-gray-500 hover:text-gray-700">
+                <button onClick={() => handleEdit(index)} className="text-gray-500 hover:text-gray-700">
                   <Image src={editIcon} alt="edit icon" />
                 </button>
-                <button onClick={() => handleDeleteQuestion(index)} className="text-gray-500 hover:text-gray-700">
+                <button onClick={() => handleDelete(index)} className="text-gray-500 hover:text-gray-700">
                   <Image src={binIcon} alt="bin icon" />
                 </button>
               </div>
@@ -202,23 +203,18 @@ const QuizDetail = () => {
         </div>
       </div>
 
-      {isEditModalOpen && currentQuestionIndex !== null && (
-        <EditQuestion
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          questionData={quizData[currentQuestionIndex]}
-          onSave={handleSaveQuestion}
-        />
-      )}
-
-      {isDeleteModalOpen && currentQuestionIndex !== null && (
-        <DeleteQuestion
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          onConfirmDelete={confirmDeleteQuestion}
-          questionTitle={quizData[currentQuestionIndex].question}  
-          questionDescription={quizData[currentQuestionIndex].description}  
-        />
+      {currentQuestionIndex !== null && (
+        <>
+          <EditQuestionModal
+            questionData={quizData[currentQuestionIndex]}
+            onSave={handleSaveEdit}
+          />
+        <DeleteQuestionModal
+        onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}  
+        questionTitle={quizData[currentQuestionIndex].question}
+        questionDescription={quizData[currentQuestionIndex].description}
+          />
+        </>
       )}
     </div>
   );

@@ -1,10 +1,9 @@
-
 import { create } from "zustand";
 
-export type ModalType = "deleteQuizz" | "cancelCreateQuizz" | "";
+export type ModalType = "deleteQuestion" | "editQuestion" | "";
 
 type ModalDataT = {
-  onConfirmDelete?: (e: PressEvent) => void;  
+  onConfirmDelete?: () => void;  
   title: string;
   description: string;
   status: string;
@@ -24,7 +23,7 @@ export const useModalStore = create<ModalStore>((set) => ({
   type: "",
   isOpen: false,
   openModal: (payload: ModalType) => set({ isOpen: true, type: payload }),
-  closeModal: () => set({ isOpen: false }),
+  closeModal: () => set({ isOpen: false, type: "" }),
   modalData: {
     title: "",
     description: "",
@@ -34,6 +33,3 @@ export const useModalStore = create<ModalStore>((set) => ({
   },
   setModalData: (data: ModalDataT) => set({ modalData: data }),
 }));
-
-
-
