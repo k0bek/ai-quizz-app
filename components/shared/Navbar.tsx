@@ -8,7 +8,7 @@ import { NavbarLinks } from "@/constants";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const navbarLinksList = navbarLinks();
+  const navbarLinksList = NavbarLinks();
 
   return (
     <nav className="w-full md:w-min">

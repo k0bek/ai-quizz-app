@@ -18,7 +18,7 @@
     "passwordMinLength": "Password must be at least 8 characters long",
     "passwordMaxLength": "Password cannot exceed 100 characters",
     "passwordLowercase": "Password must contain at least one lowercase letter",
-    "passwordUpprecase": "Password must contain at least one uppercase letter",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
     "passwordNumber": "Password must contain at least one number",
     "passwordSpecialChar": "Password must contain at least one special character",
     "passwordsDontMatch": "Passwords do not match",
@@ -112,7 +112,10 @@
     "nextButton": "Next",
     "promptRequiredField": "Prompt field is required",
     "promptForm": "Enter your prompt",
-    "promptLabel": "Prompt"
+    "promptLabel": "Prompt",
+    "cancelQuizWarning": "Are you sure?",
+    "cancelQuizWarningText": "You are about to quit the quiz creation process. Any progress made so far will be lost. The action cannot be undone",
+    "cancelQuizConfirm": "Yes, I quit"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Configure Quiz",

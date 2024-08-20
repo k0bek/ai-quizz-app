@@ -1,25 +1,20 @@
-export const signUp = async (data: FormData) => {
-  // Extract the email and password from FormData
-  const email = data.get("email")?.toString();
-  const password = data.get("password")?.toString();
+import { signUpUrl } from "@/constants/api";
 
-  const options = {
-    method: "POST",
-    headers: {
-      Accept: "*/*",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
-  };
+export const signUp = async (email: string, password: string) => {
+  // Extract the email and password from FormData
 
   try {
-    const response = await fetch(
-      "https://mlab2024-backend.yellowocean-31330507.westeurope.azurecontainerapps.io/api/auth/signin",
-      options
-    );
+    const response = await fetch(signUpUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
 
     // Check if the response is ok (status code 200-299)
     if (!response.ok) {

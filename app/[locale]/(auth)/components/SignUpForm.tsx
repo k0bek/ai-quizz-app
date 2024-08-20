@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import authSchemas from "../schemas/authSchemas";
+import { signUp } from "@/api/auth/sign-up";
 function SignUpForm() {
   const { signUpSchema } = authSchemas();
   const t = useTranslations("AuthPages");
@@ -18,8 +19,12 @@ function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
   type FormData = z.infer<typeof signUpSchema>;
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log(data);
+    const { email, password } = data;
+    console.log(email, password);
+    const signUpResult = await signUp(email, password);
+    console.log(signUpResult);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
@@ -28,7 +33,7 @@ function SignUpForm() {
           E-mail
         </label>
         <Input
-          {...register("email", { required: t("Email is required") })}
+          {...register("email", { required: t("emailRequired") })}
           id="email"
           type="email"
           name="email"
