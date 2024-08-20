@@ -73,15 +73,15 @@ const TakeQuiz = () => {
   const { question, answers, correctAnswer } = questions[activeQuestion];
 
   const handleSelectAnswer = (answer: string, index: number) => {
-    setAnswersMap((prev: AnswerMapItem) => ({
+    setAnswersMap((prev) => ({
       ...prev,
       [activeQuestion]: index,
     }));
   };
 
   const nextQuestion = () => {
-    if (answersMap[activeQuestion] !== null) {
-      const selectedAnswer = answers[answersMap[activeQuestion] as number];
+    if (answersMap[activeQuestion] !== undefined) {
+      const selectedAnswer = answers[answersMap[activeQuestion]!];
       const isCorrect =
         answersMap[activeQuestion] ===
         questions[activeQuestion].answers.indexOf(correctAnswer);
@@ -98,10 +98,10 @@ const TakeQuiz = () => {
             }
       );
 
-      setHistory((prev: HistoryItem[]) => {
-        const updatedHistory: HistoryItem[] = [...prev];
+      setHistory((prev) => {
+        const updatedHistory = [...prev];
         const existingIndex = updatedHistory.findIndex(
-          (item: HistoryItem) => item.question === question
+          (item) => item.question === question
         );
 
         const options = answers.map((answer) => ({
@@ -126,10 +126,9 @@ const TakeQuiz = () => {
       });
     }
 
-    if (activeQuestion !== questions.length - 1) {
+    if (activeQuestion < questions.length - 1) {
       setActiveQuestion((prev) => prev + 1);
     } else {
-      setActiveQuestion(0);
       setShowResult(true);
     }
   };
