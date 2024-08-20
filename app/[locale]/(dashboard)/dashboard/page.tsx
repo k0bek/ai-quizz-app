@@ -1,6 +1,8 @@
 import React from "react";
 import QuizCard from "../components/QuizCard";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { routes } from "@/routes";
 
 const quizzes = [
   {

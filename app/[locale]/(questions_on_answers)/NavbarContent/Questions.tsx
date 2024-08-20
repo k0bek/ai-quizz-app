@@ -1,8 +1,10 @@
+"use client";
 import React from "react";
 import Switch from "../components/Switch";
 import Image from "next/image";
 import editIcon from "/public/assets/edit.svg";
 import binIcon from "/public/assets/bin.svg";
+import { useTranslations } from "next-intl";
 type quizDataType = {
   question: string;
   description: string;
@@ -15,13 +17,11 @@ type QuizData = {
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const Questions = ({ quizData, enabled, setEnabled }: QuizData) => {
+  const t = useTranslations("QuestionsOnAnswers");
   return (
     <section data-navbar-item="questions">
       <div className="mb-6">
-        <p className="text-gray-700">
-          Manage your quiz questions here. You can edit and delete questions.
-          This page is a preview page for your question.
-        </p>
+        <p className="text-gray-700">{t("manageText")}</p>
       </div>
 
       <div className="bg-gray-200 py-4 px-4 rounded-lg">
@@ -32,14 +32,14 @@ const Questions = ({ quizData, enabled, setEnabled }: QuizData) => {
             </button>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-500">Answers</span>
+            <span className="text-gray-500">{t("answers")}</span>
             <Switch enabled={enabled} setEnabled={setEnabled} />
           </div>
         </div>
 
         <div className="flex justify-end items-center mb-4">
           <button className="bg-blue-300 text-blue-600 py-2 px-2 rounded-lg ml-auto">
-            Add new question
+            {t("addNewButton")}
           </button>
         </div>
 

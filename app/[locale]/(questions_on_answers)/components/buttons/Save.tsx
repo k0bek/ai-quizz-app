@@ -1,7 +1,9 @@
 import { Button } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 const Save = () => {
+  const t = useTranslations("QuestionsOnAnswers");
   return (
     <Button
       className="flex self-end"
@@ -11,7 +13,7 @@ const Save = () => {
       size="lg"
       type="submit"
     >
-      Save
+      {t("save")}
     </Button>
   );
 };

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { format } from "date-fns";
 
@@ -13,11 +14,13 @@ import DetailsButton from "../components/buttons/DetailsButton";
 import StatusChip from "../components/StatusChip/StatusChip";
 import EventDuration from "../components/QuizDurationTIme/QuizDurationTime";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 function Statistics() {
   const date = new Date();
   const formatedDate = format(date, "dd.MM.yyyy");
-
+  const t = useTranslations("QuestionsOnAnswers");
   const finishedQuizzes = [
     {
       quizId: 1,
@@ -66,13 +69,13 @@ function Statistics() {
     },
   ];
   const tableHeaders = [
-    "Score",
-    "Name",
+    t("scoreTableHeader"),
+    t("nameTableHeader"),
     "E-mail",
     "Status",
-    "Time",
-    "Date",
-    "Details",
+    t("timeTableHeader"),
+    t("dateTableHeader"),
+    t("detailsTableHeader"),
   ];
   return (
     <>
@@ -120,10 +123,10 @@ function Statistics() {
                 <TableCell>{finishedQuizz.email}</TableCell>
                 <TableCell>
                   {finishedQuizz.stat === "Stopped" && (
-                    <StatusChip status="Stopped"></StatusChip>
+                    <StatusChip status={"Stopped"}></StatusChip>
                   )}
                   {finishedQuizz.stat === "Finished" && (
-                    <StatusChip status="Finished"></StatusChip>
+                    <StatusChip status={"Finished"}></StatusChip>
                   )}
                 </TableCell>
                 <TableCell className="text-center md:text-start">

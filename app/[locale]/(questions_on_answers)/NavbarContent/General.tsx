@@ -3,6 +3,7 @@ import { Input } from "@nextui-org/react";
 import React, { useRef, useState } from "react";
 import Save from "../components/buttons/Save";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
+import { useTranslations } from "next-intl";
 
 const General = () => {
   const [errors, setErrors] = useState("");
@@ -27,7 +28,7 @@ const General = () => {
 
     return true;
   };
-
+  const t = useTranslations("QuestionsOnAnswers");
   return (
     <NavbarContentContainer>
       <form
@@ -35,7 +36,7 @@ const General = () => {
         className="gap-8 p-6 bg-content2 flex flex-col"
       >
         <div className="flex flex-col gap-4">
-          <label htmlFor="QuizTitle">Quiz Title</label>
+          <label htmlFor="QuizTitle">{t("generalSettingsHeading")}</label>
           <Input
             ref={quizTitleRef}
             color="default"
@@ -46,12 +47,13 @@ const General = () => {
             placeholder="Quiz Title"
           />
           <span className="text-sm text-foreground-500">
-            This is your quiz title. It will be displayed on your quiz page. You
-            can change it anytime.
+            {t("generalSettingsHeadingTitle")}
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="QuizDescription">Quiz Description</label>
+          <label htmlFor="QuizDescription">
+            {t("quizDescriptionSettingsHeading")}
+          </label>
           <Input
             ref={quizDescRef}
             color="default"
@@ -59,11 +61,10 @@ const General = () => {
             type="text"
             size="sm"
             radius="sm"
-            placeholder="Quiz Description"
+            placeholder={t("quizDescriptionSettingsHeading")}
           />
           <span className="text-sm text-foreground-500">
-            This is your public quiz description. It will be displayed on your
-            quiz page. You can change it anytime.
+            {t("quizDescriptionSettingsTitle")}
           </span>
         </div>
         {errors && <span className="text-red-500">{errors}</span>}

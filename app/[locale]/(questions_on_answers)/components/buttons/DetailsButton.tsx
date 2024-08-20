@@ -1,7 +1,8 @@
 import { Button } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 import React from "react";
-
 const DetailsButton = () => {
+  const t = useTranslations("QuestionsOnAnswers");
   return (
     <Button
       variant="solid"
@@ -10,7 +11,7 @@ const DetailsButton = () => {
       radius="sm"
       className="text-white"
     >
-      Details
+      {t("detailsButton")}
     </Button>
   );
 };

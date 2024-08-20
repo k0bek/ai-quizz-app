@@ -1,3 +1,5 @@
+"use client";
+import { useTranslations } from "next-intl";
 import React, { ReactNode } from "react";
 
 const NavbarContentContainer = ({
@@ -7,11 +9,10 @@ const NavbarContentContainer = ({
   children: ReactNode;
   className?: string;
 }) => {
+  const t = useTranslations("QuestionsOnAnswers");
   return (
     <>
-      <p className="mb-4">
-        Manage your quiz settings here. You can need text gpt
-      </p>
+      <p className="mb-4">{t("manageSettings")}</p>
       <section className={className}>{children}</section>
     </>
   );
