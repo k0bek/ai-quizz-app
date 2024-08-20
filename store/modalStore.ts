@@ -15,7 +15,7 @@ interface ModalStore {
   setModalData: (data: ModalDataT) => void;
 }
 
-export type ModalType = "deleteQuizz" | "cancelCreateQuizz" | "";
+export type ModalType = "deleteQuizz" | "cancelCreateQuizz" | "finishQuiz" | "";
 
 export const useModalStore = create<ModalStore>((set) => ({
   type: "",

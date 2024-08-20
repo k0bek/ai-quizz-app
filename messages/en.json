@@ -70,6 +70,30 @@
   "LanguageSwitcher": {
     "english": "English",
     "polish": "Polish",
-    "selectLanguage":"Select language"
+    "selectLanguage": "Select language"
+  },
+  "TakeQuiz": {
+    "takeQuiz": "Take quiz",
+    "quizSubHeading": "Engage with our quiz designed to evaluate your understanding and knowledge on various topics.",
+    "name": "Name",
+    "yourName": "Your name",
+    "total": "Total",
+    "questions": "questions",
+    "previous": "Previous",
+    "next": "Next",
+    "finish": "Finish",
+    "finishQuiz": "Finish quiz",
+    "areYouSure": "Are you sure that all questions have been answered? Once you submit, you won't be able to make any changes.",
+    "cancel": "Cancel",
+    "quizResults": "Quiz results",
+    "yourScore": "Your score",
+    "home": "Dashboard",
+    "summary": "Summary",
+    "thankYou": "Congratulations on finishing the quiz! Your responses have been recorded. Review your results below, and see how you did. Thank you for participating!",
+    "yourScoreIs": "Your score is...",
+    "seeResults": "See results",
+    "awesome": "Awesome!!!",
+    "notYourDay": "This is not your day...",
+    "warningName": "Name must be at least 2 characters long"
   }
 }
