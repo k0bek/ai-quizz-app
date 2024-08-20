@@ -92,7 +92,6 @@ function SignUpForm() {
         className="mt-5"
       >
         {t("register")}
-      </Button>
     </form>
   );
 }

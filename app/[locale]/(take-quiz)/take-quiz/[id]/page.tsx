@@ -61,16 +61,15 @@ const TakeQuiz = () => {
   const [isTakeQuizBoxVisible, setIsTakeQuizBoxVisible] = useState(true);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  const [result, setResult] = useState({
-    correctAnswers: 0,
-    wrongAnswers: 0,
-  });
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const [answersMap, setAnswersMap] = useState<AnswerMapItem>({});
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   const { questions } = quizData;
   const { question, answers, correctAnswer } = questions[activeQuestion];
+  const correctAnswers = history.filter(
+    (item) => item.isCorrect === true
+  ).length;
 
   const handleSelectAnswer = (answer: string, index: number) => {
     setAnswersMap((prev) => ({
@@ -85,18 +84,6 @@ const TakeQuiz = () => {
       const isCorrect =
         answersMap[activeQuestion] ===
         questions[activeQuestion].answers.indexOf(correctAnswer);
-
-      setResult((prev) =>
-        isCorrect
-          ? {
-              ...prev,
-              correctAnswers: prev.correctAnswers + 1,
-            }
-          : {
-              ...prev,
-              wrongAnswers: prev.wrongAnswers + 1,
-            }
-      );
 
       setHistory((prev) => {
         const updatedHistory = [...prev];
@@ -166,7 +153,7 @@ const TakeQuiz = () => {
         )}
         {showResult && !isHistoryVisible && (
           <QuizResults
-            correctAnswers={result.correctAnswers}
+            correctAnswers={correctAnswers}
             quizLength={questions.length}
             setIsHistoryVisible={setIsHistoryVisible}
           />
@@ -174,7 +161,7 @@ const TakeQuiz = () => {
         {isHistoryVisible && (
           <HistoryResults
             quizLength={questions.length}
-            correctAnswers={result.correctAnswers}
+            correctAnswers={correctAnswers}
             history={history}
           />
         )}
