@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DeleteQuizzModal from "../[locale]/(dashboard)/components/modals/DeleteQuizzModal";
+import FinishQuizModal from "../[locale]/(take-quiz)/components/FinishQuizModal";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
