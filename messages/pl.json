@@ -81,5 +81,29 @@
     "english": "Angielski",
     "polish": "Polski",
     "selectLanguage": "Wybierz język"
+  },
+  "TakeQuiz": {
+    "takeQuiz": "Rozpocznij quiz",
+    "quizSubHeading": "Weź udział w naszym quizie, aby sprawdzić swoją wiedzę i zrozumienie na różne tematy.",
+    "name": "Imię",
+    "yourName": "Twoje imię",
+    "total": "Łącznie",
+    "questions": "pytań",
+    "previous": "Cofnij",
+    "next": "Następne",
+    "finish": "Koniec",
+    "finishQuiz": "Zakończ quiz",
+    "areYouSure": "Czy na pewno odpowiedziałeś(aś) na wszystkie pytania? Po przesłaniu nie będziesz mógł(a) wprowadzić żadnych zmian.",
+    "cancel": "Anuluj",
+    "quizResults": "Wyniki quizu",
+    "yourScore": "Twój wynik",
+    "home": "Dashboard",
+    "summary": "Podsumowanie",
+    "thankYou": "Gratulacje z ukończenia quizu! Twoje odpowiedzi zostały zapisane. Przejrzyj poniżej swoje wyniki i zobacz, jak Ci poszło. Dziękujemy za udział!",
+    "yourScoreIs": "Twój wynik to...",
+    "seeResults": "Zobacz wyniki",
+    "awesome": "Niesamowicie!!!",
+    "notYourDay": "To nie Twój dzień...",
+    "warningName":"Imię musi mieć co najmniej 2 znaki"
   }
 }

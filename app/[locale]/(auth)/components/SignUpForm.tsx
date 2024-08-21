@@ -79,7 +79,7 @@ function SignUpForm() {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button type="submit" disabled={isSubmitting} color="primary">
         {t("register")}
       </Button>
     </form>
