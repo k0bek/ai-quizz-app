@@ -85,7 +85,14 @@
     "quizDescriptonSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. YYou can change it anytime",
     "quizDescriptionSettingsHeading": "Quiz description",
     "quizDescriptionSettingsTitle": "This is your public quiz description. It will be displayed on your quiz page. YYou can change it anytime",
-    "save": "Save"
+    "questionDescription": "Quizz description",
+    "optional": "optional",
+    "cancel": "Cancel",
+    "save": "Save",
+    "questionTitle": "Question Title",
+    "areYouSure": "Are you sure ?",
+    "delete": "Delete",
+    "cannotUndo": "This action cannot be undone. Once you delete the question, there is no going back."
   },
   "Header": {
     "userAvatar": "User avatar",

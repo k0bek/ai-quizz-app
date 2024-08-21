@@ -20,7 +20,6 @@ function SignUpForm() {
   });
   type FormData = z.infer<typeof signUpSchema>;
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     const { email, password } = data;
     console.log(email, password);
     const signUpResult = await signUp(email, password);

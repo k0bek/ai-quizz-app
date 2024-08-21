@@ -85,7 +85,14 @@
     "generalSettingsHeadingTitle": "To jest tytuł Twojego quizu. Będzie on wyświetlany na stronie quizu. Możesz go zmienić w dowolnym momencie.",
     "quizDescriptionSettingsHeading": "Opis Quizu",
     "quizDescriptionSettingsTitle": "To jest opis Twojego quizu. Będzie on wyświetlany na stronie quizu. Możesz go zmienić w dowolnym momencie.",
-    "save": "Zapisz"
+    "save": "Zapisz",
+    "questionTitle": "Tytuł pytania",
+    "questionDescription": "Opis quizu",
+    "optional": "opcjonalnie",
+    "cancel": "Anuluj",
+    "areYouSure": "Czy  jesteś pewien?",
+    "delete": "Usuń",
+    "cannotUndo": "Wprowadzone zmiany nie można będzie cofnąć"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",

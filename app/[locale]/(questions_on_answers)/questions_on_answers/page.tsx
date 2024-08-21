@@ -5,12 +5,18 @@ import Questions from "../NavbarContent/Questions";
 import Statistics from "../NavbarContent/Statistics";
 import Settings from "../NavbarContent/Settings";
 import { useTranslations } from "next-intl";
-
+import EditQuestionModal from "../modals/EditQuestionModal";
+import DeleteQuestionModal from "../modals/DeleteQuestionModal";
+import { useModalStore } from "@/store/modalStore2";
+import Switch from "../components/Switch";
+import Image from "next/image";
+import editIcon from "/public/assets/edit.svg";
+import binIcon from "/public/assets/bin.svg";
 const QuizDetail = () => {
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState("Questions");
 
-  const quizData = [
+  const [quizData, setQuizData] = useState([
     {
       question: "1. What is one of the key features of cryptocurrencies?",
       description: "Quiz description",
@@ -35,7 +41,7 @@ const QuizDetail = () => {
       options: ["Physical existence", "Test1", "test2", "test3"],
       selected: "Test1",
     },
-  ];
+  ]);
   const navRef = useRef(null);
   const t = useTranslations("QuestionsOnAnswers");
   const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
@@ -53,6 +59,7 @@ const QuizDetail = () => {
             quizData={quizData}
             enabled={enabled}
             setEnabled={setEnabled}
+            setQuizData={setQuizData}
           />
         );
       case "Settings":
@@ -67,13 +74,15 @@ const QuizDetail = () => {
             quizData={quizData}
             enabled={enabled}
             setEnabled={setEnabled}
+            setQuizData={setQuizData}
           />
         );
     }
   };
+
   return (
-    <div className=" bg-white  w-full md:max-w-7xl">
-      <div className="bg-white p-4 md:p-6 rounded-lg ">
+    <div className="bg-white w-full md:max-w-7xl">
+      <div className="bg-white p-4 md:p-6 rounded-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-semibold">{t("detailQuizzHeading")}</h1>
           <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">

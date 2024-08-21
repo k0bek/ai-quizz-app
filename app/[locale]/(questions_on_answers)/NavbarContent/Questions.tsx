@@ -1,10 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Switch from "../components/Switch";
 import Image from "next/image";
 import editIcon from "/public/assets/edit.svg";
 import binIcon from "/public/assets/bin.svg";
 import { useTranslations } from "next-intl";
+import { useModalStore } from "@/store/modalStore2";
+import EditQuestionModal from "../modals/EditQuestionModal";
+import DeleteQuestionModal from "../modals/DeleteQuestionModal";
+
 type quizDataType = {
   question: string;
   description: string;
@@ -15,20 +19,55 @@ type QuizData = {
   quizData: quizDataType[];
   enabled: boolean;
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  setQuizData: React.Dispatch<React.SetStateAction<quizDataType[]>>;
 };
-const Questions = ({ quizData, enabled, setEnabled }: QuizData) => {
+const Questions = ({
+  setQuizData,
+  quizData,
+  enabled,
+  setEnabled,
+}: QuizData) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
+    number | null
+  >(null);
+  const { openModal, setModalData } = useModalStore();
   const t = useTranslations("QuestionsOnAnswers");
+  const handleEdit = (index: number) => {
+    setCurrentQuestionIndex(index);
+    openModal("editQuestion");
+  };
+
+  const handleDelete = (index: number) => {
+    setCurrentQuestionIndex(index);
+    setModalData({
+      title: quizData[index].question,
+      description: quizData[index].description,
+      status: "Error",
+      questions: 2,
+      onConfirmDelete: () => handleConfirmDelete(index),
+    });
+    openModal("deleteQuestion");
+  };
+
+  const handleConfirmDelete = (index: number) => {
+    const updatedQuizData = quizData.filter((_, i) => i !== index);
+    setQuizData(updatedQuizData);
+  };
+
+  const handleSaveEdit = (updatedQuestion: any) => {
+    if (currentQuestionIndex !== null) {
+      const updatedQuizData = [...quizData];
+      updatedQuizData[currentQuestionIndex] = updatedQuestion;
+      setQuizData(updatedQuizData);
+    }
+  };
   return (
     <section data-navbar-item="questions">
-      <div className="mb-6">
-        <p className="text-gray-700">{t("manageText")}</p>
-      </div>
-
       <div className="bg-gray-200 py-4 px-4 rounded-lg">
         <div className="flex justify-between items-center mb-4">
           <div className="flex justify-end items-center mb-4">
             <button className="bg-blue-600 text-white py-2 px-2 rounded-lg ml-auto">
-              Total 5 question
+              {t("total")} {quizData.length} {t("questionsSmall")}
             </button>
           </div>
           <div className="flex items-center space-x-4">
@@ -72,16 +111,36 @@ const Questions = ({ quizData, enabled, setEnabled }: QuizData) => {
               </div>
             </div>
             <div className="flex space-x-2 mt-2">
-              <button className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={() => handleEdit(index)}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 <Image src={editIcon} alt="edit icon" />
               </button>
-              <button className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={() => handleDelete(index)}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 <Image src={binIcon} alt="bin icon" />
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {currentQuestionIndex !== null && (
+        <>
+          <EditQuestionModal
+            questionData={quizData[currentQuestionIndex]}
+            onSave={handleSaveEdit}
+          />
+          <DeleteQuestionModal
+            onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}
+            questionTitle={quizData[currentQuestionIndex].question}
+            questionDescription={quizData[currentQuestionIndex].description}
+          />
+        </>
+      )}
     </section>
   );
 };
