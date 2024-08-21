@@ -7,6 +7,7 @@ import NextButton from "../../create-quiz/components/buttons/NextButton";
 import { useRouter } from "next/navigation";
 import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 import { routes } from "@/routes";
+import { useTranslations } from "next-intl";
 
 function ButtonGroupComponent() {
   // State to track the selected button in each group
@@ -28,13 +29,14 @@ function ButtonGroupComponent() {
     router.push(routes.createQuiz[2].route);
     // API call here
   };
+  const t = useTranslations("ConfigureQuiz");
   return (
     <form
       onSubmit={handleSubmit}
       className=" md:w-full   rounded-lg flex flex-col "
     >
       <div className="flex flex-col bg-content2 gap-4 p-6">
-        <span>What type of questions?</span>
+        <span>{t("questionsType")}</span>
         <div className="w-full flex">
           <ButtonGroup
             className="flex flex-col md:flex-row justify-start gap-2 md:gap-0 items-start w-full"
@@ -60,7 +62,7 @@ function ButtonGroupComponent() {
               aria-pressed={selectedType === "multiple-choice"}
               onClick={() => handleTypeClick("multiple-choice")}
             >
-              <span>Multiple Choice</span>
+              <span>{t("multipleChoice")}</span>
             </Button>
             <Button
               variant={selectedType === "true-false" ? "solid" : "flat"}
@@ -73,7 +75,7 @@ function ButtonGroupComponent() {
               aria-pressed={selectedType === "true-false"}
               onClick={() => handleTypeClick("true-false")}
             >
-              <span>True/False</span>
+              <span>{t("trueFalse")}</span>
             </Button>
             <Button
               variant={selectedType === "fill-in-the-blank" ? "solid" : "flat"}
@@ -90,14 +92,14 @@ function ButtonGroupComponent() {
               aria-pressed={selectedType === "fill-in-the-blank"}
               onClick={() => handleTypeClick("fill-in-the-blank")}
             >
-              Fill in the blank
+              <span>{t("fillIn")}</span>
             </Button>
           </ButtonGroup>
         </div>
       </div>
       <div>
         <div className="gap-4 p-6 flex flex-col bg-content2">
-          <span>How many questions?</span>
+          <span>{t("howManyQuestions")}</span>
           <ButtonGroup
             className="flex-col w-full gap-2 md:gap-0 items-start flex md:flex-row justify-start"
             variant="solid"
@@ -116,7 +118,7 @@ function ButtonGroupComponent() {
               aria-pressed={selectedQuantity === "low"}
               onClick={() => handleQuantityClick("low")}
             >
-              Low
+              <span>{t("low")}</span>
             </Button>
             <Button
               variant={selectedQuantity === "medium" ? "solid" : "flat"}
@@ -131,7 +133,7 @@ function ButtonGroupComponent() {
               aria-pressed={selectedQuantity === "medium"}
               onClick={() => handleQuantityClick("medium")}
             >
-              Medium
+              <span>{t("med")}</span>
             </Button>
             <Button
               variant={selectedQuantity === "high" ? "solid" : "flat"}
@@ -144,7 +146,7 @@ function ButtonGroupComponent() {
               aria-pressed={selectedQuantity === "high"}
               onClick={() => handleQuantityClick("high")}
             >
-              High
+              <span>{t("high")}</span>
             </Button>
             <Button
               variant={selectedQuantity === "manual" ? "solid" : "flat"}
@@ -157,7 +159,7 @@ function ButtonGroupComponent() {
               aria-pressed={selectedQuantity === "manual"}
               onClick={() => handleQuantityClick("manual")}
             >
-              Manual
+              <span>{t("man")}</span>
             </Button>
           </ButtonGroup>
         </div>

@@ -8,6 +8,7 @@ import SaveQuiz from "../../create-quiz/components/buttons/SaveQuiz";
 import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
+import { useTranslations } from "next-intl";
 function Preview() {
   const mockQuestions = [
     {
@@ -46,23 +47,26 @@ function Preview() {
     e.preventDefault();
     router.push(routes.createQuiz[3].route);
   };
+  const t = useTranslations("QuizPreview");
   return (
     <>
       <form onSubmit={onSubmit} className=" flex-col flex  rounded-lg">
-        <h1 className="text-4xl font-semibold pt-5 pb-5">Preview</h1>
+        <h1 className="text-4xl font-semibold pt-5 pb-5">
+          {t("quizPreviewHeading")}
+        </h1>
         <h1
           className="text-lg
       font-normal"
         >
-          Here, you can create quizz based on your prompt
+          {t("quizPreviewMessage")}
         </h1>
         <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
           <div className="flex justify-between items-center ">
             <Chip color="primary" size="md" radius="sm">
-              Total 5 questions
+              {t("numberOfQuestions")}
             </Chip>
             <div className="flex items-center gap-2">
-              <label htmlFor="answers">Answers</label>
+              <label htmlFor="answers">{t("answers")}</label>
               <Switch size="lg" color="default" />
             </div>
           </div>
@@ -73,7 +77,7 @@ function Preview() {
             size="sm"
             radius="md"
           >
-            Add new question
+            {t("addNewQuestionBtn")}
           </Button>
           {mockQuestions.map((question, index) => (
             <QuizItem key={index} {...question} />

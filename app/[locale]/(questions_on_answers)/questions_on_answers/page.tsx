@@ -1,19 +1,21 @@
 "use client";
-import React, { useState } from "react";
-import Switch from "../components/Switch";
-import Image from "next/image";
-import editIcon from "/public/assets/edit.svg";
-import binIcon from "/public/assets/bin.svg";
+import React, { useRef, useState } from "react";
+import General from "../NavbarContent/General";
+import Questions from "../NavbarContent/Questions";
+import Statistics from "../NavbarContent/Statistics";
+import Settings from "../NavbarContent/Settings";
 import { useTranslations } from "next-intl";
 import EditQuestionModal from "../modals/EditQuestionModal";
 import DeleteQuestionModal from "../modals/DeleteQuestionModal";
 import { useModalStore } from "@/store/modalStore2";
-
+import Switch from "../components/Switch";
+import Image from "next/image";
+import editIcon from "/public/assets/edit.svg";
+import binIcon from "/public/assets/bin.svg";
 const QuizDetail = () => {
-  const t = useTranslations("QuestionsOnAnswers");
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState("Questions");
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
+
   const [quizData, setQuizData] = useState([
     {
       question: "1. What is one of the key features of cryptocurrencies?",
@@ -40,36 +42,41 @@ const QuizDetail = () => {
       selected: "Test1",
     },
   ]);
-
-  const { openModal, setModalData } = useModalStore();
-
-  const handleEdit = (index: number) => {
-    setCurrentQuestionIndex(index);
-    openModal("editQuestion");
+  const navRef = useRef(null);
+  const t = useTranslations("QuestionsOnAnswers");
+  const handleNavbarChange = (e: React.BaseSyntheticEvent) => {
+    const target = e.target.getAttribute("data-navbar-item");
+    if (target && target !== activeTab) {
+      console.log(target);
+      setActiveTab(target);
+    }
   };
-
-  const handleDelete = (index: number) => {
-    setCurrentQuestionIndex(index);
-    setModalData({
-      title: quizData[index].question,
-      description: quizData[index].description,
-      status: "Error",
-      questions: 2,
-      onConfirmDelete: () => handleConfirmDelete(index),
-    });
-    openModal("deleteQuestion");
-  };
-
-  const handleConfirmDelete = (index: number) => {
-    const updatedQuizData = quizData.filter((_, i) => i !== index);
-    setQuizData(updatedQuizData);
-  };
-
-  const handleSaveEdit = (updatedQuestion: any) => {
-    if (currentQuestionIndex !== null) {
-      const updatedQuizData = [...quizData];
-      updatedQuizData[currentQuestionIndex] = updatedQuestion;
-      setQuizData(updatedQuizData);
+  const renderTabContent = function (activeTab: string) {
+    switch (activeTab) {
+      case "Questions":
+        return (
+          <Questions
+            quizData={quizData}
+            enabled={enabled}
+            setEnabled={setEnabled}
+            setQuizData={setQuizData}
+          />
+        );
+      case "Settings":
+        return <Settings />;
+      case "Statistics":
+        return <Statistics />;
+      case "General":
+        return <General />;
+      default:
+        return (
+          <Questions
+            quizData={quizData}
+            enabled={enabled}
+            setEnabled={setEnabled}
+            setQuizData={setQuizData}
+          />
+        );
     }
   };
 
@@ -88,11 +95,18 @@ const QuizDetail = () => {
             Title: Understanding Cryptocurrencies and Their Impact on Finance
           </h2>
           <p className="text-gray-600">
-            Explore how cryptocurrencies like Bitcoin and Ethereum are transforming the financial landscape through decentralization, blockchain technology, and the potential for high returns, while also discussing risks and regulatory challenges.
+            Explore how cryptocurrencies like Bitcoin and Ethereum are
+            transforming the financial landscape through decentralization,
+            blockchain technology, and the potential for high returns, while
+            also discussing risks and regulatory challenges.
           </p>
         </div>
 
-        <nav className="flex space-x-6 mb-6 bg-gray-100 p-2 rounded-lg overflow-x-auto">
+        <nav
+          ref={navRef}
+          onClick={(e) => handleNavbarChange(e)}
+          className="flex gap-2 md:w-1/2 w-full space-x-6 mb-6 bg-gray-100 p-2 rounded-lg overflow-x-auto"
+        >
           <a
             href="#"
             className={`px-2 py-2 rounded-lg whitespace-nowrap ${
@@ -100,7 +114,7 @@ const QuizDetail = () => {
                 ? "bg-white font-semibold text-gray-600"
                 : "bg-gray-100 text-gray-600"
             }`}
-            onClick={() => setActiveTab("Questions")}
+            data-navbar-item="Questions"
           >
             {t("questions")}
           </a>
@@ -111,7 +125,7 @@ const QuizDetail = () => {
                 ? "bg-white font-semibold text-gray-600"
                 : "bg-gray-100 text-gray-600"
             }`}
-            onClick={() => setActiveTab("Settings")}
+            data-navbar-item="Settings"
           >
             {t("settings")}
           </a>
@@ -122,7 +136,7 @@ const QuizDetail = () => {
                 ? "bg-white font-semibold text-gray-600"
                 : "bg-gray-100 text-gray-600"
             }`}
-            onClick={() => setActiveTab("Statistics")}
+            data-navbar-item={"Statistics"}
           >
             {t("statistics")}
           </a>
@@ -133,89 +147,14 @@ const QuizDetail = () => {
                 ? "bg-white font-semibold text-gray-600"
                 : "bg-gray-100 text-gray-600"
             }`}
-            onClick={() => setActiveTab("General")}
+            data-navbar-item={"General"}
           >
             {t("general")}
           </a>
         </nav>
 
-        <div className="mb-6">
-          <p className="text-gray-700">{t("manageText")}</p>
-        </div>
-
-        <div className="bg-gray-200 py-4 px-4 rounded-lg">
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex justify-end items-center mb-4">
-              <button className="bg-blue-600 text-white py-2 px-2 rounded-lg ml-auto">
-                {t("total")} {quizData.length} {t("questionsSmall")}
-              </button>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-500">{t("answers")}</span>
-              <Switch enabled={enabled} setEnabled={setEnabled} />
-            </div>
-          </div>
-
-          <div className="flex justify-end items-center mb-4">
-            <button className="bg-blue-300 text-blue-600 py-2 px-2 rounded-lg ml-auto">
-              {t("addNewButton")}
-            </button>
-          </div>
-
-          {quizData.map((data, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 p-4 mb-4 border-dashed border-2 rounded-lg flex justify-between items-start shadow-sm"
-            >
-              <div className="w-full">
-                <h3 className="font-bold mb-2">{data.question}</h3>
-                <p className="text-gray-500 mb-4">{data.description}</p>
-
-                <div className="space-y-2">
-                  {data.options.map((option, i) => (
-                    <div
-                      key={i}
-                      className={`flex items-center p-2 rounded-lg cursor-pointer ${
-                        enabled && data.selected === option
-                          ? "bg-green-100"
-                          : "bg-white"
-                      }`}
-                    >
-                      <span className="font-medium text-gray-700">
-                        {String.fromCharCode(65 + i)}
-                      </span>
-                      <div className="border-l border-gray-300 h-6 mx-2"></div>
-                      <span className="text-gray-700">{option}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="flex space-x-2 mt-2">
-                <button onClick={() => handleEdit(index)} className="text-gray-500 hover:text-gray-700">
-                  <Image src={editIcon} alt="edit icon" />
-                </button>
-                <button onClick={() => handleDelete(index)} className="text-gray-500 hover:text-gray-700">
-                  <Image src={binIcon} alt="bin icon" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+        {renderTabContent(activeTab)}
       </div>
-
-      {currentQuestionIndex !== null && (
-        <>
-          <EditQuestionModal
-            questionData={quizData[currentQuestionIndex]}
-            onSave={handleSaveEdit}
-          />
-        <DeleteQuestionModal
-        onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}  
-        questionTitle={quizData[currentQuestionIndex].question}
-        questionDescription={quizData[currentQuestionIndex].description}
-          />
-        </>
-      )}
     </div>
   );
 };
