@@ -86,8 +86,8 @@ function Statistics() {
           className=" overflow-x-auto bg-content2  gap-6 p-6 "
         >
           <TableHeader className=" flex justify-between rounded-lg ">
-            {tableHeaders.map((tableHeader) => (
-              <TableColumn className="uppercase " key={tableHeader}>
+            {tableHeaders.map((tableHeader, index) => (
+              <TableColumn className="uppercase " key={index}>
                 <div className="flex items-center justify-between gap-2">
                   <span>{tableHeader}</span>
                   <svg
