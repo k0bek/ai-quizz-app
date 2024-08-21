@@ -5,13 +5,16 @@ import Image from "next/image";
 import editIcon from "/public/assets/edit.svg";
 import binIcon from "/public/assets/bin.svg";
 import { useTranslations } from "next-intl";
+import EditQuestionModal from "../modals/EditQuestionModal";
+import DeleteQuestionModal from "../modals/DeleteQuestionModal";
+import { useModalStore } from "@/store/modalStore2";
 
 const QuizDetail = () => {
   const t = useTranslations("QuestionsOnAnswers");
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState("Questions");
-
-  const quizData = [
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number | null>(null);
+  const [quizData, setQuizData] = useState([
     {
       question: "1. What is one of the key features of cryptocurrencies?",
       description: "Quiz description",
@@ -36,11 +39,43 @@ const QuizDetail = () => {
       options: ["Physical existence", "Test1", "test2", "test3"],
       selected: "Test1",
     },
-  ];
+  ]);
+
+  const { openModal, setModalData } = useModalStore();
+
+  const handleEdit = (index: number) => {
+    setCurrentQuestionIndex(index);
+    openModal("editQuestion");
+  };
+
+  const handleDelete = (index: number) => {
+    setCurrentQuestionIndex(index);
+    setModalData({
+      title: quizData[index].question,
+      description: quizData[index].description,
+      status: "Error",
+      questions: 2,
+      onConfirmDelete: () => handleConfirmDelete(index),
+    });
+    openModal("deleteQuestion");
+  };
+
+  const handleConfirmDelete = (index: number) => {
+    const updatedQuizData = quizData.filter((_, i) => i !== index);
+    setQuizData(updatedQuizData);
+  };
+
+  const handleSaveEdit = (updatedQuestion: any) => {
+    if (currentQuestionIndex !== null) {
+      const updatedQuizData = [...quizData];
+      updatedQuizData[currentQuestionIndex] = updatedQuestion;
+      setQuizData(updatedQuizData);
+    }
+  };
 
   return (
-    <div className=" bg-white  w-full md:max-w-7xl">
-      <div className="bg-white p-4 md:p-6 rounded-lg ">
+    <div className="bg-white w-full md:max-w-7xl">
+      <div className="bg-white p-4 md:p-6 rounded-lg">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-xl font-semibold">{t("detailQuizzHeading")}</h1>
           <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
@@ -53,10 +88,7 @@ const QuizDetail = () => {
             Title: Understanding Cryptocurrencies and Their Impact on Finance
           </h2>
           <p className="text-gray-600">
-            Explore how cryptocurrencies like Bitcoin and Ethereum are
-            transforming the financial landscape through decentralization,
-            blockchain technology, and the potential for high returns, while
-            also discussing risks and regulatory challenges.
+            Explore how cryptocurrencies like Bitcoin and Ethereum are transforming the financial landscape through decentralization, blockchain technology, and the potential for high returns, while also discussing risks and regulatory challenges.
           </p>
         </div>
 
@@ -115,7 +147,7 @@ const QuizDetail = () => {
           <div className="flex justify-between items-center mb-4">
             <div className="flex justify-end items-center mb-4">
               <button className="bg-blue-600 text-white py-2 px-2 rounded-lg ml-auto">
-                {t("total")} 5 {t("questionsSmall")}
+                {t("total")} {quizData.length} {t("questionsSmall")}
               </button>
             </div>
             <div className="flex items-center space-x-4">
@@ -159,10 +191,10 @@ const QuizDetail = () => {
                 </div>
               </div>
               <div className="flex space-x-2 mt-2">
-                <button className="text-gray-500 hover:text-gray-700">
+                <button onClick={() => handleEdit(index)} className="text-gray-500 hover:text-gray-700">
                   <Image src={editIcon} alt="edit icon" />
                 </button>
-                <button className="text-gray-500 hover:text-gray-700">
+                <button onClick={() => handleDelete(index)} className="text-gray-500 hover:text-gray-700">
                   <Image src={binIcon} alt="bin icon" />
                 </button>
               </div>
@@ -170,6 +202,20 @@ const QuizDetail = () => {
           ))}
         </div>
       </div>
+
+      {currentQuestionIndex !== null && (
+        <>
+          <EditQuestionModal
+            questionData={quizData[currentQuestionIndex]}
+            onSave={handleSaveEdit}
+          />
+        <DeleteQuestionModal
+        onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}  
+        questionTitle={quizData[currentQuestionIndex].question}
+        questionDescription={quizData[currentQuestionIndex].description}
+          />
+        </>
+      )}
     </div>
   );
 };
