@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React from "react";
 import { z } from "zod";
 
 const authSchemas = () => {
@@ -10,51 +9,51 @@ const authSchemas = () => {
   const signInSchema = z.object({
     email: z
       .string()
-      .email({ message: t('enterValidEmail') })
-      .max(100, { message: t('emailMaxLength') }),
+      .email({ message: t("enterValidEmail") })
+      .max(100, { message: t("emailMaxLength") }),
 
     password: z
       .string()
-      .min(8, { message: t('passwordMinLength') })
-      .max(100, { message: t('passwordMaxLength') })
+      .min(8, { message: t("passwordMinLength") })
+      .max(100, { message: t("passwordMaxLength") })
       .regex(/[a-z]/, {
-        message: t('passwordLowercase'),
+        message: t("passwordLowercase"),
       })
       .regex(/[A-Z]/, {
-        message: t('passwordUppercase'),
+        message: t("passwordUppercase"),
       })
       .regex(/[0-9]/, {
-        message: t('passwordNumber'),
+        message: t("passwordNumber"),
       })
       .regex(/[@$!%*?&#]/, {
-        message: t('passwordSpecialChar'),
+        message: t("passwordSpecialChar"),
       }),
-    rememberMe: z.boolean(),
+    // rememberMe: z.boolean(),
   });
 
   const signUpSchema = z
     .object({
-      email: z.string().email({ message: t('enterValidEmail') }),
+      email: z.string().email({ message: t("enterValidEmail") }),
       password: z
         .string()
-        .min(6, { message: t('passwordMinLength') })
-        .max(100, { message: t('passwordMaxLength') })
+        .min(6, { message: t("passwordMinLength") })
+        .max(100, { message: t("passwordMaxLength") })
         .regex(/[a-z]/, {
-          message: t('passwordLowercase'),
+          message: t("passwordLowercase"),
         })
         .regex(/[A-Z]/, {
-          message: t('passwordUppercase'),
+          message: t("passwordUppercase"),
         })
         .regex(/[0-9]/, {
-          message: t('passwordNumber'),
+          message: t("passwordNumber"),
         })
         .regex(/[@$!%*?&#]/, {
-          message: t('passwordSpecialChar'),
+          message: t("passwordSpecialChar"),
         }),
       repeatPassword: z.string(),
     })
     .refine((data) => data.password === data.repeatPassword, {
-      message: t('passwordsDontMatch'),
+      message: t("passwordsDontMatch"),
       path: ["repeatPassword"],
     });
 

@@ -18,7 +18,7 @@
     "passwordMinLength": "Password must be at least 8 characters long",
     "passwordMaxLength": "Password cannot exceed 100 characters",
     "passwordLowercase": "Password must contain at least one lowercase letter",
-    "passwordUpprecase": "Password must contain at least one uppercase letter",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
     "passwordNumber": "Password must contain at least one number",
     "passwordSpecialChar": "Password must contain at least one special character",
     "passwordsDontMatch": "Passwords do not match",

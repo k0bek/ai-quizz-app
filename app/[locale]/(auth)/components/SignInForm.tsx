@@ -7,15 +7,20 @@ import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import authSchemas from "../schemas/authSchemas";
+import { useMutation } from "@tanstack/react-query";
+import { signInUser } from "@/utils/actions/auth/sign-in";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function LoginForm() {
+  const router = useRouter();
   const { signInSchema } = authSchemas();
   const t = useTranslations("AuthPages");
   type FormData = z.infer<typeof signInSchema>;
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -24,14 +29,20 @@ export default function LoginForm() {
     },
   });
 
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: signInUser,
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSuccess: () => {
+      toast.success('Successfully signed in!');
+      router.push("/dashboard");
+    },
+  });
+
   async function onSubmit(data: FormData) {
-    console.log(isSubmitting);
-    console.log(data);
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 2000);
-    });
+    mutate(data);
   }
 
   return (
@@ -50,7 +61,7 @@ export default function LoginForm() {
           placeholder="Email"
           autoComplete="off"
           className="text-foreground-500 mt-1 text-sm"
-          disabled={isSubmitting}
+          disabled={isPending}
         />
         {errors?.email && (
           <p className="text-red-500 mt-2 text-sm">{errors?.email?.message}</p>
@@ -70,7 +81,7 @@ export default function LoginForm() {
           className="text-foreground-500 mt-1 text-sm"
           placeholder={t("password")}
           autoComplete="off"
-          disabled={isSubmitting}
+          disabled={isPending}
         />
         {errors?.password && (
           <p className="text-red-500 mt-2 text-sm">
@@ -84,11 +95,18 @@ export default function LoginForm() {
           color="default"
           radius="none"
           size="sm"
-          {...register("rememberMe")}
+          isDisabled={isPending}
+          // {...register("rememberMe")}
         >
           <span className="text-primary text-sm">{t("rememberMe")}</span>
         </Checkbox>
       </div>
+
+      {error?.message && (
+        <p className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm">
+          {error?.message}
+        </p>
+      )}
 
       <Button
         variant="solid"
@@ -96,8 +114,8 @@ export default function LoginForm() {
         size="lg"
         radius="sm"
         type="submit"
-        className="w-full mt-10 bg-primary text-primary-foreground cursor-pointer text-medium disabled:opacity-50"
-        disabled={isSubmitting}
+        className="w-full mt-5 bg-primary text-primary-foreground cursor-pointer text-medium disabled:opacity-50"
+        disabled={isPending}
       >
         {t("login")}
       </Button>
@@ -108,7 +126,7 @@ export default function LoginForm() {
           radius="sm"
           className="text-tiny sm:text-medium disabled:opacity-50"
           color="primary"
-          disabled={isSubmitting}
+          disabled={isPending}
         >
           <Link href={routes.signUp}>{t("createAccount")}</Link>
         </Button>
@@ -118,7 +136,7 @@ export default function LoginForm() {
           radius="sm"
           color="primary"
           className="text-tiny sm:text-medium disabled:opacity-50"
-          disabled={isSubmitting}
+          disabled={isPending}
         >
           {t("forgotPassword")}
         </Button>

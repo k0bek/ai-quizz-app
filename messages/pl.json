@@ -18,7 +18,7 @@
     "passwordMinLength": "Hasło musi mieć co najmniej 8 znaków",
     "passwordMaxLength": "Hasło nie może przekraczać 100 znaków",
     "passwordLowercase": "Hasło musi zawierać co najmniej jedną małą literę",
-    "passwordUpprecase": "Hasło musi zawierać co najmniej jedną dużą literę",
+    "passwordUppercase": "Hasło musi zawierać co najmniej jedną dużą literę",
     "passwordNumber": "Hasło musi zawierać co najmniej jedną cyfrę",
     "passwordSpecialChar": "Hasło musi zawierać co najmniej jeden znak specjalny",
     "passwordsDontMatch": "Hasła nie pasują do siebie",
