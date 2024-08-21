@@ -36,8 +36,8 @@ export default function LoginForm() {
       console.log(error.message);
     },
     onSuccess: () => {
-      toast.success('Successfully signed in!');
       router.push("/dashboard");
+      toast.success("Successfully signed in!");
     },
   });
 

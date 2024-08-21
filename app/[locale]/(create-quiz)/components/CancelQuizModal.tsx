@@ -1,3 +1,4 @@
+"use client";
 import { routes } from "@/routes";
 import { useModalStore } from "@/store/modalStore";
 import {
@@ -9,11 +10,14 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 
 function CancelQuizModal() {
   const { isOpen, type, closeModal, modalData } = useModalStore();
   const isModalOpen = isOpen && type === "cancelCreateQuizz";
+  const t = useTranslations("CreateQuiz");
   return (
     <Modal
       onOpenChange={closeModal}
@@ -45,22 +49,21 @@ function CancelQuizModal() {
         <ModalHeader>
           <div className="flex flex-col justify-start">
             <p className="text-lg text-foreground-700 font-semibold">
-              Are you sure?
+              {t("cancelQuizWarning")}
             </p>
             <p className="text-base text-foreground-500 font-medium mt-1">
-              You are about to quit the quiz creation process. Any progress made
-              so far will be lost. The action cannot be undone
+              {t("cancelQuizWarningText")}
             </p>
           </div>
         </ModalHeader>
         <ModalBody></ModalBody>
         <ModalFooter>
           <Button variant="flat" color="primary" onPress={closeModal}>
-            Cancel
+            {t("cancelButton")}
           </Button>
           <Link href={routes.dashboard}>
             <Button color="danger" onPress={closeModal}>
-              Yes, I quit
+              {t("cancelQuizConfirm")}
             </Button>
           </Link>
         </ModalFooter>

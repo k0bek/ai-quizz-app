@@ -1,8 +1,12 @@
+"use client";
 import { Button } from "@nextui-org/react";
 import React from "react";
 import RightArrow from "./RightArrow";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 const SaveQuiz = () => {
+  const t = useTranslations("QuizPreview");
   return (
     <Button
       endContent={<RightArrow />}
@@ -12,7 +16,7 @@ const SaveQuiz = () => {
       radius="sm"
       type="submit"
     >
-      Save Quiz
+      {t("saveQuizButton")}
     </Button>
   );
 };

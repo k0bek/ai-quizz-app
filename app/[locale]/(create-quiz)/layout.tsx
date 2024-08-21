@@ -1,7 +1,7 @@
 import Header from "@/components/shared/Header";
 import React, { ReactNode } from "react";
-import StepContextProvider from "../context/StepContext";
 import StatusIndicator from "./create-quiz/components/StatusIndicator/StatusIndicator";
+import StepContextProvider from "@/app/context/StepContext";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (

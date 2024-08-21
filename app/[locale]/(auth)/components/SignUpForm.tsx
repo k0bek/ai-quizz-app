@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import authSchemas from "../schemas/authSchemas";
+import { signUp } from "@/api/auth/sign-up";
 function SignUpForm() {
   const { signUpSchema } = authSchemas();
   const t = useTranslations("AuthPages");
@@ -18,8 +19,11 @@ function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
   type FormData = z.infer<typeof signUpSchema>;
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    const { email, password } = data;
+    console.log(email, password);
+    const signUpResult = await signUp(email, password);
+    console.log(signUpResult);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
@@ -28,12 +32,13 @@ function SignUpForm() {
           E-mail
         </label>
         <Input
-          {...register("email", { required: t("Email is required") })}
+          {...register("email", { required: t("emailRequired") })}
           id="email"
           type="email"
           name="email"
           disabled={isSubmitting}
           placeholder="E-mail"
+          autoComplete="off"
         />
         {errors?.email && (
           <span className="text-red-600">{errors.email.message}</span>
@@ -45,12 +50,13 @@ function SignUpForm() {
           {t("password")}
         </label>
         <Input
-          {...register("password", { required: "Password is required" })}
+          {...register("password", { required: true })}
           type="password"
           id="password"
           name="password"
           disabled={isSubmitting}
           placeholder={t("password")}
+          autoComplete="off"
         />
         {errors?.password && (
           <span className="text-red-600">{errors.password.message}</span>
@@ -73,13 +79,22 @@ function SignUpForm() {
           name="repeatPassword"
           disabled={isSubmitting}
           placeholder={t("repeatPassword")}
+          autoComplete="off"
         />
         {errors?.repeatPassword && (
           <span className="text-red-600">{errors.repeatPassword.message}</span>
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting} color="primary">
+      <Button
+        variant="solid"
+        color="primary"
+        size="lg"
+        radius="sm"
+        type="submit"
+        disabled={isSubmitting}
+        className="mt-5"
+      >
         {t("register")}
       </Button>
     </form>

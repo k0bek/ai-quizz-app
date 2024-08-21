@@ -17,8 +17,12 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
   }
 
   try {
-    const response = await axios.post(signInUrl, values);
-    console.log(response.data);
+    const response = await axios.post(signInUrl, values, {
+      withCredentials: true,
+    });
+
+    cookies().set("accessToken", response.data.accessToken);
+    cookies().set("refreshToken", response.data.refreshToken);
   } catch (error) {
     console.log(error);
     throw new Error(`This is error is in the Server Action`);

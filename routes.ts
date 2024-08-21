@@ -5,7 +5,6 @@ export const routes = {
     },
     {
       route: "/create-quiz-configure-quiz",
-      createQuiz: "/create-quiz",
     },
     {
       route: "/create-quiz-preview",

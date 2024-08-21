@@ -1,11 +1,11 @@
-"use client";
 import React from "react";
 import { Button } from "@nextui-org/button";
 import RightArrow from "./RightArrow";
 import { useFormStatus } from "react-dom";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 const NextButton = () => {
-  const { pending } = useFormStatus();
-
+  const t = useTranslations("CreateQuiz");
   return (
     <Button
       type="submit"
@@ -14,9 +14,8 @@ const NextButton = () => {
       size="lg"
       radius="sm"
       endContent={<RightArrow />}
-      isDisabled={pending}
     >
-      Next
+      {t("nextButton")}
     </Button>
   );
 };

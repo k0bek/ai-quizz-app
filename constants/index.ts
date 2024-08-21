@@ -3,7 +3,7 @@
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 
-export const navbarLinks = () => {
+export const NavbarLinks = () => {
   const t = useTranslations("Navbar");
   const navbarLinksList = [
     {

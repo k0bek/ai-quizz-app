@@ -1,5 +1,4 @@
 "use client";
-import { PromptSchema } from "@/app/(create-quiz)/schemas/PromptSchema";
 import { routes } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@nextui-org/react";
@@ -9,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
+import { PromptSchema } from "../../../schemas/PromptSchema";
+import { useTranslations } from "use-intl";
 const PromptForm = () => {
   type FormValue = z.infer<typeof PromptSchema>;
   const {
@@ -22,15 +23,16 @@ const PromptForm = () => {
     router.push(routes.createQuiz[1].route);
     // Call your API here
   };
+  const t = useTranslations("CreateQuiz");
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Textarea
         isRequired
         variant="faded"
-        label="Prompt"
-        {...register("prompt", { required: "Prompt is required" })}
+        label={t("promptLabel")}
+        {...register("prompt", { required: t("promptRequiredField") })}
         labelPlacement="outside"
-        placeholder="Enter your prompt"
+        placeholder={t("promptForm")}
         className="p-6 gap-2 bg-content2"
       />
       {errors.prompt && (

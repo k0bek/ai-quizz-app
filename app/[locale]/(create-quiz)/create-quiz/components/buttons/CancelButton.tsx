@@ -1,9 +1,13 @@
-import CancelQuizModal from "@/app/(create-quiz)/components/CancelQuizModal";
+"use client";
 import { useModalStore } from "@/store/modalStore";
 import { Button } from "@nextui-org/react";
 import React from "react";
+import CancelQuizModal from "../../../components/CancelQuizModal";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 function CancelButton() {
+  const t = useTranslations("CreateQuiz");
   const { openModal } = useModalStore();
   const handleOpenModal = () => {
     openModal("cancelCreateQuizz");
@@ -17,7 +21,7 @@ function CancelButton() {
         size="lg"
         radius="sm"
       >
-        Cancel
+        {t("cancelButton")}
       </Button>
       <CancelQuizModal />
     </>

@@ -4,11 +4,11 @@ import { cn } from "@/lib";
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { navbarLinks } from "@/constants";
+import { NavbarLinks } from "@/constants";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const navbarLinksList = navbarLinks();
+  const navbarLinksList = NavbarLinks();
 
   return (
     <nav className="w-full md:w-min">
