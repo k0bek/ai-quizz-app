@@ -2,14 +2,11 @@
 
 import { signInSchema } from "@/lib/form-schemas";
 import { z } from "zod";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
+import { signInUrl } from "@/constants/api";
 
 export const signInUser = async (values: z.infer<typeof signInSchema>) => {
-  const API_BASE_URL =
-    "https://mlab2024-backend.yellowocean-31330507.westeurope.azurecontainerapps.io";
-  const signInUrl = `${API_BASE_URL}/api/auth/signin`;
-
   const validatedFields = signInSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -24,7 +21,10 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
     cookies().set("accessToken", response.data.accessToken);
     cookies().set("refreshToken", response.data.refreshToken);
   } catch (error) {
-    console.log(error);
-    throw new Error(`This is error is in the Server Action`);
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.detail);
+    } else {
+      throw new Error("An unexpected error occurred");
+    }
   }
 };
