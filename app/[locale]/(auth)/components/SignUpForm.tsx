@@ -24,6 +24,10 @@ function SignUpForm() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
   type FormData = z.infer<typeof signUpSchema>;
   const router = useRouter();
@@ -36,12 +40,15 @@ function SignUpForm() {
       console.log(error.message);
     },
     onSuccess: () => {
-      router.push(routes.signIn);
-      toast.success("Successfully signed in!");
+      toast.success(t("signedUp"));
+      setTimeout(() => {
+        router.push(routes.signIn);
+      }, 3000);
     },
   });
   const onSubmit = async (data: FormData) => {
     mutate(data);
+    console.log(data);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
@@ -65,16 +72,11 @@ function SignUpForm() {
           autoComplete="off"
         />
       </div>
-
+      {errors?.email && (
+        <p className="text-red-500  text-sm">{errors?.email.message}</p>
+      )}
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="password"
-          className={`${
-            errors?.password ? "text-red-500" : "text-foreground-100"
-          } text-medium `}
-        >
-          {t("password")}
-        </label>
+        <label htmlFor="password">{t("password")}</label>
         <Input
           {...register("password", { required: true })}
           type="password"
@@ -83,10 +85,11 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("password")}
           autoComplete="off"
-          color={error?.message ? "danger" : "default"}
         />
       </div>
-
+      {errors?.password && (
+        <p className="text-red-500  text-sm">{errors?.password?.message}</p>
+      )}
       <div className="flex flex-col gap-2">
         <label
           htmlFor="repeatPassword"
@@ -106,11 +109,17 @@ function SignUpForm() {
           disabled={isPending}
           placeholder={t("repeatPassword")}
           autoComplete="off"
-          color={error?.message ? "danger" : "default"}
         />
       </div>
+      {errors?.repeatPassword && (
+        <p className="text-red-500  text-sm">
+          {errors?.repeatPassword?.message}
+        </p>
+      )}
       {error?.message && (
-        <div className="bg-red-500 text-white rounded-xl">{error.message}</div>
+        <p className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm">
+          {error?.message}
+        </p>
       )}
 
       <Button

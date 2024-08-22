@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
 import React from "react";
 import { useTranslations } from "next-intl";
+import { routes } from "@/routes";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const ProfilePage = () => {
     // remove account logic
     if (window.confirm(t("areYouSure"))) {
       console.log("Delete account");
-      router.push("/login");
+      router.push(routes.signIn);
     }
   };
 

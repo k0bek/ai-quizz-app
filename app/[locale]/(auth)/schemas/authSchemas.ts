@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React from "react";
 import { z } from "zod";
 
 const authSchemas = () => {
@@ -29,7 +28,7 @@ const authSchemas = () => {
       .regex(/[@$!%*?&#]/, {
         message: t("passwordSpecialChar"),
       }),
-    rememberMe: z.boolean(),
+    // rememberMe: z.boolean(),
   });
 
   const signUpSchema = z

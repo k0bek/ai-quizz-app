@@ -11,7 +11,9 @@
     "register": "Zarejestruj się",
     "signInEnterText": "Proszę wprowadzić swoje dane.",
     "signUpEnterText": "Proszę wprowadzić swoje dane.",
-    "pending": "Loading"
+    "pending": "Loading",
+    "signedIn": "Pomyślnie zalogowano!",
+    "signedUp": "Pomyslnie zarejestrowano uzytkownika!"
   },
   "AuthSchemas": {
     "enterValidEmail": "Proszę wprowadzić prawidłowy adres e-mail",
@@ -98,7 +100,8 @@
   "Header": {
     "userAvatar": "Awatar użytkownika",
     "profile": "Profil",
-    "logOut": "Wyloguj się"
+    "logOut": "Wyloguj się",
+    "loggedOut": "Pomyślnie wylogowano!"
   },
   "Navbar": {
     "profile": "Profil"

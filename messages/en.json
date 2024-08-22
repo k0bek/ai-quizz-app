@@ -11,7 +11,9 @@
     "register": "Register",
     "signInEnterText": "Please enter your user information.",
     "signUpEnterText": "Please enter your user information.",
-    "pending": "Przetwarzanie..."
+    "pending": "Przetwarzanie...",
+    "signedUp": "Successfully signed up!",
+    "signedIn": "Successfully signed in!"
   },
   "AuthSchemas": {
     "enterValidEmail": "Please enter a valid email",
@@ -98,7 +100,8 @@
   "Header": {
     "userAvatar": "User avatar",
     "profile": "Profile",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "loggedOut": "Logged out successfully"
   },
   "Navbar": {
     "profile": "Profile"

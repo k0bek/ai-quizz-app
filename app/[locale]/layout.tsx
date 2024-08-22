@@ -4,6 +4,7 @@ import "../globals.css";
 import { Providers } from "../providers/providers";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,10 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              {children}
+              <Toaster position="top-center" />
+            </main>
           </Providers>
         </NextIntlClientProvider>
       </body>

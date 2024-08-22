@@ -1,11 +1,15 @@
 "use server";
 import { signUpUrl } from "@/constants/api";
+import { signUpSchema } from "@/lib/form-schemas";
 import { z } from "zod";
-import authSchemas from "../[locale]/(auth)/schemas/authSchemas";
 
-const { signUpSchema } = authSchemas();
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   const { email, password } = values;
+  const validatedFields = signUpSchema.safeParse(values);
+  if (!validatedFields.success) {
+    return { error: "Invalid fields." };
+  }
+
   try {
     const response = await fetch(signUpUrl, {
       method: "POST",
@@ -14,8 +18,8 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email: validatedFields.data?.email,
+        password: validatedFields.data?.password,
       }),
     });
 
