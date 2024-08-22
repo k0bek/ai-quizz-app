@@ -3,12 +3,17 @@
 import Container from "@/components/shared/Container";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
+import { logOutUser } from "@/utils/actions/auth/log-out";
+import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const Header = () => {
+  const router = useRouter();
   const t = useTranslations("Header");
   const [user, setUser] = useState({
     email: "robbie@mlab.com",
@@ -18,8 +23,19 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const { mutate } = useMutation({
+    mutationFn: logOutUser,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      router.push(routes.signIn);
+      toast.success(t("loggedOut"));
+    },
+  });
+
   const handleLogout = () => {
-    console.log("Logging out...");
+    mutate();
   };
 
   const toggleDropdown = (e: React.MouseEvent) => {
