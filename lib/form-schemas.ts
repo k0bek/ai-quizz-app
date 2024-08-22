@@ -50,3 +50,9 @@ export const signUpSchema = z
     message: "Passwords do not match",
     path: ["Repeate password"],
   });
+export const PromptSchema = z.object({
+  prompt: z
+    .string()
+    .min(10, { message: "Prompt field cannot be empty" })
+    .max(1200, { message: "Prompt should have a maximum of 1200 characters" }),
+});

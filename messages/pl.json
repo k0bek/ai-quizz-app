@@ -125,7 +125,9 @@
     "promptLabel": "Tekst",
     "cancelQuizWarning": "Jesteś pewien?",
     "cancelQuizWarningText": "Zamierzasz opuścić proces tworzenia quizu. Wszelkie dotychczasowe postępy zostaną utracone. Tej czynności nie można cofnąć",
-    "cancelQuizConfirm": "Tak, opuszczam"
+    "cancelQuizConfirm": "Tak, opuszczam",
+    "emptyPrompt": "Formularz nie moze byc pusty",
+    "promptExceededChars": "Formularze nie powinien przekroczyc 1200 znakow"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Konfiguracja quizu",

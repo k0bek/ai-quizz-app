@@ -36,11 +36,11 @@ function SignUpForm() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: signUp,
     onError: (error) => {
-      toast.error(error.message);
+      showError(error.message);
       console.log(error.message);
     },
     onSuccess: () => {
-      toast.success(t("signedUp"));
+      showSuccess(t("signUpSuccess"));
       setTimeout(() => {
         router.push(routes.signIn);
       }, 3000);
@@ -55,7 +55,7 @@ function SignUpForm() {
       <ToastContainer
         position="top-center"
         transition={Bounce}
-        autoClose={5000}
+        autoClose={false}
         theme="light"
       />
       <div className="flex flex-col gap-2">
