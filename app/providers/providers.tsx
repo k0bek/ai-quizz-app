@@ -2,12 +2,16 @@
 
 import { NextUIProvider } from "@nextui-org/react";
 import ModalProvider from "./modalProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient();
   return (
-    <NextUIProvider>
-      {children}
-      <ModalProvider />
-    </NextUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextUIProvider>
+        {children}
+        <ModalProvider />
+      </NextUIProvider>
+    </QueryClientProvider>
   );
 }

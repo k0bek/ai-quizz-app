@@ -1,6 +1,7 @@
 import SignInForm from "../components/SignInForm";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { ToastContainer } from "react-toastify";
 
 const SignInPage = async () => {
   const t = await getTranslations("AuthPages");

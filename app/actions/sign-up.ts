@@ -1,6 +1,11 @@
+"use server";
 import { signUpUrl } from "@/constants/api";
+import { z } from "zod";
+import authSchemas from "../[locale]/(auth)/schemas/authSchemas";
 
-export const signUp = async (email: string, password: string) => {
+const { signUpSchema } = authSchemas();
+export const signUp = async (values: z.infer<typeof signUpSchema>) => {
+  const { email, password } = values;
   try {
     const response = await fetch(signUpUrl, {
       method: "POST",

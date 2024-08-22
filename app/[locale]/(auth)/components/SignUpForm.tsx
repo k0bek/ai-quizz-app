@@ -7,7 +7,14 @@ import { Button } from "@nextui-org/button";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import authSchemas from "../schemas/authSchemas";
-import { signUp } from "@/api/auth/sign-up";
+import { useRouter } from "next/navigation";
+import { routes } from "@/routes";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "@/app/hooks/useToast";
+import { signUp } from "@/app/actions/sign-up";
+import { useMutation } from "@tanstack/react-query";
+
 function SignUpForm() {
   const { signUpSchema } = authSchemas();
   const t = useTranslations("AuthPages");
@@ -19,16 +26,33 @@ function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
   type FormData = z.infer<typeof signUpSchema>;
+  const router = useRouter();
+  const { showSuccess, showError } = useToast();
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: signUp,
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error.message);
+    },
+    onSuccess: () => {
+      router.push(routes.signIn);
+      toast.success("Successfully signed in!");
+    },
+  });
   const onSubmit = async (data: FormData) => {
-    const { email, password } = data;
-    console.log(email, password);
-    const signUpResult = await signUp(email, password);
-    console.log(signUpResult);
+    mutate(data);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
+      <ToastContainer
+        position="top-center"
+        transition={Bounce}
+        autoClose={5000}
+        theme="light"
+      />
       <div className="flex flex-col gap-2">
-        <label className="text-foreground-100 text-medium" htmlFor="email">
+        <label className={"text-medium"} htmlFor="email">
           E-mail
         </label>
         <Input
@@ -36,17 +60,19 @@ function SignUpForm() {
           id="email"
           type="email"
           name="email"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder="E-mail"
           autoComplete="off"
         />
-        {errors?.email && (
-          <span className="text-red-600">{errors.email.message}</span>
-        )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="password" className="text-foreground-100 text-medium">
+        <label
+          htmlFor="password"
+          className={`${
+            errors?.password ? "text-red-500" : "text-foreground-100"
+          } text-medium `}
+        >
           {t("password")}
         </label>
         <Input
@@ -54,19 +80,19 @@ function SignUpForm() {
           type="password"
           id="password"
           name="password"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder={t("password")}
           autoComplete="off"
+          color={error?.message ? "danger" : "default"}
         />
-        {errors?.password && (
-          <span className="text-red-600">{errors.password.message}</span>
-        )}
       </div>
 
       <div className="flex flex-col gap-2">
         <label
           htmlFor="repeatPassword"
-          className="text-foreground-100 text-medium"
+          className={`${
+            errors.email ? "text-red-500" : "text-foreground-100"
+          } text-medium `}
         >
           {t("repeatPassword")}
         </label>
@@ -77,25 +103,26 @@ function SignUpForm() {
           type="password"
           id="repeatPassword"
           name="repeatPassword"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder={t("repeatPassword")}
           autoComplete="off"
+          color={error?.message ? "danger" : "default"}
         />
-        {errors?.repeatPassword && (
-          <span className="text-red-600">{errors.repeatPassword.message}</span>
-        )}
       </div>
+      {error?.message && (
+        <div className="bg-red-500 text-white rounded-xl">{error.message}</div>
+      )}
 
       <Button
-        variant="solid"
+        variant={isPending ? "bordered" : "solid"}
         color="primary"
         size="lg"
         radius="sm"
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="mt-5"
       >
-        {t("register")}
+        {isSubmitting ? t("pending") : t("register")}
       </Button>
     </form>
   );
