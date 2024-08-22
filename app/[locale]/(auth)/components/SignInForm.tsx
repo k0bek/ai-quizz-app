@@ -36,7 +36,7 @@ export default function LoginForm() {
     },
     onSuccess: () => {
       router.push("/dashboard");
-      toast.success("Successfully signed in!");
+      toast.success(t("signedIn"));
     },
   });
 

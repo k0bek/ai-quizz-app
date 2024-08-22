@@ -10,7 +10,8 @@
     "pleaseRepeatPassword": "Proszę powtórzyć hasło",
     "register": "Zarejestruj się",
     "signInEnterText": "Proszę wprowadzić swoje dane.",
-    "signUpEnterText": "Proszę wprowadzić swoje dane."
+    "signUpEnterText": "Proszę wprowadzić swoje dane.",
+    "signedIn": "Pomyślnie zalogowano!"
   },
   "AuthSchemas": {
     "enterValidEmail": "Proszę wprowadzić prawidłowy adres e-mail",
