@@ -98,7 +98,8 @@
   "Header": {
     "userAvatar": "Awatar użytkownika",
     "profile": "Profil",
-    "logOut": "Wyloguj się"
+    "logOut": "Wyloguj się",
+    "loggedOut": "Pomyślnie wylogowano!"
   },
   "Navbar": {
     "profile": "Profil"

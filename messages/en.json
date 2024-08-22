@@ -98,7 +98,8 @@
   "Header": {
     "userAvatar": "User avatar",
     "profile": "Profile",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "loggedOut": "Logged out successfully"
   },
   "Navbar": {
     "profile": "Profile"
