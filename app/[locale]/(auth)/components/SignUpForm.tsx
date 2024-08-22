@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@nextui-org/input";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
@@ -9,9 +9,8 @@ import { useTranslations } from "next-intl";
 import authSchemas from "../schemas/authSchemas";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
-import { Bounce, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useToast } from "@/app/hooks/useToast";
+import toast from "react-hot-toast";
+
 import { signUp } from "@/app/actions/sign-up";
 import { useMutation } from "@tanstack/react-query";
 
@@ -21,7 +20,7 @@ function SignUpForm() {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -31,19 +30,16 @@ function SignUpForm() {
   });
   type FormData = z.infer<typeof signUpSchema>;
   const router = useRouter();
-  const { showSuccess, showError } = useToast();
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: signUp,
     onError: (error) => {
-      showError(error.message);
+      toast.error("Registration failed");
       console.log(error.message);
     },
     onSuccess: () => {
-      showSuccess(t("signUpSuccess"));
-      setTimeout(() => {
-        router.push(routes.signIn);
-      }, 3000);
+      toast.success(t("signedUp"));
+      router.push(routes.signIn);
     },
   });
   const onSubmit = async (data: FormData) => {
@@ -52,12 +48,6 @@ function SignUpForm() {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
-      <ToastContainer
-        position="top-center"
-        transition={Bounce}
-        autoClose={false}
-        theme="light"
-      />
       <div className="flex flex-col gap-2">
         <label className={"text-medium"} htmlFor="email">
           E-mail
@@ -91,14 +81,7 @@ function SignUpForm() {
         <p className="text-red-500  text-sm">{errors?.password?.message}</p>
       )}
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="repeatPassword"
-          className={`${
-            errors.email ? "text-red-500" : "text-foreground-100"
-          } text-medium `}
-        >
-          {t("repeatPassword")}
-        </label>
+        <label htmlFor="repeatPassword">{t("repeatPassword")}</label>
         <Input
           {...register("repeatPassword", {
             required: t("pleaseRepeatPassword"),
@@ -116,11 +99,15 @@ function SignUpForm() {
           {errors?.repeatPassword?.message}
         </p>
       )}
-      {error?.message && (
-        <p className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm">
-          {error?.message}
-        </p>
-      )}
+      {error?.message &&
+        JSON.parse(error.message)?.errors.map((err: string, index: number) => (
+          <p
+            key={index}
+            className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm"
+          >
+            {err}
+          </p>
+        ))}
 
       <Button
         variant={isPending ? "bordered" : "solid"}
@@ -129,9 +116,10 @@ function SignUpForm() {
         radius="sm"
         type="submit"
         disabled={isPending}
+        isLoading={isPending}
         className="mt-5"
       >
-        {isSubmitting ? t("pending") : t("register")}
+        {isPending ? t("pending") : t("register")}
       </Button>
     </form>
   );

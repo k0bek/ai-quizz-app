@@ -4,10 +4,9 @@ import { signUpSchema } from "@/lib/form-schemas";
 import { z } from "zod";
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
-  const { email, password } = values;
   const validatedFields = signUpSchema.safeParse(values);
   if (!validatedFields.success) {
-    return { error: "Invalid fields." };
+    return { error: { errorDet: ["Invalid fields."] } };
   }
 
   try {
@@ -23,15 +22,27 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
       }),
     });
 
+    const result = await response.json();
+
     if (!response.ok) {
-      console.error(`HTTP error! status: ${response.status}`);
-      return false;
+      const errorDetails = Object.entries(result.errors).flatMap(
+        ([, messages]) => messages
+      );
+      console.log(errorDetails);
+      throw new Error(JSON.stringify({ errors: errorDetails }));
     }
 
-    const json = await response.json();
-    return json;
+    if (result && result.message) {
+      return result.message;
+    }
+
+    return "Sign-up successful";
   } catch (error) {
-    console.error("Error during sign-up:", error);
-    return false;
+    if (error instanceof Error) {
+      console.error(error.message);
+      throw error;
+    } else {
+      throw new Error("An unexpected error occurred");
+    }
   }
 };

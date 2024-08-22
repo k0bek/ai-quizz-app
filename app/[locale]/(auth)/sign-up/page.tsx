@@ -3,7 +3,6 @@ import Image from "next/image";
 import SignUpForm from "../components/SignUpForm";
 import learnGO from "@/public//assets/logo.svg";
 import { getTranslations } from "next-intl/server";
-import { ToastContainer } from "react-toastify";
 async function SignUp() {
   const t = await getTranslations("AuthPages");
   return (
