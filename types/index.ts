@@ -8,3 +8,7 @@ export type HistoryItem = {
   isCorrect: boolean;
   options: { answer: string; properValue: boolean }[];
 };
+
+export type UpdateProfile = {
+  userName: string;
+};

@@ -47,7 +47,8 @@
     "displayName": "This is your public display name.",
     "updateButton": "Update",
     "deleteAccount": "Delete account",
-    "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain."
+    "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
+    "profileUpdated": "Profile updated successfully!"
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Quiz Detail",

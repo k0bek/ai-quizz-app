@@ -18,8 +18,8 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
       withCredentials: true,
     });
 
-    cookies().set("accessToken", response.data.accessToken);
-    cookies().set("refreshToken", response.data.refreshToken);
+    cookies().set("AccessToken", response.data.accessToken);
+    cookies().set("RefreshToken", response.data.refreshToken);
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.detail);

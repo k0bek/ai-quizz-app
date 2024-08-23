@@ -13,7 +13,7 @@ const intlMiddleware = createMiddleware({
 
 export default function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
-  const accessToken = req.cookies.get("accessToken");
+  const accessToken = req.cookies.get("AccessToken");
 
   if (publicPages.includes(req.nextUrl.pathname)) {
     if (accessToken) {

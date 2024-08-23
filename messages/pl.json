@@ -47,7 +47,8 @@
     "displayName": "To jest twoja publiczna nazwa wyświetlana.",
     "updateButton": "Zaktualizuj",
     "deleteAccount": "Usuń konto",
-    "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się."
+    "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
+    "profileUpdated": "Twoje dane zostały zaktualizowane."
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Szczegóły Quizu",

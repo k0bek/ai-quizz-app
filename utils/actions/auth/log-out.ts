@@ -15,8 +15,8 @@ export const logOutUser = async () => {
       }
     );
 
-    cookies().delete("accessToken");
-    cookies().delete("refreshToken");
+    cookies().delete("AccessToken");
+    cookies().delete("RefreshToken");
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.detail);
