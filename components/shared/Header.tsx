@@ -4,6 +4,7 @@ import Container from "@/components/shared/Container";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
 import { logOutUser } from "@/utils/actions/auth/log-out";
+import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 
@@ -13,10 +14,10 @@ import React, { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 
 const Header = () => {
+  const { data: currentProfile } = useGetCurrentProfile();
   const router = useRouter();
   const t = useTranslations("Header");
   const [user, setUser] = useState({
-    email: "robbie@mlab.com",
     avatar: "https://via.placeholder.com/50",
   });
 
@@ -82,7 +83,7 @@ const Header = () => {
                 className="absolute right-0 mt-2 bg-white border rounded-lg py-2 z-50 shadow-md"
               >
                 <span className="block px-4 py-2 text-foreground-700 text-large">
-                  {user.email}
+                  {currentProfile?.email}
                 </span>
                 <hr className=" w-[85%] mx-auto" />
                 <Link

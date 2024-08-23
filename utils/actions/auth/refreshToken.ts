@@ -1,36 +1,52 @@
+import { refreshTokenUrl } from "@/constants/api";
 import axiosInstance from "../axiosInstance";
 import Cookies from "js-cookie"; // Ensure you have js-cookie installed
 
-export const refreshToken = async () => {
-  try {
-    // Call the refresh token endpoint
-    const response = await axiosInstance.post("/auth/refresh-token"); // Adjust the endpoint as needed
+let isRefreshing = false; // Flag to track if a refresh is in progress
+let subscribers = []; // Array to hold subscribers while refreshing
 
-    // If the response is successful, update the cookies with new tokens
+const onRefreshed = (accessToken, refreshToken) => {
+  subscribers.forEach((callback) => callback(accessToken, refreshToken));
+  subscribers = []; // Clear the subscribers after refreshing
+};
+
+const subscribeTokenRefresh = (callback) => {
+  subscribers.push(callback);
+};
+
+export const refreshToken = async () => {
+  if (isRefreshing) {
+    // If a refresh is already in progress, return a promise that resolves when done
+    return new Promise((resolve) => {
+      subscribeTokenRefresh((accessToken, refreshToken) => {
+        resolve({ accessToken, refreshToken });
+      });
+    });
+  }
+
+  isRefreshing = true; // Set the flag to true
+
+  try {
+    const response = await axiosInstance.post(refreshTokenUrl);
+
     if (response.status === 200) {
       const { accessToken, refreshToken } = response.data;
 
       // Clear existing tokens
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
+      Cookies.remove("AccessToken");
+      Cookies.remove("RefreshToken");
 
       // Set new tokens in cookies with expiration
-      Cookies.set("accessToken", accessToken, { expires: 1 }); // Expires in 1 day
-      Cookies.set("refreshToken", refreshToken, { expires: 7 }); // Expires in 7 days
+      Cookies.set("AccessToken", accessToken, { expires: 1 }); // Expires in 1 day
+      Cookies.set("RefreshToken", refreshToken, { expires: 7 }); // Expires in 7 days
 
+      onRefreshed(accessToken, refreshToken); // Notify subscribers
       return { accessToken, refreshToken }; // Return new tokens
     }
   } catch (error) {
-    // Handle error (e.g., log out user, redirect, etc.)
     console.error("Failed to refresh token:", error);
-
-    // Optional: handle specific error cases (401, network error, etc.)
-    if (error.response && error.response.status === 401) {
-      // Redirect to login or perform logout action
-      console.warn("Unauthorized! Redirecting to login.");
-      // You can implement a logout function or redirect here
-    }
-
-    throw new Error("Could not refresh token"); // Throw an error to be handled by the caller
+    throw new Error("Could not refresh token");
+  } finally {
+    isRefreshing = false; // Reset the flag after completion
   }
 };

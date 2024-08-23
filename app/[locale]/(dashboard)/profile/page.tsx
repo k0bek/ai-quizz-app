@@ -2,21 +2,48 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { routes } from "@/routes";
+import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProfile } from "@/utils/actions/user/updateProfile";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
+  const queryClient = useQueryClient();
+  const { data: currentProfile } = useGetCurrentProfile();
+  const [nameValue, setNameValue] = useState<string>(
+    currentProfile?.userName || ""
+  );
+
   const router = useRouter();
   const t = useTranslations("Dashboard");
 
+  useEffect(() => {
+    if (currentProfile?.userName) {
+      setNameValue(currentProfile.userName);
+    }
+  }, [currentProfile]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateProfile,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
+      toast.success(t("profileUpdated"));
+    },
+  });
+
   const handleUpdate = () => {
-    // profile update
-    console.log("Update profile with name:", name);
+    mutate({
+      userName: nameValue,
+    });
   };
 
   const handleDelete = () => {
-    // remove account logic
     if (window.confirm(t("areYouSure"))) {
       console.log("Delete account");
       router.push(routes.signIn);
@@ -40,14 +67,16 @@ const ProfilePage = () => {
           <input
             id="name"
             type="text"
-            placeholder="Robert Mlab"
+            value={nameValue}
+            onChange={(e) => setNameValue(e.target.value)}
             className="p-3 rounded-lg shadow-sm"
           />
           <p className="text-foreground-500 text-sm">{t("displayName")}</p>
           <Button
             variant="solid"
-            className="bg-base-primary text-white w-min py-5"
+            className="bg-base-primary text-white w-min py-5 disabled:bg-base-primary/50"
             onClick={handleUpdate}
+            disabled={isPending || !nameValue}
           >
             {t("updateButton")}
           </Button>
@@ -59,10 +88,11 @@ const ProfilePage = () => {
             {t("deleteAccountWarningProfile")}
           </p>
           <Button
-            className="transition-all hover:bg-danger-500 text-white px-4 text-medium w-min py-5"
+            className="transition-all hover:bg-danger-500 text-white px-4 text-medium w-min py-5 disabled:bg-danger-200"
             onClick={handleDelete}
             variant="solid"
             color="danger"
+            disabled={isPending}
           >
             {t("delete")}
           </Button>
