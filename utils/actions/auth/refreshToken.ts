@@ -29,7 +29,7 @@ export const refreshToken = async () => {
     });
   }
 
-  isRefreshing = true; // Set the flag to true
+  isRefreshing = true;
 
   try {
     const response = await axiosInstance.post(refreshTokenUrl);
@@ -42,16 +42,16 @@ export const refreshToken = async () => {
       Cookies.remove("RefreshToken");
 
       // Set new tokens in cookies with expiration
-      Cookies.set("AccessToken", accessToken, { expires: 1 }); // Expires in 1 day
-      Cookies.set("RefreshToken", refreshToken, { expires: 7 }); // Expires in 7 days
+      Cookies.set("AccessToken", accessToken, { expires: 1 });
+      Cookies.set("RefreshToken", refreshToken, { expires: 7 });
 
-      onRefreshed(accessToken, refreshToken); // Notify subscribers
-      return { accessToken, refreshToken }; // Return new tokens
+      onRefreshed(accessToken, refreshToken);
+      return { accessToken, refreshToken };
     }
   } catch (error) {
     console.error("Failed to refresh token:", error);
     throw new Error("Could not refresh token");
   } finally {
-    isRefreshing = false; // Reset the flag after completion
+    isRefreshing = false;
   }
 };

@@ -2,11 +2,13 @@ import axios from "axios";
 import Cookies from "js-cookie"; // Import js-cookie for client-side cookie handling
 import { refreshToken } from "./auth/refreshToken";
 import { API_BASE_URL } from "@/constants/api";
+import { useRouter } from "next/router";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL, // Base URL for your API
   withCredentials: true, // Include credentials (cookies, HTTP auth) with requests
 });
+
 type newTokens = {
   AccessToken: string;
   RefreshToken: string;
@@ -49,7 +51,6 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalRequest); // Retry the original request
         } catch (refreshError) {
           console.error("Token refresh failed:", refreshError);
-          // Handle logout or redirect to login if necessary
         }
       }
     }
