@@ -7,11 +7,14 @@ export const axiosInstance = axios.create({
   baseURL: API_BASE_URL, // Base URL for your API
   withCredentials: true, // Include credentials (cookies, HTTP auth) with requests
 });
-
+type newTokens = {
+  AccessToken: string;
+  RefreshToken: string;
+};
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (request) => {
-    const accessToken = Cookies.get("accessToken"); // Get the access token from cookies
+    const accessToken = Cookies.get("AccessToken"); // Get the access token from cookies
 
     if (accessToken) {
       request.headers["Authorization"] = `Bearer ${accessToken}`;
@@ -37,12 +40,12 @@ axiosInstance.interceptors.response.use(
 
         try {
           // Call your refreshToken function to get new access token
-          const newTokens = await refreshToken(); // Handle refresh and cookie management in this function
+          const newTokens = (await refreshToken()) as newTokens; // Handle refresh and cookie management in this function
 
           // Update the Authorization header with the new access token
           originalRequest.headers[
             "Authorization"
-          ] = `Bearer ${newTokens.accessToken}`;
+          ] = `Bearer ${newTokens.AccessToken}`;
           return axiosInstance(originalRequest); // Retry the original request
         } catch (refreshError) {
           console.error("Token refresh failed:", refreshError);

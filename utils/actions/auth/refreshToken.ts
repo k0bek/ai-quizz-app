@@ -3,9 +3,9 @@ import axiosInstance from "../axiosInstance";
 import Cookies from "js-cookie"; // Ensure you have js-cookie installed
 
 let isRefreshing = false; // Flag to track if a refresh is in progress
-let subscribers = []; // Array to hold subscribers while refreshing
+let subscribers: object[] = []; // Array to hold subscribers while refreshing
 
-const onRefreshed = (accessToken, refreshToken) => {
+const onRefreshed = (accessToken: string, refreshToken: string) => {
   subscribers.forEach((callback) => callback(accessToken, refreshToken));
   subscribers = []; // Clear the subscribers after refreshing
 };
