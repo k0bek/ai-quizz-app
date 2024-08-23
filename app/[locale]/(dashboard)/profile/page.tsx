@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
-import React, { startTransition, useOptimistic, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { routes } from "@/routes";
 import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
@@ -12,11 +12,19 @@ import toast from "react-hot-toast";
 
 const ProfilePage = () => {
   const queryClient = useQueryClient();
-  const [nameValue, setNameValue] = useState<string>("");
-  const { data: currentProfle } = useGetCurrentProfile();
+  const { data: currentProfile } = useGetCurrentProfile();
+  const [nameValue, setNameValue] = useState<string>(
+    currentProfile?.userName || ""
+  );
 
   const router = useRouter();
   const t = useTranslations("Dashboard");
+
+  useEffect(() => {
+    if (currentProfile?.userName) {
+      setNameValue(currentProfile.userName);
+    }
+  }, [currentProfile]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateProfile,
@@ -24,11 +32,11 @@ const ProfilePage = () => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentProfile"] }),
-        toast.success(t("profileUpdated"));
-      setNameValue("");
+      queryClient.invalidateQueries({ queryKey: ["currentProfile"] });
+      toast.success(t("profileUpdated"));
     },
   });
+
   const handleUpdate = () => {
     mutate({
       userName: nameValue,
@@ -59,7 +67,6 @@ const ProfilePage = () => {
           <input
             id="name"
             type="text"
-            placeholder={currentProfle?.userName}
             value={nameValue}
             onChange={(e) => setNameValue(e.target.value)}
             className="p-3 rounded-lg shadow-sm"

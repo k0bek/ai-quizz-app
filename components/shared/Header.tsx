@@ -14,7 +14,7 @@ import React, { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 
 const Header = () => {
-  const { data: currentProfle } = useGetCurrentProfile();
+  const { data: currentProfile } = useGetCurrentProfile();
   const router = useRouter();
   const t = useTranslations("Header");
   const [user, setUser] = useState({
@@ -83,7 +83,7 @@ const Header = () => {
                 className="absolute right-0 mt-2 bg-white border rounded-lg py-2 z-50 shadow-md"
               >
                 <span className="block px-4 py-2 text-foreground-700 text-large">
-                  {currentProfle?.email}
+                  {currentProfile?.email}
                 </span>
                 <hr className=" w-[85%] mx-auto" />
                 <Link
