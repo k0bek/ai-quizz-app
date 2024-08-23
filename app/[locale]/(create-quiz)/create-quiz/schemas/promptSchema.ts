@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import React from "react";
 import { z } from "zod";
 export const promptSchemas = () => {
   const t = useTranslations("CreateQuiz");
