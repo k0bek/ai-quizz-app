@@ -56,8 +56,15 @@ const authSchemas = () => {
       message: t("passwordsDontMatch"),
       path: ["repeatPassword"],
     });
-
-  return { signInSchema, signUpSchema };
+  const promptSchema = z.object({
+    prompt: z
+      .string()
+      .min(10, { message: "Prompt field cannot be empty" })
+      .max(1200, {
+        message: "Prompt should have a maximum of 1200 characters",
+      }),
+  });
+  return { signInSchema, signUpSchema, promptSchema };
 };
 
 export default authSchemas;

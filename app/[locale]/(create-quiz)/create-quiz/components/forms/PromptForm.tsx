@@ -8,15 +8,16 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
-import { PromptSchema } from "../../../schemas/PromptSchema";
 import { useTranslations } from "use-intl";
+import { promptSchemas } from "../../schemas/promptSchema";
 const PromptForm = () => {
-  type FormValue = z.infer<typeof PromptSchema>;
+  const { promptSchema } = promptSchemas();
+  type FormValue = z.infer<typeof promptSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValue>({ resolver: zodResolver(PromptSchema) });
+  } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
   const router = useRouter();
   const onSubmit = (data: FormValue) => {
     console.log(data);
@@ -30,7 +31,7 @@ const PromptForm = () => {
         isRequired
         variant="faded"
         label={t("promptLabel")}
-        {...register("prompt", { required: t("promptRequiredField") })}
+        {...register("prompt", { required: true })}
         labelPlacement="outside"
         placeholder={t("promptForm")}
         className="p-6 gap-2 bg-content2"

@@ -1,34 +1,55 @@
 "use client";
 import { Input } from "@nextui-org/input";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import authSchemas from "../schemas/authSchemas";
-import { signUp } from "@/api/auth/sign-up";
+import { useRouter } from "next/navigation";
+import { routes } from "@/routes";
+import toast from "react-hot-toast";
+
+import { signUp } from "@/app/actions/sign-up";
+import { useMutation } from "@tanstack/react-query";
+
 function SignUpForm() {
   const { signUpSchema } = authSchemas();
   const t = useTranslations("AuthPages");
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
   type FormData = z.infer<typeof signUpSchema>;
+  const router = useRouter();
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: signUp,
+    onError: (error) => {
+      toast.error("Registration failed");
+      console.log(error.message);
+    },
+    onSuccess: () => {
+      toast.success(t("signedUp"));
+      router.push(routes.signIn);
+    },
+  });
   const onSubmit = async (data: FormData) => {
-    const { email, password } = data;
-    console.log(email, password);
-    const signUpResult = await signUp(email, password);
-    console.log(signUpResult);
+    mutate(data);
+    console.log(data);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
       <div className="flex flex-col gap-2">
-        <label className="text-foreground-100 text-medium" htmlFor="email">
+        <label className={"text-medium"} htmlFor="email">
           E-mail
         </label>
         <Input
@@ -36,40 +57,31 @@ function SignUpForm() {
           id="email"
           type="email"
           name="email"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder="E-mail"
           autoComplete="off"
         />
-        {errors?.email && (
-          <span className="text-red-600">{errors.email.message}</span>
-        )}
       </div>
-
+      {errors?.email && (
+        <p className="text-red-500  text-sm">{errors?.email.message}</p>
+      )}
       <div className="flex flex-col gap-2">
-        <label htmlFor="password" className="text-foreground-100 text-medium">
-          {t("password")}
-        </label>
+        <label htmlFor="password">{t("password")}</label>
         <Input
           {...register("password", { required: true })}
           type="password"
           id="password"
           name="password"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder={t("password")}
           autoComplete="off"
         />
-        {errors?.password && (
-          <span className="text-red-600">{errors.password.message}</span>
-        )}
       </div>
-
+      {errors?.password && (
+        <p className="text-red-500  text-sm">{errors?.password?.message}</p>
+      )}
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="repeatPassword"
-          className="text-foreground-100 text-medium"
-        >
-          {t("repeatPassword")}
-        </label>
+        <label htmlFor="repeatPassword">{t("repeatPassword")}</label>
         <Input
           {...register("repeatPassword", {
             required: t("pleaseRepeatPassword"),
@@ -77,25 +89,37 @@ function SignUpForm() {
           type="password"
           id="repeatPassword"
           name="repeatPassword"
-          disabled={isSubmitting}
+          disabled={isPending}
           placeholder={t("repeatPassword")}
           autoComplete="off"
         />
-        {errors?.repeatPassword && (
-          <span className="text-red-600">{errors.repeatPassword.message}</span>
-        )}
       </div>
+      {errors?.repeatPassword && (
+        <p className="text-red-500  text-sm">
+          {errors?.repeatPassword?.message}
+        </p>
+      )}
+      {error?.message &&
+        JSON.parse(error.message)?.errors.map((err: string, index: number) => (
+          <p
+            key={index}
+            className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm"
+          >
+            {err}
+          </p>
+        ))}
 
       <Button
-        variant="solid"
+        variant={isPending ? "bordered" : "solid"}
         color="primary"
         size="lg"
         radius="sm"
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
+        isLoading={isPending}
         className="mt-5"
       >
-        {t("register")}
+        {isPending ? t("pending") : t("register")}
       </Button>
     </form>
   );

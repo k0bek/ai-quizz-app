@@ -6,12 +6,12 @@ import { getTranslations } from "next-intl/server";
 async function SignUp() {
   const t = await getTranslations("AuthPages");
   return (
-    <main className=" h-screen text-white flex items-center">
-      <div className="md:w-[34.38rem] place-self-center pt-7 rounded-lg bg-content2-foreground mx-auto">
+    <main className=" h-screen text-white flex items-center p-4">
+      <div className="md:w-[34.38rem] w-full  place-self-center p-6 rounded-lg bg-content2-foreground mx-auto">
         <picture>
           <Image alt="learngo" className="mx-auto" src={learnGO} />
         </picture>
-        <h1 className="p-5">{t("signUpEnterText")}</h1>
+        <h1 className="p-5 text-sm font-semibold">{t("signUpEnterText")}</h1>
         <SignUpForm />
       </div>
     </main>
