@@ -3,14 +3,19 @@ import axiosInstance from "../axiosInstance";
 import Cookies from "js-cookie"; // Ensure you have js-cookie installed
 
 let isRefreshing = false; // Flag to track if a refresh is in progress
-let subscribers: object[] = []; // Array to hold subscribers while refreshing
+type TokenType = string;
 
-const onRefreshed = (accessToken: string, refreshToken: string) => {
+type SubscriberCallback = (
+  accessToken: TokenType,
+  refreshToken: TokenType
+) => void;
+let subscribers: SubscriberCallback[] = [];
+const onRefreshed = (accessToken: TokenType, refreshToken: TokenType): void => {
   subscribers.forEach((callback) => callback(accessToken, refreshToken));
   subscribers = []; // Clear the subscribers after refreshing
 };
 
-const subscribeTokenRefresh = (callback) => {
+const subscribeTokenRefresh = (callback: SubscriberCallback): void => {
   subscribers.push(callback);
 };
 
@@ -18,7 +23,7 @@ export const refreshToken = async () => {
   if (isRefreshing) {
     // If a refresh is already in progress, return a promise that resolves when done
     return new Promise((resolve) => {
-      subscribeTokenRefresh((accessToken, refreshToken) => {
+      subscribeTokenRefresh((accessToken: string, refreshToken: string) => {
         resolve({ accessToken, refreshToken });
       });
     });

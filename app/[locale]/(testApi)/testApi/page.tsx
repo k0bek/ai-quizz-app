@@ -1,7 +1,6 @@
 "use client";
 import { userProfile } from "@/constants/api";
 import { axiosInstance } from "@/utils/actions/axiosInstance";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 const Page = () => {
   const [data, setData] = useState<any>(null);
