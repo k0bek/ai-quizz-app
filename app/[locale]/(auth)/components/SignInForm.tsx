@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signInUser } from "@/utils/actions/auth/sign-in";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import AuthSchemas from "../schemas/AuthSchemas";
+import AuthSchemas from "../schemas/authSchemas";
 
 export default function LoginForm() {
   const router = useRouter();

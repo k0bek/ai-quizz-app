@@ -11,7 +11,7 @@ import { routes } from "@/routes";
 import toast from "react-hot-toast";
 import { signUp } from "@/app/actions/sign-up";
 import { useMutation } from "@tanstack/react-query";
-import AuthSchemas from "../schemas/AuthSchemas";
+import AuthSchemas from "../schemas/authSchemas";
 
 function SignUpForm() {
   const { signUpSchema } = AuthSchemas();
