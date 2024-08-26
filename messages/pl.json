@@ -180,5 +180,9 @@
     "awesome": "Awesome!!!",
     "notYourDay": "This is not your day...",
     "warningName": "Name must be at least 2 characters long"
+  },
+  "NotFoundPage": {
+    "goDashboard": "Przejdź do panelu",
+    "notFound": "Ups! Strona nie znaleziona"
   }
 }
