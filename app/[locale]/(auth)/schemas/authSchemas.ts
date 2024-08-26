@@ -67,4 +67,4 @@ const AuthSchemas = () => {
   return { signInSchema, signUpSchema, promptSchema };
 };
 
-export default authSchemas;
+export default AuthSchemas;

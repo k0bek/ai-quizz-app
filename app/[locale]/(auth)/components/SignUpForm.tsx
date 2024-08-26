@@ -6,16 +6,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import authSchemas from "../schemas/authSchemas";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import toast from "react-hot-toast";
 
 import { signUp } from "@/app/actions/sign-up";
 import { useMutation } from "@tanstack/react-query";
+import AuthSchemas from "../schemas/AuthSchemas";
 
 function SignUpForm() {
-  const { signUpSchema } = authSchemas();
+  const { signUpSchema } = AuthSchemas();
   const t = useTranslations("AuthPages");
   const {
     handleSubmit,
