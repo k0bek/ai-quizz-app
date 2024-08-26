@@ -121,14 +121,12 @@
     "saveQuizzButton": "Zapisz quiz",
     "cancelButton": "Anuluj",
     "nextButton": "Dalej",
-    "promptRequiredField": "To pole jest wymagane",
+    "promptRequiredField": "To pole powinno zawierać conajmniej 10 znaków",
     "promptForm": "Wpisz swój tekst",
     "promptLabel": "Tekst",
     "cancelQuizWarning": "Jesteś pewien?",
     "cancelQuizWarningText": "Zamierzasz opuścić proces tworzenia quizu. Wszelkie dotychczasowe postępy zostaną utracone. Tej czynności nie można cofnąć",
-    "cancelQuizConfirm": "Tak, opuszczam",
-    "emptyPrompt": "Formularz nie może być pusty",
-    "promptExceededChars": "Formularz nie powinien przekroczyć 1200 znaków"
+    "cancelQuizConfirm": "Tak, opuszczam"
   },
   "ConfigureQuiz": {
     "configureQuizHeading": "Konfiguracja quizu",

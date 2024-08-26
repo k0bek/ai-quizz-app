@@ -12,13 +12,9 @@ import { useTranslations } from "use-intl";
 import { PromptSchema } from "@/lib/form-schemas";
 
 const PromptForm = () => {
+  const t = useTranslations("CreateQuiz");
   const promptSchema = z.object({
-    prompt: z
-      .string()
-      .min(10, { message: "Prompt field cannot be empty" })
-      .max(1200, {
-        message: "Prompt should have a maximum of 1200 characters",
-      }),
+    prompt: z.string().min(10, { message: t("promptRequiredField") }),
   });
   type FormValue = z.infer<typeof promptSchema>;
   const {
@@ -32,7 +28,6 @@ const PromptForm = () => {
     router.push(routes.createQuiz[1].route);
     // Call your API here
   };
-  const t = useTranslations("CreateQuiz");
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Textarea

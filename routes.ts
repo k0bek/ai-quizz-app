@@ -18,4 +18,5 @@ export const routes = {
   signUp: "/sign-up",
   profile: "/profile",
   root: "/",
+  takeQuiz: "/take-quiz/1",
 };
