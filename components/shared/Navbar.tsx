@@ -4,12 +4,12 @@ import { cn } from "@/lib";
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { NavbarLinks } from "@/constants";
 import { routes } from "@/routes";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
+  const t = useTranslations("Navbar");
   const pathname = usePathname();
-  const navbarLinksList = NavbarLinks();
   const navbarLinksList = [
     {
       label: "Dashboard",
