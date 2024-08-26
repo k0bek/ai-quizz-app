@@ -122,7 +122,7 @@
     "saveQuizzButton": "Save quiz",
     "cancelButton": "Cancel",
     "nextButton": "Next",
-    "promptRequiredField": "Prompt field is required",
+    "promptRequiredField": "Prompt field should have at least 10 characters",
     "promptForm": "Enter your prompt",
     "promptLabel": "Prompt",
     "cancelQuizWarning": "Are you sure?",

@@ -33,7 +33,7 @@ const DashboardPage = async () => {
         <h2 className="text-4xl font-bold mb-4 sm:mb-0 text-foreground-700">
           {t("quizzes")}
         </h2>
-        <Link href={routes.createQuiz[0].route}>
+        <Link href={routes.takeQuiz}>
           <button className="text-small text-white font-normal py-2 px-4 rounded-xl transition-colors bg-base-primary">
             {t("createNewQuizButton")}
           </button>
