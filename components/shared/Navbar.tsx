@@ -5,10 +5,21 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { NavbarLinks } from "@/constants";
+import { routes } from "@/routes";
 
 const Navbar = () => {
   const pathname = usePathname();
   const navbarLinksList = NavbarLinks();
+  const navbarLinksList = [
+    {
+      label: "Dashboard",
+      route: routes.dashboard,
+    },
+    {
+      label: t("profile"),
+      route: routes.profile,
+    },
+  ];
 
   return (
     <nav className="w-full md:w-min">
