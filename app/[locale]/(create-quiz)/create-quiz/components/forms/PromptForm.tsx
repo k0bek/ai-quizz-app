@@ -9,10 +9,17 @@ import { z } from "zod";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
-import PromptSchemas from "../../schemas/PromptSchemas";
+import { PromptSchema } from "@/lib/form-schemas";
 
 const PromptForm = () => {
-  const { promptSchema } = PromptSchemas();
+  const promptSchema = z.object({
+    prompt: z
+      .string()
+      .min(10, { message: "Prompt field cannot be empty" })
+      .max(1200, {
+        message: "Prompt should have a maximum of 1200 characters",
+      }),
+  });
   type FormValue = z.infer<typeof promptSchema>;
   const {
     register,
