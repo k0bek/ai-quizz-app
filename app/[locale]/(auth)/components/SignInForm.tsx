@@ -6,15 +6,15 @@ import { Button, Checkbox, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import authSchemas from "../schemas/authSchemas";
 import { useMutation } from "@tanstack/react-query";
 import { signInUser } from "@/utils/actions/auth/sign-in";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import AuthSchemas from "../schemas/authSchemas";
 
 export default function LoginForm() {
   const router = useRouter();
-  const { signInSchema } = authSchemas();
+  const { signInSchema } = AuthSchemas();
   const t = useTranslations("AuthPages");
   type FormData = z.infer<typeof signInSchema>;
   const {

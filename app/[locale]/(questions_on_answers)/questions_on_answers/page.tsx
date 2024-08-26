@@ -5,13 +5,6 @@ import Questions from "../NavbarContent/Questions";
 import Statistics from "../NavbarContent/Statistics";
 import Settings from "../NavbarContent/Settings";
 import { useTranslations } from "next-intl";
-import EditQuestionModal from "../modals/EditQuestionModal";
-import DeleteQuestionModal from "../modals/DeleteQuestionModal";
-import { useModalStore } from "@/store/modalStore2";
-import Switch from "../components/Switch";
-import Image from "next/image";
-import editIcon from "/public/assets/edit.svg";
-import binIcon from "/public/assets/bin.svg";
 const QuizDetail = () => {
   const [enabled, setEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState("Questions");

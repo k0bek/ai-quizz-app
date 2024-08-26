@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
-import React from "react";
 import { z } from "zod";
-export const promptSchemas = () => {
+const PromptSchemas = () => {
   const t = useTranslations("CreateQuiz");
   const promptSchema = z.object({
     prompt: z
@@ -13,3 +12,4 @@ export const promptSchemas = () => {
   });
   return { promptSchema };
 };
+export default PromptSchemas;
