@@ -9,7 +9,8 @@ import { z } from "zod";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
-import { PromptSchemas } from "../../schemas/PromptSchemas";
+import PromptSchemas from "../../schemas/PromptSchemas";
+
 const PromptForm = () => {
   const { promptSchema } = PromptSchemas();
   type FormValue = z.infer<typeof promptSchema>;

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
-const AuthSchemas = () => {
+export const AuthSchemas = () => {
   const t = useTranslations("AuthSchemas");
 
   const signInSchema = z.object({
