@@ -5,24 +5,22 @@ import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import { routes } from "@/routes";
 import { logOutUser } from "@/utils/actions/auth/log-out";
 import { useGetCurrentProfile } from "@/utils/hooks/useGetCurrentProfile";
+import {
+  Avatar,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 
 const Header = () => {
   const { data: currentProfile } = useGetCurrentProfile();
   const router = useRouter();
   const t = useTranslations("Header");
-  const [user, setUser] = useState({
-    avatar: "https://via.placeholder.com/50",
-  });
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { mutate } = useMutation({
     mutationFn: logOutUser,
@@ -39,27 +37,6 @@ const Header = () => {
     mutate();
   };
 
-  const toggleDropdown = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const closeDropdown = (e: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(e.target as Node)
-    ) {
-      setIsDropdownOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mouseup", closeDropdown);
-    return () => {
-      document.removeEventListener("mouseup", closeDropdown);
-    };
-  }, []);
-
   return (
     <header className="flex justify-between items-center border-b border-gray-200 px-5 py-4 border-none">
       <div className="flex items-center">
@@ -69,38 +46,47 @@ const Header = () => {
         <div className="flex items-center justify-end">
           <div className="relative flex gap-2">
             <LanguageSwitcher />
-            <img
-              src={user.avatar}
-              alt={t("userAvatar")}
-              className="rounded-full cursor-pointer w-10"
-              onClick={(event) => {
-                toggleDropdown(event);
-              }}
-            />
-            {isDropdownOpen && (
-              <div
-                ref={dropdownRef}
-                className="absolute right-0 mt-2 bg-white border rounded-lg py-2 z-50 shadow-md"
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Profile Actions"
+                variant="flat"
+                className="px-2"
               >
-                <span className="block px-4 py-2 text-foreground-700 text-large">
-                  {currentProfile?.email}
-                </span>
-                <hr className=" w-[85%] mx-auto" />
-                <Link
-                  href={routes.profile}
-                  className="block w-full text-left px-4 py-2 hover:bg-white hover:text-gray-900 transition-colors text-foreground-600 text-medium"
+                <DropdownItem
+                  key="profile"
+                  className="gap-2"
+                  isReadOnly
+                  showDivider
+                >
+                  <p className="text-lg text-foreground-700 hover:bg-none">
+                    {currentProfile?.email}
+                  </p>
+                </DropdownItem>
+                <DropdownItem
+                  key="profile"
+                  className="text-foreground-600"
+                  href="/profile"
+                  showDivider
                 >
                   {t("profile")}
-                </Link>
-                <hr className=" w-[85%] mx-auto" />
-                <button
-                  className="block w-full text-left px-4 py-2 hover:text-gray-900 transition-colors text-foreground-600 text-medium"
-                  onClick={handleLogout}
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  className="text-lg text-foreground-600"
+                  onPress={handleLogout}
                 >
                   {t("logOut")}
-                </button>
-              </div>
-            )}
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
       </Container>
