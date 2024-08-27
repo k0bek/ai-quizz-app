@@ -15,6 +15,11 @@ export default function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   const accessToken = req.cookies.get("AccessToken");
 
+  if (req.nextUrl.pathname === "/" && accessToken) {
+    url.pathname = redirectAfterLogin;
+    return NextResponse.redirect(url);
+  }
+
   if (publicPages.includes(req.nextUrl.pathname)) {
     if (accessToken) {
       url.pathname = redirectAfterLogin;

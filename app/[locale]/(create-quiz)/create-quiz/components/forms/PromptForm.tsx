@@ -9,9 +9,13 @@ import { z } from "zod";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
-import { promptSchemas } from "../../schemas/promptSchema";
+import { PromptSchema } from "@/lib/form-schemas";
+
 const PromptForm = () => {
-  const { promptSchema } = promptSchemas();
+  const t = useTranslations("CreateQuiz");
+  const promptSchema = z.object({
+    prompt: z.string().min(10, { message: t("promptRequiredField") }),
+  });
   type FormValue = z.infer<typeof promptSchema>;
   const {
     register,
@@ -24,7 +28,6 @@ const PromptForm = () => {
     router.push(routes.createQuiz[1].route);
     // Call your API here
   };
-  const t = useTranslations("CreateQuiz");
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Textarea

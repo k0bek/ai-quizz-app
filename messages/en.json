@@ -122,7 +122,7 @@
     "saveQuizzButton": "Save quiz",
     "cancelButton": "Cancel",
     "nextButton": "Next",
-    "promptRequiredField": "Prompt field is required",
+    "promptRequiredField": "Prompt field should have at least 10 characters",
     "promptForm": "Enter your prompt",
     "promptLabel": "Prompt",
     "cancelQuizWarning": "Are you sure?",
@@ -178,5 +178,9 @@
     "awesome": "Awesome!!!",
     "notYourDay": "This is not your day...",
     "warningName": "Name must be at least 2 characters long"
+  },
+  "NotFoundPage": {
+    "goDashboard": "Go to dashboard",
+    "notFound": "Oops! Page Not Found"
   }
 }
