@@ -26,12 +26,10 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
     const result = await response.json();
 
     if (!response.ok) {
-      console.log(result.errors);
       throw new Error(result?.errors?.DuplicateEmail);
     }
 
     if (result && result.message) {
-      console.log(result?.message);
       return { message: result.message };
     }
 

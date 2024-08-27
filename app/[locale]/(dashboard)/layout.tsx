@@ -17,7 +17,7 @@ export default function DashboardLayout({
         <section className="flex flex-col items-start md:flex-row md:gap-8 w-full">
           <Navbar />
           {children}
-          <Suspense fallback={<Loading />}></Suspense>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </section>
       </Container>
     </>
