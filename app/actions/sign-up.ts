@@ -1,6 +1,7 @@
 "use server";
 import { signUpUrl } from "@/constants/api";
 import { signUpSchema } from "@/lib/form-schemas";
+import { error } from "console";
 import { z } from "zod";
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
@@ -25,18 +26,16 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
     const result = await response.json();
 
     if (!response.ok) {
-      const errorDetails = Object.entries(result.errors).flatMap(
-        ([, messages]) => messages
-      );
-      console.log(errorDetails);
-      throw new Error(JSON.stringify({ errors: errorDetails }));
+      console.log(result.errors);
+      throw new Error(result?.errors?.DuplicateEmail);
     }
 
     if (result && result.message) {
-      return result.message;
+      console.log(result?.message);
+      return { message: result.message };
     }
 
-    return "Sign-up successful";
+    return { message: "Sign-up succesful" };
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);

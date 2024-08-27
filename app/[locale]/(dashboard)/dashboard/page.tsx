@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { routes } from "@/routes";
 
-const quizzes = [
+export const quizzes = [
   {
     title: "Identify your biggest roadblock to succeeding in cryptocurrency",
     description: "Quiz description",

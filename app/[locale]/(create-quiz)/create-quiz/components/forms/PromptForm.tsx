@@ -40,7 +40,7 @@ const PromptForm = () => {
         className="p-6 gap-2 bg-content2"
       />
       {errors.prompt && (
-        <div className="text-red-500">{errors.prompt.message}</div>
+        <div className="text-red-500 text-sm">{errors.prompt.message}</div>
       )}
       <NavigationControls>
         <NextButton />

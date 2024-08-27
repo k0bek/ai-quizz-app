@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie"; // Import js-cookie for client-side cookie handling
 import { refreshToken } from "./auth/refreshToken";
-import { API_BASE_URL } from "@/constants/api";
+import { API_BASE_URL, refreshTokenUrl } from "@/constants/api";
 
 export const axiosInstance = axios.create({
   baseURL: API_BASE_URL, // Base URL for your API
@@ -33,24 +33,33 @@ axiosInstance.interceptors.response.use(
     return response; // Return the response if successful
   },
   async (error) => {
-    if (error.response?.status === 401) {
+    const originalRequest = error.config; // Store original request
+    if (error.response?.status === 401 && !originalRequest._entry) {
+      originalRequest._entry = true;
       console.log("Call the refresh token api here");
-      const originalRequest = error.config; // Store original request
-      if (!originalRequest._retry) {
-        originalRequest._retry = true;
-
-        try {
-          // Call your refreshToken function to get new access token
-          const newTokens = (await refreshToken()) as newTokens; // Handle refresh and cookie management in this function
-
-          // Update the Authorization header with the new access token
-          originalRequest.headers[
-            "Authorization"
-          ] = `Bearer ${newTokens.AccessToken}`;
-          return axiosInstance(originalRequest); // Retry the original request
-        } catch (refreshError) {
-          console.error("Token refresh failed:", refreshError);
-        }
+      try {
+        // Call your refreshToken function to get new access token
+        const refreshToken = Cookies.get("RefreshToken");
+        const response = (await axios.post(refreshTokenUrl, {
+          refreshToken,
+        })) as newTokens; // Handle refresh and cookie management in this function
+        const data = {
+          accessToken: response.AccessToken,
+          refreshToken: response.RefreshToken,
+        };
+        const { accessToken, refreshToken: newRefreshToken } = data;
+        Cookies.set("AccessToken", accessToken);
+        Cookies.set("RefreshToken", refreshToken as string);
+        axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error(`Token refreshed failed: ${refreshError}`);
+        Cookies.remove("AccessToken");
+        Cookies.remove("RefreshToken");
+        window.location.href = "/sign-in";
+        return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error); // Reject if not a 401 error

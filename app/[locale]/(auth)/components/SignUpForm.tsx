@@ -98,15 +98,11 @@ function SignUpForm() {
           {errors?.repeatPassword?.message}
         </p>
       )}
-      {error?.message &&
-        JSON.parse(error.message)?.errors.map((err: string, index: number) => (
-          <p
-            key={index}
-            className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm"
-          >
-            {err}
-          </p>
-        ))}
+      {error?.message && (
+        <p className="text-white text-center px-1 py-3 rounded-lg bg-red-500 mt-5 text-sm">
+          {error?.message}
+        </p>
+      )}
 
       <Button
         variant={isPending ? "bordered" : "solid"}
