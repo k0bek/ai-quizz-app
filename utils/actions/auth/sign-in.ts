@@ -8,6 +8,7 @@ import { signInUrl } from "@/constants/api";
 
 export const signInUser = async (values: z.infer<typeof signInSchema>) => {
   const validatedFields = signInSchema.safeParse(values);
+  const { rememberMe } = values;
 
   if (!validatedFields.success) {
     return { error: "Invalid fields." };
@@ -18,8 +19,12 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
       withCredentials: true,
     });
 
-    cookies().set("AccessToken", response.data.accessToken);
-    cookies().set("RefreshToken", response.data.refreshToken);
+    if (rememberMe) {
+      cookies().set("AccessToken", response.data.accessToken);
+      cookies().set("RefreshToken", response.data.refreshToken);
+    } else {
+      cookies().set("AccessToken", response.data.accessToken);
+    }
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.detail);

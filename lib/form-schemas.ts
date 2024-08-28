@@ -22,7 +22,7 @@ export const signInSchema = z.object({
     .regex(/[@$!%*?&#]/, {
       message: "Password must contain at least one special character",
     }),
-  // rememberMe: z.boolean(),
+  rememberMe: z.boolean(),
 });
 
 export const signUpSchema = z
