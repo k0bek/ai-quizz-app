@@ -9,21 +9,10 @@ import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/De
 import { useModalStore } from "@/store/modalStore2";
 type QuizItemPropType = {
   question: string;
-  description: string;
   number: number;
   answers: string[];
 };
-type SelectedAnswers = {};
-const QuizItem = ({
-  question,
-  description,
-  answers,
-  number,
-}: QuizItemPropType) => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
-    null | number
-  >(null);
-  const { openModal, closeModal, setModalData } = useModalStore();
+const QuizItem = ({ question, answers, number }: QuizItemPropType) => {
   const labels = ["A", "B", "C", "D"];
   return (
     <div className=" relative flex flex-col gap-4">
@@ -38,7 +27,7 @@ const QuizItem = ({
             <Image src={edit} alt="edit" />
           </div>
         </div>
-        <span>{}</span>
+        <span>description</span>
         <div className="flex flex-col  gap-2">
           {answers.map((answer, index) => (
             <Button
