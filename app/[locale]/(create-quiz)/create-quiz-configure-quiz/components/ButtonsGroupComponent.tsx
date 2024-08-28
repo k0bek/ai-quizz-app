@@ -24,10 +24,36 @@ function ButtonGroupComponent() {
     setSelectedQuantity(qty);
   };
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(routes.createQuiz[2].route);
+    //router.push(routes.createQuiz[2].route);
     // API call here
+    const quizConfigData = {
+      content: selectedType, 
+      numberOfQuestions: selectedQuantity === "low" ? 5 : selectedQuantity === "medium" ? 10 : 15,
+      typeOfQuestions: selectedType,
+    };
+
+    try {
+     
+      const response = await fetch("/api/quiz/generate-quiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizConfigData),
+      });
+
+      if (response.ok) {
+        const generatedQuiz = await response.json(); 
+        
+        router.push(routes.createQuiz[2].route); 
+      } else {
+        console.error("Błąd przy generowaniu quizu:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Wystąpił błąd przy komunikacji z serwerem:", error);
+    }
   };
   const t = useTranslations("ConfigureQuiz");
   return (

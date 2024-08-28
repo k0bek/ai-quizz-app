@@ -10,6 +10,7 @@ import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
 import { useTranslations } from "use-intl";
 import { PromptSchema } from "@/lib/form-schemas";
+import { generateQuizUrl } from "@/constants/api";
 
 const PromptForm = () => {
   const t = useTranslations("CreateQuiz");
@@ -23,11 +24,39 @@ const PromptForm = () => {
     formState: { errors },
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
   const router = useRouter();
-  const onSubmit = (data: FormValue) => {
+
+  
+  const onSubmit = async (data: FormValue) => {
     console.log(data);
-    router.push(routes.createQuiz[1].route);
-    // Call your API here
+
+   
+    const quizData = {
+      content: data.prompt,
+      numberOfQuestions: 5, 
+      typeOfQuestions: "multiple-choice", 
+    };
+
+    try {
+      const response = await fetch(generateQuizUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      });
+
+      if (response.ok) {
+        const generatedQuiz = await response.json();
+        console.log("Wygenerowany quiz:", generatedQuiz);
+        router.push(routes.createQuiz[1].route);
+      } else {
+        console.error("Błąd przy generowaniu quizu:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Wystąpił błąd:", error);
+    }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Textarea
