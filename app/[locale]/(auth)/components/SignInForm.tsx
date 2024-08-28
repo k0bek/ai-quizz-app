@@ -45,35 +45,9 @@ export default function LoginForm() {
     },
   });
 
-  const handleRememberMe = (data: FormData) => {
-    if (data.rememberMe && !error) {
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("password", data.password);
-      localStorage.setItem("rememberMe", "true");
-    } else {
-      localStorage.removeItem("email");
-      localStorage.removeItem("password");
-      localStorage.setItem("rememberMe", "false");
-    }
-  };
-
   async function onSubmit(data: FormData) {
     mutate(data);
-    if (Object.keys(errors).length === 0) {
-      handleRememberMe(data);
-    }
   }
-
-  useEffect(() => {
-    const rememberMe = localStorage.getItem("rememberMe") === "true";
-    if (rememberMe) {
-      const savedEmail = localStorage.getItem("email") || "";
-      const savedPassword = localStorage.getItem("password") || "";
-      setValue("email", savedEmail);
-      setValue("password", savedPassword);
-      setValue("rememberMe", rememberMe);
-    }
-  }, [setValue]);
 
   return (
     <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
