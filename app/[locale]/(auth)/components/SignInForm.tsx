@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -17,15 +18,19 @@ export default function LoginForm() {
   const { signInSchema } = AuthSchemas();
   const t = useTranslations("AuthPages");
   type FormData = z.infer<typeof signInSchema>;
+
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
   });
 
@@ -40,9 +45,35 @@ export default function LoginForm() {
     },
   });
 
+  const handleRememberMe = (data: FormData) => {
+    if (data.rememberMe && !error) {
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("password", data.password);
+      localStorage.setItem("rememberMe", "true");
+    } else {
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+      localStorage.setItem("rememberMe", "false");
+    }
+  };
+
   async function onSubmit(data: FormData) {
     mutate(data);
+    if (Object.keys(errors).length === 0) {
+      handleRememberMe(data);
+    }
   }
+
+  useEffect(() => {
+    const rememberMe = localStorage.getItem("rememberMe") === "true";
+    if (rememberMe) {
+      const savedEmail = localStorage.getItem("email") || "";
+      const savedPassword = localStorage.getItem("password") || "";
+      setValue("email", savedEmail);
+      setValue("password", savedPassword);
+      setValue("rememberMe", rememberMe);
+    }
+  }, [setValue]);
 
   return (
     <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
@@ -95,7 +126,7 @@ export default function LoginForm() {
           radius="none"
           size="sm"
           isDisabled={isPending}
-          // {...register("rememberMe")}
+          {...register("rememberMe")}
         >
           <span className="text-primary text-sm">{t("rememberMe")}</span>
         </Checkbox>
