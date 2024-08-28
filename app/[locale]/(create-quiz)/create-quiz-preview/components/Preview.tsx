@@ -12,11 +12,13 @@ import { useTranslations } from "next-intl";
 function Preview() {
   const mockQuestions = [
     {
+      questionId: 1,
       number: 1,
       question: "What is the capital of France?",
       answers: ["Paris", "London", "Berlin", "Madrid"],
     },
     {
+      questionId: 2,
       number: 2,
       question: "Who won the 2020 Nobel Prize in Literature?",
       answers: [
@@ -27,6 +29,7 @@ function Preview() {
       ],
     },
     {
+      questionId: 3,
       number: 3,
       question: "Which famous American inventor developed the light bulb?",
       answers: [
@@ -37,6 +40,7 @@ function Preview() {
       ],
     },
     {
+      questionId: 4,
       number: 4,
       question: "Who is the current Prime Minister of Canada?",
       answers: ["Joe Biden", "Stephen McCain", "John Cena", "Michael Douglas"],
@@ -80,7 +84,7 @@ function Preview() {
             {t("addNewQuestionBtn")}
           </Button>
           {mockQuestions.map((question, index) => (
-            <QuizItem key={index} {...question} />
+            <QuizItem key={question.questionId} {...question} />
           ))}
         </aside>
         <NavigationControls>

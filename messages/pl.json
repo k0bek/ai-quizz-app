@@ -123,7 +123,7 @@
     "nextButton": "Dalej",
     "promptRequiredField": "To pole powinno zawierać co najmniej 10 znaków",
     "promptForm": "Wpisz swój tekst",
-    "promptLabel": "Tekst",
+    "contentLabel": "Tekst",
     "cancelQuizWarning": "Jesteś pewien?",
     "cancelQuizWarningText": "Zamierzasz opuścić proces tworzenia quizu. Wszelkie dotychczasowe postępy zostaną utracone. Tej czynności nie można cofnąć",
     "cancelQuizConfirm": "Tak, opuszczam"

@@ -1,7 +1,6 @@
 "use server";
 import { signUpUrl } from "@/constants/api";
 import { signUpSchema } from "@/lib/form-schemas";
-import { error } from "console";
 import { z } from "zod";
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {

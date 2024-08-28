@@ -33,7 +33,7 @@ const PromptForm = () => {
       <Textarea
         isRequired
         variant="faded"
-        label={t("promptLabel")}
+        label={t("contentLabel")}
         {...register("prompt", { required: true })}
         labelPlacement="outside"
         placeholder={t("promptForm")}

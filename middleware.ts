@@ -1,7 +1,6 @@
 import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { locales } from "./config/locales";
-
 const publicPages = ["/sign-in", "/sign-up"];
 const redirectAfterLogin = "/dashboard";
 
@@ -11,7 +10,7 @@ const intlMiddleware = createMiddleware({
   localePrefix: "never",
 });
 
-export default function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   const accessToken = req.cookies.get("AccessToken");
 
