@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -17,15 +18,19 @@ export default function LoginForm() {
   const { signInSchema } = AuthSchemas();
   const t = useTranslations("AuthPages");
   type FormData = z.infer<typeof signInSchema>;
+
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
   });
 
@@ -95,7 +100,7 @@ export default function LoginForm() {
           radius="none"
           size="sm"
           isDisabled={isPending}
-          // {...register("rememberMe")}
+          {...register("rememberMe")}
         >
           <span className="text-primary text-sm">{t("rememberMe")}</span>
         </Checkbox>

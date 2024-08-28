@@ -28,7 +28,7 @@ export const AuthSchemas = () => {
       .regex(/[@$!%*?&#]/, {
         message: t("passwordSpecialChar"),
       }),
-    // rememberMe: z.boolean(),
+    rememberMe: z.boolean(),
   });
 
   const signUpSchema = z
