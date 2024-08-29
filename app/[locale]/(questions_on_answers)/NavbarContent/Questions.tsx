@@ -32,6 +32,7 @@ const Questions = ({
   >(null);
   const { openModal, setModalData } = useModalStore();
   const t = useTranslations("QuestionsOnAnswers");
+
   const handleEdit = (index: number) => {
     setCurrentQuestionIndex(index);
     openModal("editQuestion");

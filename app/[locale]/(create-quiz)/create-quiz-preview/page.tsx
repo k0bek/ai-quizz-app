@@ -18,7 +18,6 @@ const PreviewPage = () => {
         {t("quizPreviewMessage")}
       </h1>
       <Preview />
-      <AddQuestionModal />
     </section>
   );
 };

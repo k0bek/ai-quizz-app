@@ -1,7 +1,7 @@
-import React from 'react';
-import Image from 'next/image';
-import closeIcon from '/public/assets/closeIcon.svg';
-import { useTranslations } from 'next-intl';
+import React from "react";
+import Image from "next/image";
+import closeIcon from "/public/assets/closeIcon.svg";
+import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 
 interface DeleteQuestionModalProps {
@@ -15,14 +15,14 @@ const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
   questionTitle,
   questionDescription,
 }) => {
-  const t = useTranslations('QuestionsOnAnswers');
+  const t = useTranslations("QuestionsOnAnswers");
   const { type, isOpen, closeModal } = useModalStore((state) => ({
     type: state.type,
     isOpen: state.isOpen,
     closeModal: state.closeModal,
   }));
 
-  if (!(isOpen && type === 'deleteQuestion')) return null;
+  if (!(isOpen && type === "deleteQuestion")) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -34,8 +34,10 @@ const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
           <Image src={closeIcon} alt="close icon" />
         </button>
 
-        <h2 className="text-xl font-semibold mb-4 text-black">{t('areYouSure')}</h2>
-        <p className="text-gray mb-5">{t('cannotUndo')}</p>
+        <h2 className="text-xl font-semibold mb-4 text-black">
+          {t("areYouSure")}
+        </h2>
+        <p className="text-gray mb-5">{t("cannotUndo")}</p>
 
         <div className="bg-white p-4 rounded-lg mb-5">
           <h3 className="font-bold mb-1 text-gray-800">{questionTitle}</h3>
@@ -47,7 +49,7 @@ const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
             onClick={closeModal}
             className="bg-primary-200 text-primary-600 py-2 px-4 rounded-md "
           >
-            {t('cancel')}
+            {t("cancel")}
           </button>
 
           <button
@@ -57,7 +59,7 @@ const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
             }}
             className="bg-pink-600 text-white py-2 px-4 rounded-md"
           >
-            {t('delete')}
+            {t("delete")}
           </button>
         </div>
       </div>
@@ -66,6 +68,3 @@ const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
 };
 
 export default DeleteQuestionModal;
-
-
-

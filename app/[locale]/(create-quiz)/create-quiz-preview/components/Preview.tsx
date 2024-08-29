@@ -1,85 +1,185 @@
 "use client";
-import React from "react";
-import { Chip } from "@nextui-org/chip";
+import React, { useState } from "react";
 import QuizItem from "./Quiz/QuizItem";
 import { Switch } from "@nextui-org/switch";
-import { Button } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import SaveQuiz from "../../create-quiz/components/buttons/SaveQuiz";
 import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
-import { useModalStore } from "@/store/modalStore";
-import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
+import { useModalStore } from "@/store/modalStore2";
+import DeleteQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/DeleteQuestionModal";
+import EditQuestionModal from "@/app/[locale]/(questions_on_answers)/modals/EditQuestionModal";
+
+const mockQuestions = {
+  title: "What is the purpose of quantum physics?",
+  description: "Test your knowledge about the purpose of quantum physics",
+  generateQuestionsDto: [
+    {
+      title: "What is the primary goal of quantum physics?",
+      generateAnswersDto: [
+        {
+          content: "To understand the behavior of macroscopic objects",
+          iscorrect: false,
+        },
+        {
+          content: "To understand the behavior of microscopic particles",
+          iscorrect: false,
+        },
+        {
+          content: "To understand the fundamental laws of the universe",
+          iscorrect: true,
+        },
+        {
+          content: "To develop new technologies",
+          iscorrect: false,
+        },
+      ],
+    },
+    {
+      title: "What is the main application of quantum physics?",
+      generateAnswersDto: [
+        {
+          content: "Medical research",
+          iscorrect: false,
+        },
+        {
+          content: "Computer science",
+          iscorrect: false,
+        },
+        {
+          content: "Materials science",
+          iscorrect: false,
+        },
+        {
+          content: "Understanding the behavior of matter and energy",
+          iscorrect: true,
+        },
+      ],
+    },
+    {
+      title: "What is the primary focus of quantum physics?",
+      generateAnswersDto: [
+        {
+          content: "The behavior of macroscopic objects",
+          iscorrect: false,
+        },
+        {
+          content: "The behavior of microscopic particles",
+          iscorrect: true,
+        },
+        {
+          content: "The behavior of living organisms",
+          iscorrect: false,
+        },
+        {
+          content: "The behavior of the universe as a whole",
+          iscorrect: false,
+        },
+      ],
+    },
+    {
+      title: "What is the main benefit of quantum physics?",
+      generateAnswersDto: [
+        {
+          content: "Improved medical treatments",
+          iscorrect: false,
+        },
+        {
+          content: "New technologies and innovations",
+          iscorrect: true,
+        },
+        {
+          content: "Better understanding of the universe",
+          iscorrect: false,
+        },
+        {
+          content: "Increased funding for research",
+          iscorrect: false,
+        },
+      ],
+    },
+  ],
+};
 function Preview() {
-  const mockQuestions = [
-    {
-      questionId: 1,
-      number: 1,
-      question: "What is the capital of France?",
-      answers: ["Paris", "London", "Berlin", "Madrid"],
-    },
-    {
-      questionId: 2,
-      number: 2,
-      question: "Who won the 2020 Nobel Prize in Literature?",
-      answers: [
-        "Jane Austen",
-        "William Shakespeare",
-        "Ernest Hemingway",
-        "George Orwell",
-      ],
-    },
-    {
-      questionId: 3,
-      number: 3,
-      question: "Which famous American inventor developed the light bulb?",
-      answers: [
-        "Alexander Graham Bell",
-        "Enrico Fermi",
-        "Nikola Tesla",
-        "Charles Babbage",
-      ],
-    },
-    {
-      questionId: 4,
-      number: 4,
-      question: "Who is the current Prime Minister of Canada?",
-      answers: ["Joe Biden", "Stephen McCain", "John Cena", "Michael Douglas"],
-    },
-  ];
   const router = useRouter();
+  const t = useTranslations("QuizPreview");
+  const { closeModal, openModal, setModalData } = useModalStore();
+
+  const [questions, setQuestions] = useState(
+    mockQuestions.generateQuestionsDto
+  );
+  const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
+    number | null
+  >(null);
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     router.push(routes.createQuiz[3].route);
   };
-  const t = useTranslations("QuizPreview");
-  const { closeModal, openModal, setModalData } = useModalStore();
-  const openDeleteModalHandler = () => {
-    openModal("addQuestion");
+
+  const handleDeleteQuestion = (index: number) => {
+    setCurrentQuestionIndex(index);
+    openModal("deleteQuestion");
     setModalData({
-      title: "Some title",
-      description: "Some title",
-      status: "",
-      questions: 0,
+      title: questions[index].title,
+      description: questions[index].title,
+      status: "Error",
+      questions: 2,
+      onConfirmDelete: () => handleConfirmDelete(index),
     });
   };
-  const deleteQuestionHandler = () => {
-    openModal("deleteQuestion");
+
+  const handleConfirmDelete = (index: number) => {
+    const updatedQuizData = questions.filter((_, i) => i !== index);
+    setQuestions(updatedQuizData);
   };
+
+  const handleEditQuestion = (index: number) => {
+    openModal("editQuestion");
+    setCurrentQuestionIndex(index);
+  };
+
+  const handleSaveEdit = (updatedQuestion: any) => {
+    if (
+      currentQuestionIndex !== null &&
+      currentQuestionIndex < questions.length
+    ) {
+      const updatedQuizData = [...questions];
+      updatedQuizData[currentQuestionIndex] = {
+        ...updatedQuizData[currentQuestionIndex], // Retain existing properties
+        title: updatedQuestion.question, // Update the title
+        generateAnswersDto: updatedQuestion.options.map((option: string) => ({
+          content: option,
+          iscorrect: updatedQuestion.selected === option,
+        })),
+      };
+      setQuestions(updatedQuizData);
+      closeModal(); // Ensure the modal is closed after saving
+    }
+  };
+
   return (
     <>
-      <form onSubmit={onSubmit} className=" flex-col flex  rounded-lg">
+      <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
         <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
-          <div className="flex gap-3  sm:gap-2 md:gap-0 justify-between items-center ">
+          <div className="flex gap-3 sm:gap-2 md:gap-0 justify-between items-center">
             <Chip color="primary" size="md" radius="sm">
               {t("numberOfQuestions")}
             </Chip>
-            <div className="flex items-center flex-col sm:flex-row gap-2 ">
+            <div className="flex items-center flex-col sm:flex-row gap-2">
               <label className="text-sm order-1" htmlFor="answers">
                 {t("answers")}
               </label>
-              <Switch className="order-0" size="lg" color="default" />
+              <Switch
+                className="order-0"
+                size="lg"
+                color="default"
+                checked={showCorrectAnswers}
+                onChange={(e) => setShowCorrectAnswers(e.target.checked)}
+              />
             </div>
           </div>
           <Button
@@ -88,20 +188,55 @@ function Preview() {
             color="primary"
             size="sm"
             radius="md"
-            onClick={openDeleteModalHandler}
           >
             {t("addNewQuestionBtn")}
           </Button>
-          {mockQuestions.map((question) => (
-            <div key={question.questionId}>
-              <QuizItem {...question} />
-            </div>
-          ))}
+          <div>
+            {questions.length === 0 ? (
+              <p>No questions available.</p>
+            ) : (
+              questions.map((question, index) => (
+                <QuizItem
+                  key={index}
+                  questionId={index + 1}
+                  number={index + 1}
+                  question={question.title}
+                  options={question.generateAnswersDto} // Pass the full array with content and iscorrect
+                  description={""}
+                  showCorrectAnswers={showCorrectAnswers} // Make sure this prop is being passed
+                  handleDelete={() => handleDeleteQuestion(index)}
+                  handleEdit={() => handleEditQuestion(index)}
+                />
+              ))
+            )}
+          </div>
         </aside>
         <NavigationControls>
           <SaveQuiz />
         </NavigationControls>
-        <AddQuestionModal />
+        {currentQuestionIndex !== null && (
+          <>
+            <DeleteQuestionModal
+              questionTitle={questions[currentQuestionIndex]?.title}
+              onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}
+              questionDescription={questions[currentQuestionIndex].title}
+            />
+            <EditQuestionModal
+              questionData={{
+                question: questions[currentQuestionIndex].title,
+                description: questions[currentQuestionIndex].title,
+                options: questions[currentQuestionIndex].generateAnswersDto.map(
+                  (ans) => ans.content
+                ),
+                selected:
+                  questions[currentQuestionIndex].generateAnswersDto.find(
+                    (ans) => ans.iscorrect
+                  )?.content || "",
+              }}
+              onSave={handleSaveEdit}
+            />
+          </>
+        )}
       </form>
     </>
   );

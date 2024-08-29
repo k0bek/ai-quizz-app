@@ -1,5 +1,5 @@
 "use client";
-import { useModalStore } from "@/store/modalStore";
+import { useModalStore } from "@/store/modalStore2";
 import {
   Button,
   Card,
@@ -13,6 +13,7 @@ import {
   Tabs,
 } from "@nextui-org/react";
 import React from "react";
+import NavigationControls from "../(create-quiz)/create-quiz/components/buttons/NavigationControls";
 let questions = [
   { title: "Question2" },
   { title: "Question3" },
@@ -55,16 +56,19 @@ function AddQuestionModal() {
               </section>
             </div>
           </Tab>
-          <Tab className="" key="AIGeneration" title="AI Generation">
-            <div className="flex flex-col justify-center items-center h-full">
-              <Card className="w-full h-full">
-                <CardBody className="flex justify-center items-center text-center">
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur.
-                </CardBody>
-              </Card>
+          <Tab
+            className="w-full h-full "
+            key="AIGeneration"
+            title="AI Generation"
+          >
+            <div className="flex flex-col justify-center w-full p-6 gap-6  h-full">
+              <h1>Prompt</h1>
+              <Input
+                variant="flat"
+                color="default"
+                radius="sm"
+                size="md"
+              ></Input>
             </div>
           </Tab>
         </Tabs>

@@ -37,7 +37,7 @@ const StatusIndicator = () => {
   }, [currentRoute, visitedRoutes]);
 
   return (
-    <aside className="border p-4  flex justify-center items-center">
+    <aside className=" p-4  flex justify-center items-center">
       <div className="flex items-center ">
         {routes.createQuiz.slice(1, 4).map((routeObj, index) => (
           <Dot
