@@ -102,6 +102,7 @@ const mockQuestions = {
     },
   ],
 };
+
 function Preview() {
   const router = useRouter();
   const t = useTranslations("QuizPreview");
@@ -121,25 +122,39 @@ function Preview() {
   };
 
   const handleDeleteQuestion = (index: number) => {
-    setCurrentQuestionIndex(index);
-    openModal("deleteQuestion");
-    setModalData({
-      title: questions[index].title,
-      description: questions[index].title,
-      status: "Error",
-      questions: 2,
-      onConfirmDelete: () => handleConfirmDelete(index),
-    });
+    if (questions[index]) {
+      setCurrentQuestionIndex(index);
+      openModal("deleteQuestion");
+      setModalData({
+        title: questions[index].title,
+        description: questions[index].title,
+        status: "Error",
+        questions: 2,
+        onConfirmDelete: () => handleConfirmDelete(index),
+      });
+    }
   };
 
   const handleConfirmDelete = (index: number) => {
     const updatedQuizData = questions.filter((_, i) => i !== index);
     setQuestions(updatedQuizData);
+
+    if (updatedQuizData.length === 0) {
+      setCurrentQuestionIndex(null); // Reset index when there are no questions
+      closeModal(); // Close any open modal since there's no data to show
+    } else {
+      // If questions remain, keep the index within bounds
+      setCurrentQuestionIndex(
+        Math.min(currentQuestionIndex as number, updatedQuizData.length - 1)
+      );
+    }
   };
 
   const handleEditQuestion = (index: number) => {
-    openModal("editQuestion");
-    setCurrentQuestionIndex(index);
+    if (questions[index]) {
+      setCurrentQuestionIndex(index);
+      openModal("editQuestion");
+    }
   };
 
   const handleSaveEdit = (updatedQuestion: any) => {
@@ -214,7 +229,7 @@ function Preview() {
         <NavigationControls>
           <SaveQuiz />
         </NavigationControls>
-        {currentQuestionIndex !== null && (
+        {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
           <>
             <DeleteQuestionModal
               questionTitle={questions[currentQuestionIndex]?.title}
