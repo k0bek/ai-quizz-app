@@ -1,5 +1,5 @@
 import { Button, Card, Skeleton, Spinner } from "@nextui-org/react";
-import { quizzes } from "./dashboard/page";
+
 export default function Loading() {
   const skeleton = `
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
