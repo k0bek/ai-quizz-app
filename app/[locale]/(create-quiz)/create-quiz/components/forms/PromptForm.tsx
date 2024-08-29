@@ -33,14 +33,14 @@ const PromptForm = () => {
       <Textarea
         isRequired
         variant="faded"
-        label={t("promptLabel")}
+        label={t("contentLabel")}
         {...register("prompt", { required: true })}
         labelPlacement="outside"
         placeholder={t("promptForm")}
         className="p-6 gap-2 bg-content2"
       />
       {errors.prompt && (
-        <div className="text-red-500">{errors.prompt.message}</div>
+        <div className="text-red-500 text-sm">{errors.prompt.message}</div>
       )}
       <NavigationControls>
         <NextButton />

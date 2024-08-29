@@ -77,23 +77,6 @@ function ButtonGroupComponent() {
             >
               <span>{t("trueFalse")}</span>
             </Button>
-            <Button
-              variant={selectedType === "fill-in-the-blank" ? "solid" : "flat"}
-              className="w-full justify-start md:w-auto"
-              size="lg"
-              startContent={
-                selectedType === "fill-in-the-blank" ? (
-                  <TickCircle />
-                ) : (
-                  <EmptyCircle />
-                )
-              }
-              name="fill-in-the-blank"
-              aria-pressed={selectedType === "fill-in-the-blank"}
-              onClick={() => handleTypeClick("fill-in-the-blank")}
-            >
-              <span>{t("fillIn")}</span>
-            </Button>
           </ButtonGroup>
         </div>
       </div>

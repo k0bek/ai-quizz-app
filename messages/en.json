@@ -124,7 +124,7 @@
     "nextButton": "Next",
     "promptRequiredField": "Prompt field should have at least 10 characters",
     "promptForm": "Enter your prompt",
-    "promptLabel": "Prompt",
+    "contentLabel": "Content",
     "cancelQuizWarning": "Are you sure?",
     "cancelQuizWarningText": "You are about to quit the quiz creation process. Any progress made so far will be lost. The action cannot be undone",
     "cancelQuizConfirm": "Yes, I quit"
