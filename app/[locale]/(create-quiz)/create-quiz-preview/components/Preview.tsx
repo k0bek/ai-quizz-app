@@ -9,6 +9,8 @@ import NavigationControls from "../../create-quiz/components/buttons/NavigationC
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
+import { useModalStore } from "@/store/modalStore";
+import AddQuestionModal from "@/app/[locale]/modals/AddQuestionModal";
 function Preview() {
   const mockQuestions = [
     {
@@ -52,26 +54,32 @@ function Preview() {
     router.push(routes.createQuiz[3].route);
   };
   const t = useTranslations("QuizPreview");
+  const { closeModal, openModal, setModalData } = useModalStore();
+  const openDeleteModalHandler = () => {
+    openModal("addQuestion");
+    setModalData({
+      title: "Some title",
+      description: "Some title",
+      status: "",
+      questions: 0,
+    });
+  };
+  const deleteQuestionHandler = () => {
+    openModal("deleteQuestion");
+  };
   return (
     <>
       <form onSubmit={onSubmit} className=" flex-col flex  rounded-lg">
-        <h1 className="text-4xl font-semibold pt-5 pb-5">
-          {t("quizPreviewHeading")}
-        </h1>
-        <h1
-          className="text-lg
-      font-normal"
-        >
-          {t("quizPreviewMessage")}
-        </h1>
         <aside className="bg-content2 p-6 mt-5 gap-6 flex flex-col">
-          <div className="flex justify-between items-center ">
+          <div className="flex gap-3  sm:gap-2 md:gap-0 justify-between items-center ">
             <Chip color="primary" size="md" radius="sm">
               {t("numberOfQuestions")}
             </Chip>
-            <div className="flex items-center gap-2">
-              <label htmlFor="answers">{t("answers")}</label>
-              <Switch size="lg" color="default" />
+            <div className="flex items-center flex-col sm:flex-row gap-2 ">
+              <label className="text-sm order-1" htmlFor="answers">
+                {t("answers")}
+              </label>
+              <Switch className="order-0" size="lg" color="default" />
             </div>
           </div>
           <Button
@@ -80,16 +88,20 @@ function Preview() {
             color="primary"
             size="sm"
             radius="md"
+            onClick={openDeleteModalHandler}
           >
             {t("addNewQuestionBtn")}
           </Button>
-          {mockQuestions.map((question, index) => (
-            <QuizItem key={question.questionId} {...question} />
+          {mockQuestions.map((question) => (
+            <div key={question.questionId}>
+              <QuizItem {...question} />
+            </div>
           ))}
         </aside>
         <NavigationControls>
           <SaveQuiz />
         </NavigationControls>
+        <AddQuestionModal />
       </form>
     </>
   );

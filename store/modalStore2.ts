@@ -3,7 +3,7 @@ import { create } from "zustand";
 export type ModalType = "deleteQuestion" | "editQuestion" | "";
 
 type ModalDataT = {
-  onConfirmDelete?: () => void;  
+  onConfirmDelete?: () => void;
   title: string;
   description: string;
   status: string;
@@ -29,7 +29,7 @@ export const useModalStore = create<ModalStore>((set) => ({
     description: "",
     status: "",
     questions: 0,
-    onConfirmDelete: () => {},  
+    onConfirmDelete: () => {},
   },
   setModalData: (data: ModalDataT) => set({ modalData: data }),
 }));

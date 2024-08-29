@@ -8,7 +8,7 @@ const layout = ({ children }: { children: ReactNode }) => {
     <StepContextProvider>
       <main>
         <Header />
-        <section className="md:w-[55rem] mx-auto gap-6 flex flex-col">
+        <section className="md:w-[55rem] mx-auto gap-6 flex flex-col border">
           <StatusIndicator />
           {children}
         </section>
