@@ -37,15 +37,17 @@ const StatusIndicator = () => {
   }, [currentRoute, visitedRoutes]);
 
   return (
-    <aside className="mx-auto flex justify-center items-center">
-      {routes.createQuiz.slice(1, 4).map((routeObj, index) => (
-        <Dot
-          key={index}
-          currentRouteProp={routeObj.route}
-          step={index}
-          visited={visitedRoutes.includes(routeObj.route)} // Ensure the first step is not automatically visited
-        />
-      ))}
+    <aside className=" p-4  flex justify-center items-center">
+      <div className="flex items-center ">
+        {routes.createQuiz.slice(1, 4).map((routeObj, index) => (
+          <Dot
+            key={index}
+            currentRouteProp={routeObj.route}
+            step={index}
+            visited={visitedRoutes.includes(routeObj.route)} // Ensure the first step is not automatically visited
+          />
+        ))}
+      </div>
     </aside>
   );
 };

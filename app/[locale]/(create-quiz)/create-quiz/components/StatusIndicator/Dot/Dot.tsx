@@ -28,8 +28,8 @@ const Dot = ({
           </span>
         </div>
       </div>
-      <div className="w-[80px]">
-        <hr className={step === 2 ? "hidden" : ""} />
+      <div className={step >= 2 ? "hidden" : ""}>
+        <hr className="w-[80px]" />
       </div>
     </section>
   );

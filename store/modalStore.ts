@@ -27,6 +27,7 @@ export const useModalStore = create<ModalStore>((set) => ({
     description: "",
     status: "",
     questions: 0,
+    onConfirmDelete: () => {},
   },
   setModalData: (data: ModalDataT) => set({ modalData: data }),
 }));

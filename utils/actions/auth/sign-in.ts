@@ -5,6 +5,7 @@ import { z } from "zod";
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { signInUrl } from "@/constants/api";
+import axiosInstance from "../../axiosInstance";
 
 export const signInUser = async (values: z.infer<typeof signInSchema>) => {
   const validatedFields = signInSchema.safeParse(values);
@@ -15,7 +16,7 @@ export const signInUser = async (values: z.infer<typeof signInSchema>) => {
   }
 
   try {
-    const response = await axios.post(signInUrl, values, {
+    const response = await axiosInstance.post(signInUrl, values, {
       withCredentials: true,
     });
 
