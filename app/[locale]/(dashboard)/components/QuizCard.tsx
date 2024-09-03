@@ -1,16 +1,21 @@
+
+
+
 "use client";
 
-import { cn } from "@/lib";
+import React, { useState } from "react";
 import Image from "next/image";
-import React from "react";
+import { cn } from "@/lib";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
+import { updateQuizStatus } from '@/utils/api/updateQuizStatus';
 
 interface QuizCardProps {
   title: string;
   description: string;
-  status: string;
+  status: 'Active' | 'Inactive';
   questions: number;
+  quizId: string;
 }
 
 const QuizCard: React.FC<QuizCardProps> = ({
@@ -18,7 +23,10 @@ const QuizCard: React.FC<QuizCardProps> = ({
   description,
   status,
   questions,
+  quizId,
 }) => {
+  const [currentStatus, setCurrentStatus] = useState(status);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { openModal, setModalData } = useModalStore();
   const t = useTranslations("Dashboard");
 
@@ -27,13 +35,27 @@ const QuizCard: React.FC<QuizCardProps> = ({
     setModalData({
       title,
       description,
-      status,
+      status: currentStatus,
       questions,
     });
   };
 
+  const handleStatusChange = async () => {
+    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+    setIsUpdating(true);
+    try {
+      await updateQuizStatus(quizId, newStatus);
+      setCurrentStatus(newStatus);
+    } catch (error) {
+      console.error('Failed to update quiz status:', error);
+      // Opcjonalnie, możesz tutaj wyświetlić komunikat o błędzie dla użytkownika
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return (
-    <div className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between  flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg">
+    <div className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg">
       <div className="flex flex-row justify-between items-start">
         <div>
           <h3 className="font-semibold text-base text-default-700">{title}</h3>
@@ -41,7 +63,7 @@ const QuizCard: React.FC<QuizCardProps> = ({
             {description}
           </p>
         </div>
-        <button className="ml-5 cursor-pointer" onClick={handleOpenDeleteModal}>
+        <button className="cursor-pointer" onClick={handleOpenDeleteModal}>
           <Image
             src="/assets/bin.svg"
             width={20}
@@ -57,16 +79,17 @@ const QuizCard: React.FC<QuizCardProps> = ({
             {t("total")} {questions} {t("questions")}
           </p>
         </div>
-        <div
+        <button
+          onClick={handleStatusChange}
+          disabled={isUpdating}
           className={cn(
-            "px-2 py-1 rounded-lg text-small h-full flex items-center justify-center",
-            status === "Active" ? "bg-success" : "bg-danger"
+            "px-2 py-1 rounded-lg text-small h-full flex items-center justify-center cursor-pointer",
+            currentStatus === "Active" ? "bg-success text-black" : "bg-danger text-white",
+            isUpdating && "opacity-50 cursor-not-allowed"
           )}
         >
-          <p className={cn(status === "Active" ? "text-black" : "text-white")}>
-            {status}
-          </p>
-        </div>
+          {isUpdating ? t("updating") : currentStatus}
+        </button>
       </div>
     </div>
   );
