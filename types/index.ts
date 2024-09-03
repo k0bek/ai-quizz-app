@@ -12,7 +12,19 @@ export type HistoryItemT = {
 export type UpdateProfileT = {
   userName: string;
 };
-
+export type GenerateQuizResponse = {
+  title: string;
+  description: string;
+  questions: [
+    title: string,
+    answers: [
+      {
+        content: string;
+        isCorrect: boolean;
+      }
+    ]
+  ];
+};
 export type QuestionTypeT = "MultipleChoice" | "TrueFalse" | "";
 
 export type GenerateQuizT = {
@@ -32,4 +44,31 @@ export type DashboardQuizT = {
   status: "Active" | "Inactive";
   title: string;
   totalQuestions: number;
+};
+
+export type QuestionType = ["MultipleChoice" | "TrueFalse"] | "";
+
+export type QuestionsT = {
+  title: string;
+  createAnswersDto: {
+    content: string;
+    isCorrect: boolean;
+  }[];
+};
+
+export type QuizzList = {
+  items: [
+    {
+      id: string;
+      title: string;
+      description: string;
+      availibility: string;
+      status: "Active" | "Disabled";
+      totalQuestions: number;
+    }
+  ];
+  totalPages: number;
+  totalItemsCount: number;
+  itemsFrom: number;
+  itemsTo: number;
 };
