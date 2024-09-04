@@ -1,13 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
-import TickCircle from "./TickCircle";
-import EmptyCircle from "./EmptyCircle";
-import NextButton from "../../create-quiz/components/buttons/NextButton";
+
+
 import { useRouter } from "next/navigation";
-import NavigationControls from "../../create-quiz/components/buttons/NavigationControls";
+
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
+import TickCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/TickCircle";
+import EmptyCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/EmptyCircle";
+import NextButton from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NextButton";
+import NavigationControls from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
 
 function ButtonGroupComponent() {
   // State to track the selected button in each group

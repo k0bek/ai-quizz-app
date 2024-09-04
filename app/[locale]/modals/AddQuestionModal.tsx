@@ -13,7 +13,7 @@ import {
   Tabs,
 } from "@nextui-org/react";
 import React from "react";
-import NavigationControls from "../(create-quiz)/create-quiz/components/buttons/NavigationControls";
+import NavigationControls from "../(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
 let questions = [
   { title: "Question2" },
   { title: "Question3" },
@@ -21,9 +21,11 @@ let questions = [
   { title: "Question5" },
 ];
 function AddQuestionModal() {
-  const { closeModal, isOpen } = useModalStore();
+  const { closeModal, isOpen, type } = useModalStore();
   const samplePlaceholder =
     "What is one of the key features of cryptocurrencies?";
+
+  if (!isOpen && type !== "addQuestion") return null;
   return (
     <Modal
       className="p-6 gap-6 flex"

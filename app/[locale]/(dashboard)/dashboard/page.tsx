@@ -1,45 +1,19 @@
+
+"use client"
 import React from 'react';
 import QuizCard from '../components/QuizCard';
-import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { routes } from '@/routes';
+import { useTranslations } from 'next-intl';
+import { useGetQuizList } from '@/utils/hooks/useGetQuizList';
+import { DashboardQuizT } from '@/types';
+import { Skeleton } from '@nextui-org/react';
 
+const DashboardPage = () => {
+  const t = useTranslations('Dashboard');
+  const { data, isPending, isFetching } = useGetQuizList();
 
-interface Quiz {
-  id: string;
-  title: string;
-  description: string;
-  status: 'Active' | 'Inactive';
-  questions: number;
-}
-
-// Przykładowe dane quizów
-const quizzes: Quiz[] = [
-  {
-    id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    title: 'Identify your biggest roadblock to succeeding in cryptocurrency',
-    description: 'Quiz description',
-    status: 'Active',
-    questions: 15,
-  },
-  {
-    id: '7b2bf7b8-47b3-4eaf-8cf3-9b2c3b4af85b',
-    title: 'Identify your biggest roadblock to succeeding in cryptocurrency',
-    description: 'Quiz description',
-    status: 'Inactive',
-    questions: 10,
-  },
-  {
-    id: 'e6a28d4b-62cc-4dfd-a9ff-5b55a32db2ff',
-    title: 'Identify your biggest roadblock to succeeding in cryptocurrency',
-    description: 'Quiz description',
-    status: 'Active',
-    questions: 5,
-  },
-];
-
-const DashboardPage = async () => {
-  const t = await getTranslations('Dashboard');
+  const skeletonItems = Array.from({ length: 4 });
 
   return (
     <section className="py-8 w-full md:max-w-7xl">
@@ -57,16 +31,31 @@ const DashboardPage = async () => {
         {t('manageQuizz')}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-        {quizzes.map((quiz) => (
-          <QuizCard
-            key={quiz.id}
-            title={quiz.title}
-            description={quiz.description}
-            status={quiz.status}
-            questions={quiz.questions}
-            quizId={quiz.id}
-          />
-        ))}
+        {(isPending || isFetching ? skeletonItems : data?.items).map(
+          (quiz: DashboardQuizT | undefined, index: number) =>
+            quiz ? (
+              <QuizCard
+                key={quiz.id}
+                id={quiz.id}
+                title={quiz.title}
+                description={quiz.description}
+                status={quiz.status}
+                questions={quiz.totalQuestions}
+              />
+            ) : (
+              <div
+                key={index}
+                className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg"
+              >
+                <Skeleton className="h-6 w-3/4 rounded-lg" />
+                <Skeleton className="mt-4 h-4 w-5/6 rounded-lg" />
+                <div className="flex items-center justify-start gap-4 mt-4">
+                  <Skeleton className="h-8 w-20 rounded-lg" />
+                  <Skeleton className="h-8 w-20 rounded-lg" />
+                </div>
+              </div>
+            )
+        )}
         <div className="border-dashed border-2 border-gray-300 bg-base-primary text-white rounded-lg flex flex-col justify-center items-center p-4">
           <Link href={routes.createQuiz[0].route}>
             <button className="text-white hover:text-gray-200 transition-colors flex flex-col items-center">
@@ -81,3 +70,4 @@ const DashboardPage = async () => {
 };
 
 export default DashboardPage;
+

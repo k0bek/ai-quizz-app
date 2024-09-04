@@ -47,8 +47,10 @@
     "displayName": "This is your public display name.",
     "updateButton": "Update",
     "deleteAccount": "Delete account",
+    "deletedQuizSuccess": "Deleted quiz succesfully",
+    "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
-    "profileUpdated": "Profile updated successfully!"
+    "profileUpdated": "Profile updated succesfully!"
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Quiz Detail",
@@ -140,7 +142,9 @@
     "low": "Low",
     "med": "Medium",
     "high": "High",
-    "man": "Manual"
+    "man": "Manual",
+    "generatedSuccessfullyMsg": "Quiz generated successfully",
+    "generating": "Generating quiz..."
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",
@@ -148,7 +152,9 @@
     "numberOfQuestions": "Total 5 questions",
     "addNewQuestionBtn": "Add New Question",
     "answers": "Answers",
-    "saveQuizButton": "Save Quiz"
+    "saveQuizButton": "Save Quiz",
+    "createdSuccessfullyMsg": "Quiz created successfully",
+    "creating": "Creating quiz..."
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",

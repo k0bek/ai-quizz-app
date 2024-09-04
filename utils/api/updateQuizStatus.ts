@@ -1,5 +1,3 @@
-
-
 import axios from 'axios';
 
 export const updateQuizStatus = async (id: string, newStatus: 'Active' | 'Inactive') => {
@@ -27,3 +25,4 @@ export const updateQuizStatus = async (id: string, newStatus: 'Active' | 'Inacti
     throw new Error('Failed to update quiz status');
   }
 };
+
