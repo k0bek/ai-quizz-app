@@ -12,3 +12,5 @@ export const deleteQuiz = `${API_BASE_URL}/api/quiz/`;
 export const quizListUrl = `${API_BASE_URL}/api/quiz`;
 
 export const deleteQuizUrl = `${API_BASE_URL}/api/quiz/`;
+
+export const updateQuizStatusUrl = (id: string) => `${API_BASE_URL}/api/quiz/${id}/status`;
