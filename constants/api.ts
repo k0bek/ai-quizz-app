@@ -12,3 +12,4 @@ export const deleteQuiz = `${API_BASE_URL}/api/quiz/`;
 export const quizListUrl = `${API_BASE_URL}/api/quiz`;
 
 export const deleteQuizUrl = `${API_BASE_URL}/api/quiz/`;
+export const singleQuizUrl = `${API_BASE_URL}/api/quiz/`;
