@@ -51,7 +51,9 @@
     "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
     "profileUpdated": "Profile updated succesfully!",
-    "statusUpdateError": "failed"
+    "statusUpdateError": "Quiz Update failed!",
+    "statusUpdateSuccess":"Quiz updated correctly!"
+    
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Quiz Detail",
