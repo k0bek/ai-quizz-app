@@ -1,24 +1,30 @@
 "use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
-import { updateQuizStatus } from '@/utils/api/updateQuizStatus';
+import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
 
 interface QuizCardProps {
   title: string;
   id?: string;
   description: string;
-  status: 'Active' | 'Inactive';
+  status: "Active" | "Inactive";
   questions: number;
 }
 
-export default function Component({ title, id, description, status: initialStatus, questions }: QuizCardProps) {
+export default function Component({
+  title,
+  id,
+  description,
+  status: initialStatus,
+  questions,
+}: QuizCardProps) {
   const [currentStatus, setCurrentStatus] = useState(initialStatus);
   const [isUpdating, setIsUpdating] = useState(false);
   const { openModal, setModalData, closeModal } = useModalStore();
@@ -40,17 +46,38 @@ export default function Component({ title, id, description, status: initialStatu
       });
     },
   });
+  const { mutate: updateStatus } = useMutation({
+    // Properly pass parameters to the mutation function
+    mutationFn: ({
+      id,
+      newStatus,
+    }: {
+      id: string;
+      newStatus: "Active" | "Inactive";
+    }) => updateQuizStatus(id, newStatus),
+    onSuccess: () => {
+      toast.success(t("statusUpdateSuccess"));
+    },
+    onError: (error: any) => {
+      toast.error(error.message || t("statusUpdateError"));
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["updateQuizStatus"],
+      });
+    },
+  });
 
   const handleStatusChange = async () => {
     if (!id) return;
-    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+    const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
     setIsUpdating(true);
     try {
-      await updateQuizStatus(id, newStatus);
-      setCurrentStatus(newStatus);
-      toast.success(t("statusUpdateSuccess"));
+      updateStatus({ id, newStatus });
+
+      setCurrentStatus(newStatus); // Update the state with the new status
     } catch (error) {
-      console.error('Failed to update quiz status:', error);
+      console.error(error); // Logging the error might give more insight
       toast.error(t("statusUpdateError"));
     } finally {
       setIsUpdating(false);
@@ -92,7 +119,9 @@ export default function Component({ title, id, description, status: initialStatu
       <div className="flex flex-col justify-between items-start">
         <div>
           <h3 className="font-semibold text-base text-default-700">{title}</h3>
-          <p className="text-base font-medium text-default-600 mt-1">{description}</p>
+          <p className="text-base font-medium text-default-600 mt-1">
+            {description}
+          </p>
         </div>
       </div>
       <div className="flex items-center justify-start gap-4 mt-4">
@@ -110,7 +139,11 @@ export default function Component({ title, id, description, status: initialStatu
             isUpdating ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
           )}
         >
-          <p className={cn(currentStatus === "Active" ? "text-black" : "text-white")}>
+          <p
+            className={cn(
+              currentStatus === "Active" ? "text-black" : "text-white"
+            )}
+          >
             {isUpdating ? t("updating") : currentStatus}
           </p>
         </button>

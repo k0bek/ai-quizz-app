@@ -1,34 +1,47 @@
-import axios from 'axios';
-import { API_BASE_URL, updateQuizStatusUrl } from '@/constants/api';
+"use server";
+import axios, { AxiosError } from "axios";
+import { API_BASE_URL, updateQuizStatusUrl } from "@/constants/api";
+import { cookies } from "next/headers"; // For handling cookies in Next.js
 
-export const updateQuizStatus = async (id: string, newStatus: 'Active' | 'Inactive') => {
+export const updateQuizStatus = async (
+  id: string,
+  newStatus: "Active" | "Inactive"
+) => {
   try {
-    const response = await axios.patch(
-      updateQuizStatusUrl(id), 
-      { status: newStatus }, 
+    const access = cookies().get("AccessToken")?.value;
+    console.log(id);
+    console.log("AccessToken:", access);
+
+    if (!access) {
+      throw new Error("Access token is missing");
+    }
+
+    const payload = newStatus;
+
+    console.log("Payload:", JSON.stringify(payload));
+
+    const result = await axios.patch(
+      `${updateQuizStatusUrl}/${id}/status`,
+      payload,
       {
         headers: {
-          'Content-Type': 'application/json-patch+json'
+          Authorization: `Bearer ${access}`,
+          "Content-Type": "application/json", // Ensure content type is set correctly
         },
-        baseURL: API_BASE_URL, 
       }
     );
-    return response.data;
+
+    // Return the response data
+    return result.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        const { status } = error.response;
-        if (status === 404) {
-          throw new Error('Quiz not found');
-        } else if (status === 400) {
-          throw new Error('Invalid request');
-        } else if (status === 401) {
-          throw new Error('Unauthorized access');
-        } else if (status === 500) {
-          throw new Error('Server error');
-        }
-      }
+    // Handle Axios errors
+    if (error instanceof AxiosError) {
+      console.error("Axios error:", error.response?.data || error.message);
+      throw error || new Error("Failed to update quiz status");
+    } else {
+      // Handle any other unexpected errors
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred");
     }
-    throw new Error('Failed to update quiz status');
   }
 };

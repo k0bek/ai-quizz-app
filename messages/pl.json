@@ -50,9 +50,9 @@
     "deleteAccount": "Usuń konto",
     "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
     "profileUpdated": "Twoje dane zostały zaktualizowane.",
-   
-    "statusUpdateError": "Nie udało się zaktualizować statusu quizu"
-     
+    "updating": "Aktualizowanie...",
+    "statusUpdateError": "Nie udało się zaktualizować statusu quizu",
+    "statusUpdateSuccess": "Status quizu został zaktualizowany."
   },
   "QuestionsOnAnswers": {
     "detailQuizzHeading": "Szczegóły Quizu",
