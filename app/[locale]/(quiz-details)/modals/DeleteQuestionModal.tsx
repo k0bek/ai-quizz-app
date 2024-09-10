@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import closeIcon from "/public/assets/closeIcon.svg";
 import { useTranslations } from "next-intl";
 import { useModalStore } from "@/store/modalStore2";
 import {
@@ -14,14 +13,12 @@ import {
 interface DeleteQuestionModalProps {
   onConfirmDelete: () => void;
   questionTitle: string;
-  questionDescription: string;
 }
 
-const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
+const DeleteQuestionModal = ({
   onConfirmDelete,
   questionTitle,
-  questionDescription,
-}) => {
+}: DeleteQuestionModalProps) => {
   const t = useTranslations("QuestionsOnAnswers");
   const { closeModal, isOpen, type } = useModalStore();
 
@@ -67,7 +64,6 @@ const DeleteQuestionModal: React.FC<DeleteQuestionModalProps> = ({
         <ModalBody>
           <div className="bg-white py-2 px-4 rounded-lg border-dashed border-2">
             <p className="text-foreground-700 font-semibold">{questionTitle}</p>
-            <p className="text-foreground-600">{questionDescription}</p>
           </div>
         </ModalBody>
         <ModalFooter>

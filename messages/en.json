@@ -104,7 +104,10 @@
     "delete": "Delete",
     "cannotUndo": "This action cannot be undone. Once you delete the question, there is no going back.",
     "quizDetails": "Quiz details",
-    "titleRequired": "Title is required."
+    "titleRequired": "Title is required.",
+    "dataUpdated": "Data updated successfully",
+    "changedQuestionSuccessfully": "Changed question successfully",
+    "deletedQuestionSuccess": "Deleted question succesfully"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -173,7 +176,9 @@
     "answers": "Answers",
     "saveQuizButton": "Save Quiz",
     "createdSuccessfullyMsg": "Quiz created successfully",
-    "creating": "Creating quiz..."
+    "creating": "Creating quiz...",
+    "questions": "questions",
+    "total": "Total"
   },
   "CreateQuizSuccess": {
     "quizSuccessHeading": "Success",
@@ -217,6 +222,7 @@
     "manual": "Manual",
     "ai": "AI Generation",
     "addQuestion": "Add question field",
-    "remove": "Remove"
+    "remove": "Remove",
+    "addedQuestionSuccess": "Question added successfully"
   }
 }
