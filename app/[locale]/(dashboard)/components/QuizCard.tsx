@@ -1,22 +1,21 @@
-"use client";
-
-import { cn } from "@/lib";
-import Image from "next/image";
 import React, { useState } from "react";
 import { useModalStore } from "@/store/modalStore";
 import { useTranslations } from "next-intl";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
-import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
+import { updateQuizStatus } from "@/utils/actions/api/updateQuizStatus";
+import classNames from "classnames"; 
+import { cn } from "@/lib";
+import Image from "next/image";
 
 interface QuizCardProps {
   title: string;
   id?: string;
   description: string;
-  status: "Active" | "Inactive";
+  status: string;
   questions: number;
 }
 
@@ -27,14 +26,14 @@ const QuizCard = ({
   status: initialStatus,
   questions,
 }: QuizCardProps) => {
-  const [currentStatus, setCurrentStatus] = useState(initialStatus);
-  const [isUpdating, setIsUpdating] = useState(false);
   const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
   const queryClient = useQueryClient();
   const router = useRouter();
+  const [currentStatus, setCurrentStatus] = useState(initialStatus);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Mutation for deleting quiz
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
@@ -48,10 +47,18 @@ const QuizCard = ({
       queryClient.invalidateQueries({
         queryKey: ["quizList"],
       });
+      setIsDeleting(false); 
     },
   });
 
-  // Mutation for updating quiz status
+  const handleDeleteQuiz = async (id: string) => {
+    if (!isDeleting) {
+      setIsDeleting(true); 
+      deleteMutate(id);
+    }
+  };
+
+  
   const { mutate: updateStatusMutate } = useMutation({
     mutationFn: ({
       id,
@@ -73,10 +80,6 @@ const QuizCard = ({
     },
   });
 
-  const handleDeleteQuiz = async (id: string) => {
-    deleteMutate(id);
-  };
-
   const handleOpenDeleteModal = (id?: string) => {
     if (!id) return;
     openModal("deleteQuizz");
@@ -88,6 +91,7 @@ const QuizCard = ({
       onConfirmDelete: () => {
         handleDeleteQuiz(id);
       },
+      isPending: false,
     });
   };
 
@@ -97,9 +101,9 @@ const QuizCard = ({
     setIsUpdating(true);
     try {
       updateStatusMutate({ id, newStatus });
-      setCurrentStatus(newStatus); // Update the local status state
+      setCurrentStatus(newStatus); 
     } catch (error) {
-      console.error(error); // Log the error for debugging purposes
+      console.error(error); 
       toast.error(t("statusUpdateError"));
     } finally {
       setIsUpdating(false);
@@ -128,6 +132,7 @@ const QuizCard = ({
             e.stopPropagation();
             handleOpenDeleteModal(id);
           }}
+          disabled={isDeleting} 
         >
           <Image
             src="/assets/bin.svg"
@@ -147,18 +152,18 @@ const QuizCard = ({
           </div>
           <button
             onClick={(e) => {
-              e.stopPropagation(); // Prevent opening the quiz details when changing status
+              e.stopPropagation(); 
               handleStatusChange();
             }}
             disabled={isUpdating}
-            className={cn(
+            className={classNames(
               "px-2 py-1 rounded-lg text-small h-full flex items-center justify-center",
               currentStatus === "Active" ? "bg-success" : "bg-danger",
               isUpdating ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
             )}
           >
             <p
-              className={cn(
+              className={classNames(
                 currentStatus === "Active" ? "text-black" : "text-white"
               )}
             >
