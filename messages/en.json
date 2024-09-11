@@ -51,11 +51,14 @@
     "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
     "profileUpdated": "Profile updated succesfully!",
-    "statusUpdateError": "Quiz Update failed!",
-    "statusUpdateSuccess":"Quiz updated correctly!"
-    
+    "statusUpdateSuccess": "Status updated succesfully!",
+    "statusUpdateError": "Error while updating status"
   },
   "QuestionsOnAnswers": {
+    "availabilityUpdateSuccess": "Availability updated succesfully!",
+    "availabilityUpdateError": "Error while updating availability",
+    "statusUpdateSuccess": "Status updated succesfully!",
+    "statusUpdateError": "Error while updating status",
     "detailQuizzHeading": "Quiz Detail",
     "shareQuizzButton": "Share this quiz",
     "questions": "Questions",
