@@ -47,8 +47,8 @@ export const refreshToken = async () => {
       Cookies.set("AccessToken", "", { maxAge: 0 });
       Cookies.set("RefreshToken", "", { maxAge: 0 });
 
-      Cookies.set("AccessToken", accessToken, { expires: 1 });
-      Cookies.set("RefreshToken", newRefreshToken, { expires: 7 });
+      Cookies.set("AccessToken", accessToken);
+      Cookies.set("RefreshToken", newRefreshToken);
 
       onRefreshed(accessToken, newRefreshToken);
       return { accessToken, newRefreshToken };
