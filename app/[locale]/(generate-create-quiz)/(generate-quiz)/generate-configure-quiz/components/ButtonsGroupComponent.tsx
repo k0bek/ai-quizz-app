@@ -47,20 +47,24 @@ function ButtonGroupComponent() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const numberOfQuestions = {
-      low: 5,
-      medium: 10,
-      high: 15,
-    }[selectedQuantity];
+    const numberOfQuestions =
+      {
+        low: 5,
+        medium: 10,
+        high: 15,
+      }[selectedQuantity] ?? 0;
+    const formData = new FormData();
+    formData.append("Content", Content as string);
+    formData.append("NumberOfQuestions", numberOfQuestions.toString()); //
+    formData.append("QuestionTypes", selectedType); //
+    Attachments?.forEach((attachement) => {
+      formData.append("Attachments", attachement);
+    });
+    formData.forEach((value, key) => {
+      console.log([key, value]);
+    });
 
-    const payload: GenerateQuizT = {
-      Content: Content,
-      NumberOfQuestions: numberOfQuestions,
-      QuestionTypes: [selectedType],
-      Attachments: JSON.parse(JSON.stringify(Attachments)) || [],
-    };
-
-    mutate(payload);
+    mutate(formData);
   };
 
   const questionTypes = [
@@ -74,7 +78,6 @@ function ButtonGroupComponent() {
     { label: t("high"), value: "high" },
   ];
 
-  console.log(Attachments);
   return (
     <form
       onSubmit={handleSubmit}

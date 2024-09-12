@@ -51,11 +51,15 @@
     "deletedQuizFailure": "Failed to delete quiz",
     "deleteAccountWarningProfile": "Once you delete your account, there is no going back. Please be certain.",
     "profileUpdated": "Profile updated succesfully!",
-    "statusUpdateError": "Quiz Update failed!",
-    "statusUpdateSuccess":"Quiz updated correctly!"
-    
+    "statusUpdateSuccess": "Quiz status updated successfully",
+    "updatingQuizStatus": "Updating quiz status...",
+    "statusUpdateError": "Error while updating status"
   },
   "QuestionsOnAnswers": {
+    "availabilityUpdateSuccess": "Availability updated succesfully!",
+    "availabilityUpdateError": "Error while updating availability",
+    "statusUpdateSuccess": "Status updated succesfully!",
+    "statusUpdateError": "Error while updating status",
     "detailQuizzHeading": "Quiz Detail",
     "shareQuizzButton": "Share this quiz",
     "questions": "Questions",
@@ -133,7 +137,7 @@
     "saveQuizzButton": "Save quiz",
     "cancelButton": "Cancel",
     "nextButton": "Next",
-    "promptRequiredField": "Prompt field should have at least 10 characters",
+    "requiredFields": "One of the required fields mustn't be empty",
     "promptForm": "Enter your prompt",
     "contentLabel": "Content",
     "cancelQuizWarning": "Are you sure?",

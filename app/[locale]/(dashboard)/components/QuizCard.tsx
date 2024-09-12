@@ -6,16 +6,16 @@ import toast from "react-hot-toast";
 import { deleteQuiz } from "@/utils/actions/quiz/deleteQuiz";
 import { useRouter } from "next/navigation";
 import { routes } from "@/routes";
-import { updateQuizStatus } from "@/utils/actions/api/updateQuizStatus";
-import classNames from "classnames"; 
+import { Button } from "@nextui-org/react";
 import { cn } from "@/lib";
 import Image from "next/image";
+import { updateQuizStatus } from "@/utils/api/updateQuizStatus";
 
 interface QuizCardProps {
   title: string;
   id?: string;
   description: string;
-  status: string;
+  status: "Active" | "Inactive";
   questions: number;
 }
 
@@ -29,10 +29,11 @@ const QuizCard = ({
   const { openModal, setModalData, closeModal } = useModalStore();
   const t = useTranslations("Dashboard");
   const queryClient = useQueryClient();
-  const router = useRouter();
-  const [currentStatus, setCurrentStatus] = useState(initialStatus);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState<"Active" | "Inactive">(
+    initialStatus
+  );
   const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
   const { mutate: deleteMutate } = useMutation({
     mutationFn: deleteQuiz,
@@ -47,38 +48,40 @@ const QuizCard = ({
       queryClient.invalidateQueries({
         queryKey: ["quizList"],
       });
-      setIsDeleting(false); 
+      setIsDeleting(false);
     },
   });
+
+  // Mutation for updating quiz status
+  const { mutate: updateStatusMutate, isPending: isPendingStatus } =
+    useMutation({
+      mutationFn: ({
+        id,
+        newStatus,
+      }: {
+        id: string;
+        newStatus: "Active" | "Inactive";
+      }) => updateQuizStatus(id, newStatus),
+      onSuccess: (data) => {
+        setCurrentStatus(data.newStatus);
+        toast.success(t("statusUpdateSuccess"));
+      },
+      onError: (error: any) => {
+        toast.error(error.message || t("statusUpdateError"));
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["updateQuizStatus"],
+        });
+      },
+    });
 
   const handleDeleteQuiz = async (id: string) => {
     if (!isDeleting) {
-      setIsDeleting(true); 
+      setIsDeleting(true);
       deleteMutate(id);
     }
   };
-
-  
-  const { mutate: updateStatusMutate } = useMutation({
-    mutationFn: ({
-      id,
-      newStatus,
-    }: {
-      id: string;
-      newStatus: "Active" | "Inactive";
-    }) => updateQuizStatus(id!, newStatus),
-    onSuccess: () => {
-      toast.success(t("statusUpdateSuccess"));
-    },
-    onError: (error: any) => {
-      toast.error(error.message || t("statusUpdateError"));
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["updateQuizStatus"],
-      });
-    },
-  });
 
   const handleOpenDeleteModal = (id?: string) => {
     if (!id) return;
@@ -98,22 +101,14 @@ const QuizCard = ({
   const handleStatusChange = async () => {
     if (!id) return;
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
-    setIsUpdating(true);
-    try {
-      updateStatusMutate({ id, newStatus });
-      setCurrentStatus(newStatus); 
-    } catch (error) {
-      console.error(error); 
-      toast.error(t("statusUpdateError"));
-    } finally {
-      setIsUpdating(false);
-    }
+    updateStatusMutate({ id, newStatus });
   };
 
   const goQuizDetailsPage = () => {
     router.push(routes.quizDetails + id);
   };
 
+  // Make sure to return the JSX here
   return (
     <div
       className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg cursor-pointer"
@@ -132,7 +127,7 @@ const QuizCard = ({
             e.stopPropagation();
             handleOpenDeleteModal(id);
           }}
-          disabled={isDeleting} 
+          disabled={isDeleting}
         >
           <Image
             src="/assets/bin.svg"
@@ -150,26 +145,30 @@ const QuizCard = ({
               {t("total")} {questions} {t("questions")}
             </p>
           </div>
-          <button
+          <Button
             onClick={(e) => {
-              e.stopPropagation(); 
+              e.stopPropagation();
               handleStatusChange();
             }}
-            disabled={isUpdating}
-            className={classNames(
+            disabled={isPendingStatus}
+            className={cn(
               "px-2 py-1 rounded-lg text-small h-full flex items-center justify-center",
               currentStatus === "Active" ? "bg-success" : "bg-danger",
-              isUpdating ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+              isPendingStatus
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer"
             )}
           >
             <p
-              className={classNames(
-                currentStatus === "Active" ? "text-black" : "text-white"
+              className={cn(
+                currentStatus === "Active"
+                  ? "text-foreground-600"
+                  : "text-white"
               )}
             >
-              {isUpdating ? t("updating") : currentStatus}
+              {isPendingStatus ? t("updatingQuizStatus") : currentStatus}
             </p>
-          </button>
+          </Button>
         </div>
       </div>
     </div>

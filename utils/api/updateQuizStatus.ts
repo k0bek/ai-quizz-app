@@ -3,10 +3,14 @@ import axios, { AxiosError } from "axios";
 import { API_BASE_URL, updateQuizStatusUrl } from "@/constants/api";
 import { cookies } from "next/headers"; // For handling cookies in Next.js
 
+type updateQuizStatusType = {
+  quizId: string;
+  newStatus: "Active" | "Inactive";
+};
 export const updateQuizStatus = async (
   id: string,
-  newStatus: "Active" | "Inactive"
-) => {
+  newStatus: string
+): Promise<updateQuizStatusType> => {
   try {
     const access = cookies().get("AccessToken")?.value;
     console.log(id);
@@ -30,8 +34,8 @@ export const updateQuizStatus = async (
         },
       }
     );
+    console.log(result.data);
 
-    
     return result.data;
 
     // Return the response data

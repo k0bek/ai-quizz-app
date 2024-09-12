@@ -50,12 +50,15 @@
     "deleteAccount": "Usuń konto",
     "deleteAccountWarningProfile": "Po usunięciu konta nie będzie możliwości jego przywrócenia. Proszę upewnić się.",
     "profileUpdated": "Twoje dane zostały zaktualizowane.",
-   
-    "statusUpdateError": "Nie udało się zaktualizować statusu quizu!",
-    "statusUpdateSuccess":"Zaktualizowano quiz poprawnie!"
-     
+    "statusUpdateSuccess": "Pomyślnie zaktualizowano status quizu",
+    "updatingQuizStatus": "Updating quiz status...",
+    "statusUpdateError": "Bład podczas aktualizacji statusu"
   },
   "QuestionsOnAnswers": {
+    "availabilityUpdateSuccess": "Dostępność została zaktualizowana!",
+    "availabilityUpdateError": "Bład podczas aktualizacji dostępności",
+    "statusUpdateSuccess": "Status został zaktualizowany.",
+    "statusUpdateError": "Bład podczas aktualizacji statusu",
     "detailQuizzHeading": "Szczegóły Quizu",
     "shareQuizzButton": "Udostępnij ten quiz",
     "questions": "Pytania",
@@ -131,7 +134,7 @@
     "saveQuizzButton": "Zapisz quiz",
     "cancelButton": "Anuluj",
     "nextButton": "Dalej",
-    "promptRequiredField": "To pole powinno zawierać co najmniej 10 znaków",
+    "requiredFields": "Jedno z dwóch pól musi być wypełnione. Proszę uzupełnić pole tekstowe lub dodać plik",
     "promptForm": "Wpisz swój tekst",
     "contentLabel": "Tekst",
     "cancelQuizWarning": "Jesteś pewien?",

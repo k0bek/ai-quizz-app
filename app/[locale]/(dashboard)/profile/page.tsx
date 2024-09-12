@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@nextui-org/react";
+import { Button, Skeleton } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { routes } from "@/routes";
@@ -62,9 +62,9 @@ const ProfilePage = () => {
 
   return (
     <section className="py-8 w-full md:max-w-7xl">
-      <h1 className="text-4xl font-bold mb-4 text-foreground-700">
+      <h2 className="text-4xl font-bold mb-4 text-foreground-700">
         {t("profile")}
-      </h1>
+      </h2>
       <p className="text-foreground-600 mb-4 text-medium md:text-large">
         {t("manageSettings")}
       </p>
