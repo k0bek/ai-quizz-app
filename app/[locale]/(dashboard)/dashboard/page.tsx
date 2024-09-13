@@ -9,33 +9,43 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getQuizList } from "@/utils/actions/quiz/getQuizList";
 import QuizCard from "../components/QuizCard";
 import DashboardLoading from "./loading";
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 
 const DashboardPage = () => {
   const t = useTranslations("Dashboard");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 4;
 
-  // const { data, isPending, isFetching, isSuccess } =
-  //   useGetQuizList(currentPage);
-
   const { data, isPending, isFetching, isSuccess } = useQuery({
     queryKey: ["quizList", currentPage],
     queryFn: () => getQuizList(currentPage),
-    staleTime: 50000,
   });
   const totalPages = data?.totalPages;
 
   const queryClient = useQueryClient();
+
   useEffect(() => {
-    if (currentPage < pageSize) {
-      const nextPage = currentPage + 1;
-      queryClient.prefetchQuery({
-        queryKey: ["quizList", nextPage],
-        queryFn: () => getQuizList(nextPage),
-      });
-    }
+    const nextPage = currentPage + 1;
+    queryClient.prefetchQuery({
+      queryKey: ["quizList", nextPage],
+      queryFn: () => getQuizList(nextPage),
+    });
   }, [currentPage, queryClient]);
+
+  // Skeleton items for loading state
+  const skeletonItems = Array.from({ length: pageSize }).map((_, index) => (
+    <div
+      key={index}
+      className="border-dashed border-2 border-gray-300 bg-[#f4f4f5] p-3 md:justify-between flex flex-col shadow-md hover:shadow-lg transition-shadow relative w-full sm:w-auto h-auto rounded-lg"
+    >
+      <Skeleton className="h-6 w-3/4 rounded-lg" />
+      <Skeleton className="mt-4 h-4 w-5/6 rounded-lg" />
+      <div className="flex items-center justify-start gap-4 mt-4">
+        <Skeleton className="h-8 w-20 rounded-lg" />
+        <Skeleton className="h-8 w-20 rounded-lg" />
+      </div>
+    </div>
+  ));
 
   return !isFetching ? (
     <motion.div
@@ -59,16 +69,29 @@ const DashboardPage = () => {
           {t("manageQuizz")}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-          {data.items.map((quiz: DashboardQuizItemT, index: number) => (
-            <QuizCard
-              key={quiz.id}
-              id={quiz.id}
-              title={quiz.title}
-              description={quiz.description}
-              status={quiz.status}
-              questions={quiz.totalQuestions}
-            />
-          ))}
+          {(isPending || isFetching ? skeletonItems : data?.items).map(
+            (quiz: DashboardQuizItemT, index: number) =>
+              quiz ? (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="w-full"
+                >
+                  <QuizCard
+                    key={quiz.id}
+                    id={quiz.id}
+                    title={quiz.title}
+                    description={quiz.description}
+                    status={quiz.status}
+                    questions={quiz.totalQuestions}
+                  />
+                </motion.div>
+              ) : (
+                skeletonItems[index]
+              )
+          )}
         </div>
         <div className="w-full">
           {data?.items.length !== 0 && isSuccess && (
