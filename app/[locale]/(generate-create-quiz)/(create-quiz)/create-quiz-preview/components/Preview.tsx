@@ -16,7 +16,11 @@ import { GeneratedQuestionT } from "../../../types";
 import AddQuestionGenerateModal from "../../../(generate-quiz)/modals/AddQuestionGenerateModal";
 import DeleteQuestionGenerateModal from "../../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
 import EditQuestionGenerateModal from "../../../(generate-quiz)/modals/EditQuestionGenerateModal";
+
 import BackButton from "../../../(generate-quiz)/generate-quiz/components/buttons/BackButton";
+
+import { AnimatePresence } from "framer-motion";
+
 
 function Preview() {
   const searchParams = useSearchParams();
@@ -147,18 +151,20 @@ function Preview() {
         >
           {t("addNewQuestionBtn")}
         </Button>
-        {questions?.map((question, index) => (
-          <QuizItem
-            key={index}
-            questionId={index + 1}
-            number={index + 1}
-            question={question.title}
-            generateAnswers={question.generateAnswers}
-            showCorrectAnswers={showCorrectAnswers}
-            handleDelete={() => handleDeleteQuestion(index)}
-            handleEdit={() => handleEditQuestion(index)}
-          />
-        ))}
+        <AnimatePresence>
+          {questions?.map((question, index) => (
+            <QuizItem
+              key={question.title}
+              questionId={index + 1}
+              number={index + 1}
+              question={question.title}
+              generateAnswers={question.generateAnswers}
+              showCorrectAnswers={showCorrectAnswers}
+              handleDelete={() => handleDeleteQuestion(index)}
+              handleEdit={() => handleEditQuestion(index)}
+            />
+          ))}
+        </AnimatePresence>
       </aside>
       <NavigationControls>
         <BackButton/>

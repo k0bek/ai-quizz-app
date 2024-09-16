@@ -14,42 +14,61 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { GeneratedQuestionT } from "../../types";
+import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+const answerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  exit: { opacity: 0, scale: 0, transition: { duration: 0.3 } },
+};
 
 interface AddQuestionGenerateModalProps {
   setQuestions: Dispatch<SetStateAction<GeneratedQuestionT[]>>;
 }
 
-function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProps) {
+function AddQuestionGenerateModal({
+  setQuestions,
+}: AddQuestionGenerateModalProps) {
   const { quizId } = useParams();
   const [modalValues, setModalValues] = useState({ title: "" });
   const t = useTranslations("AddQuestionModal");
   const { closeModal, isOpen, type } = useModalStore();
   const [answers, setAnswers] = useState([{ id: 1, value: "" }]);
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<number | null>(null);
-  
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<
+    number | null
+  >(null);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const samplePlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+  const samplePlaceholder =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
   if (!isOpen && type !== "addQuestion") return null;
 
   const handleAddQuestion = () => {
-    setAnswers([...answers, { id: answers.length + 1, value: "" }]);
+    const newAnswer = { id: answers.length + 1, value: "" };
+    setAnswers([...answers, newAnswer]);
   };
 
   const handleRemoveQuestion = (index: number) => {
-    const updatedQuestions = answers.filter((_, i) => i !== index);
-    setAnswers(updatedQuestions);
+    setTimeout(() => {
+      const updatedQuestions = answers.filter((_, i) => i !== index);
+      setAnswers(updatedQuestions);
 
-    if (selectedQuestionIndex === index) {
-      setSelectedQuestionIndex(null);
-    } else if (selectedQuestionIndex !== null && selectedQuestionIndex > index) {
-      setSelectedQuestionIndex(selectedQuestionIndex - 1);
-    }
+      if (selectedQuestionIndex === index) {
+        setSelectedQuestionIndex(null);
+      } else if (
+        selectedQuestionIndex !== null &&
+        selectedQuestionIndex > index
+      ) {
+        setSelectedQuestionIndex(selectedQuestionIndex - 1);
+      }
+    }, 300);
   };
 
-  const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const newQuestions = [...answers];
     newQuestions[index].value = event.target.value;
     setAnswers(newQuestions);
@@ -69,29 +88,20 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
     allQuestionsFilled &&
     selectedQuestionIndex !== null;
 
-  const handleSubmit = async () => {
-    if (isSubmitting) return; 
-    setIsSubmitting(true); 
+  const handleSubmit = () => {
+    const newQuestion = {
+      quizId,
+      title: modalValues.title,
+      generateAnswers: answers.map((answer, index) => {
+        return {
+          content: answer.value,
+          isCorrect: index === selectedQuestionIndex,
+        };
+      }),
+    };
 
-    try {
-      const newQuestion = {
-        quizId,
-        title: modalValues.title,
-        generateAnswers: answers.map((answer, index) => {
-          return {
-            content: answer.value,
-            isCorrect: index === selectedQuestionIndex,
-          };
-        }),
-      };
-
-      setQuestions((prev: GeneratedQuestionT[]) => [...prev, newQuestion]);
-      closeModal();
-    } catch (error) {
-      console.error("Failed to add question:", error);
-    } finally {
-      setIsSubmitting(false); 
-    }
+    setQuestions((prev: GeneratedQuestionT[]) => [...prev, newQuestion]);
+    closeModal();
   };
 
   return (
@@ -127,9 +137,16 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
 
               <div className="flex flex-col gap-2">
                 <h3>{t("answers")}</h3>
-                <div className="flex flex-col gap-2">
+                <AnimatePresence>
                   {answers.map((question, index) => (
-                    <div className="flex items-center gap-2" key={index}>
+                    <motion.div
+                      key={question.id}
+                      variants={answerVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      className="flex items-center gap-2"
+                    >
                       <Checkbox
                         isSelected={selectedQuestionIndex === index}
                         onChange={() => handleSelectQuestion(index)}
@@ -142,9 +159,9 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
                       <Button onClick={() => handleRemoveQuestion(index)}>
                         {t("remove")}
                       </Button>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </AnimatePresence>
               </div>
               <Button color="primary" onClick={handleAddQuestion}>
                 {t("addQuestion")}
@@ -165,7 +182,7 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
           <Button
             color="primary"
             variant="solid"
-            isDisabled={!isReadyToSubmit || isSubmitting}
+            isDisabled={!isReadyToSubmit}
             onClick={handleSubmit}
           >
             {t("save")}
