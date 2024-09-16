@@ -1,21 +1,24 @@
 "use client";
-import { routes } from "@/routes";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+
 import React from "react";
+import { Textarea, Button } from "@nextui-org/react"; 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useTranslations } from "next-intl";
 import NavigationControls from "../buttons/NavigationControls";
 import NextButton from "../buttons/NextButton";
-import { useTranslations } from "use-intl";
-import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import InsertFileButton from "../buttons/InsertFileButton";
 import { motion } from "framer-motion";
+import BackButton from "../buttons/BackButton"; 
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import { routes } from "@/routes";
 
 const PromptForm = () => {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
   const t = useTranslations("CreateQuiz");
+  const router = useRouter();
 
   const promptSchema = z.object({
     prompt: z
@@ -34,7 +37,6 @@ const PromptForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
-  const router = useRouter();
 
   const onSubmit = (data: FormValue) => {
     router.push(routes.createQuiz[1].route);
@@ -45,32 +47,36 @@ const PromptForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Textarea
-        isRequired
-        variant="faded"
-        label={t("contentLabel")}
-        {...register("prompt", { required: true })}
-        labelPlacement="outside"
-        placeholder={t("promptForm")}
-        className="p-6 gap-2 bg-content2 rounded-lg"
-      />
-      {errors.prompt && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="text-red-500 text-sm mt-2">
-            {errors.prompt.message}
-          </div>
-        </motion.div>
-      )}
-      <NavigationControls>
-        <NextButton />
-        <InsertFileButton />
-      </NavigationControls>
-    </form>
+    <div className="relative">
+     
+      <form onSubmit={handleSubmit(onSubmit)} className="pt-8">
+        <Textarea
+          isRequired
+          variant="faded"
+          label={t("contentLabel")}
+          {...register("prompt", { required: true })}
+          labelPlacement="outside"
+          placeholder={t("promptForm")}
+          className="p-6 gap-2 bg-content2 rounded-lg"
+        />
+        {errors.prompt && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-red-500 text-sm mt-2">
+              {errors.prompt.message}
+            </div>
+          </motion.div>
+        )}
+        <NavigationControls>
+          <BackButton /> 
+          <NextButton />
+          <InsertFileButton />
+        </NavigationControls>
+      </form>
+    </div>
   );
 };
 

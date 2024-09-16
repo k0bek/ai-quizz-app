@@ -1,10 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
-
-
 import { useRouter } from "next/navigation";
-
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import TickCircle from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-configure-quiz/components/TickCircle";
@@ -13,30 +10,42 @@ import NextButton from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/ge
 import NavigationControls from "@/app/[locale]/(generate-create-quiz)/(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
 
 function ButtonGroupComponent() {
-  // State to track the selected button in each group
   const [selectedType, setSelectedType] = useState("multiple-choice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
+  const [isPending, setIsPending] = useState(false); 
+  const router = useRouter();
+  const t = useTranslations("ConfigureQuiz");
 
   // Handle clicks for the type of questions
   const handleTypeClick = (type: string) => {
-    setSelectedType(type);
+    if (!isPending) setSelectedType(type);
   };
 
   // Handle clicks for the number of questions
   const handleQuantityClick = (qty: string) => {
-    setSelectedQuantity(qty);
+    if (!isPending) setSelectedQuantity(qty);
   };
-  const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(routes.createQuiz[2].route);
-    // API call here
+    if (!isPending) {
+      setIsPending(true); 
+      try {
+      
+        
+        router.push(routes.createQuiz[2].route);
+      } catch (error) {
+        console.error("Błąd:", error);
+      } finally {
+        setIsPending(false); 
+      }
+    }
   };
-  const t = useTranslations("ConfigureQuiz");
+
   return (
     <form
       onSubmit={handleSubmit}
-      className=" md:w-full   rounded-lg flex flex-col "
+      className="md:w-full rounded-lg flex flex-col"
     >
       <div className="flex flex-col bg-content2 gap-4 p-6">
         <span>{t("questionsType")}</span>
@@ -64,6 +73,7 @@ function ButtonGroupComponent() {
               name="multiple-choice"
               aria-pressed={selectedType === "multiple-choice"}
               onClick={() => handleTypeClick("multiple-choice")}
+              disabled={isPending} 
             >
               <span>{t("multipleChoice")}</span>
             </Button>
@@ -77,6 +87,7 @@ function ButtonGroupComponent() {
               name="true-false"
               aria-pressed={selectedType === "true-false"}
               onClick={() => handleTypeClick("true-false")}
+              disabled={isPending} 
             >
               <span>{t("trueFalse")}</span>
             </Button>
@@ -103,6 +114,7 @@ function ButtonGroupComponent() {
               name="low"
               aria-pressed={selectedQuantity === "low"}
               onClick={() => handleQuantityClick("low")}
+              disabled={isPending} 
             >
               <span>{t("low")}</span>
             </Button>
@@ -113,11 +125,16 @@ function ButtonGroupComponent() {
               }`}
               size="lg"
               startContent={
-                selectedQuantity === "medium" ? <TickCircle /> : <EmptyCircle />
+                selectedQuantity === "medium" ? (
+                  <TickCircle />
+                ) : (
+                  <EmptyCircle />
+                )
               }
               name="medium"
               aria-pressed={selectedQuantity === "medium"}
               onClick={() => handleQuantityClick("medium")}
+              disabled={isPending} 
             >
               <span>{t("med")}</span>
             </Button>
@@ -131,6 +148,7 @@ function ButtonGroupComponent() {
               name="high"
               aria-pressed={selectedQuantity === "high"}
               onClick={() => handleQuantityClick("high")}
+              disabled={isPending}
             >
               <span>{t("high")}</span>
             </Button>
@@ -139,11 +157,16 @@ function ButtonGroupComponent() {
               className="w-full justify-start md:w-auto"
               size="lg"
               startContent={
-                selectedQuantity === "manual" ? <TickCircle /> : <EmptyCircle />
+                selectedQuantity === "manual" ? (
+                  <TickCircle />
+                ) : (
+                  <EmptyCircle />
+                )
               }
               name="manual"
               aria-pressed={selectedQuantity === "manual"}
               onClick={() => handleQuantityClick("manual")}
+              disabled={isPending} 
             >
               <span>{t("man")}</span>
             </Button>
@@ -151,7 +174,7 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls>
-        <NextButton />
+        <NextButton isPending={isPending} /> 
       </NavigationControls>
     </form>
   );
