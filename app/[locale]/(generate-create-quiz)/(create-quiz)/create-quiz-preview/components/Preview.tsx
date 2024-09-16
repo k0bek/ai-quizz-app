@@ -1,8 +1,7 @@
-"use client";
 import React, { useState } from "react";
 import QuizItem from "./QuizItem";
 import { Switch } from "@nextui-org/switch";
-import { Button, Chip } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import SaveQuiz from "../../../(generate-quiz)/generate-quiz/components/buttons/SaveQuiz";
 import NavigationControls from "../../../(generate-quiz)/generate-quiz/components/buttons/NavigationControls";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -17,12 +16,12 @@ import { GeneratedQuestionT } from "../../../types";
 import AddQuestionGenerateModal from "../../../(generate-quiz)/modals/AddQuestionGenerateModal";
 import DeleteQuestionGenerateModal from "../../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
 import EditQuestionGenerateModal from "../../../(generate-quiz)/modals/EditQuestionGenerateModal";
+import BackButton from "../../../(generate-quiz)/generate-quiz/components/buttons/BackButton";
 
 function Preview() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const selectedType = params.get("selectedType");
-  console.log(selectedType);
 
   const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
   const t = useTranslations("QuizPreview");
@@ -36,19 +35,23 @@ function Preview() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
     number | null
   >(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const { mutate } = useMutation({
     mutationFn: createQuiz,
     onError: (error) => {
       toast.error(error.message);
+      setIsSubmitting(false); 
     },
     onSuccess: (data) => {
       setGeneratedQuizData(data);
       toast.success(t("createdSuccessfullyMsg"));
       router.push(routes.createQuiz[3].route);
+      setIsSubmitting(false); 
     },
     onMutate: () => {
       toast.loading(t("creating"), { id: "loading-toast" });
+      setIsSubmitting(true); 
     },
     onSettled() {
       toast.dismiss("loading-toast");
@@ -57,7 +60,8 @@ function Preview() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(generatedQuizData);
+    if (isSubmitting) return; 
+
     mutate({
       title: generatedQuizData.title,
       description: generatedQuizData.description,
@@ -157,6 +161,7 @@ function Preview() {
         ))}
       </aside>
       <NavigationControls>
+        <BackButton/>
         <SaveQuiz />
       </NavigationControls>
       {type === "addQuestion" && (

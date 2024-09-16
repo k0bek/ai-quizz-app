@@ -25,12 +25,12 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
   const t = useTranslations("AddQuestionModal");
   const { closeModal, isOpen, type } = useModalStore();
   const [answers, setAnswers] = useState([{ id: 1, value: "" }]);
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<
-    number | null
-  >(null);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState<number | null>(null);
+  
 
-  const samplePlaceholder =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const samplePlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
 
   if (!isOpen && type !== "addQuestion") return null;
 
@@ -44,18 +44,12 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
 
     if (selectedQuestionIndex === index) {
       setSelectedQuestionIndex(null);
-    } else if (
-      selectedQuestionIndex !== null &&
-      selectedQuestionIndex > index
-    ) {
+    } else if (selectedQuestionIndex !== null && selectedQuestionIndex > index) {
       setSelectedQuestionIndex(selectedQuestionIndex - 1);
     }
   };
 
-  const handleInputChange = (
-    index: number,
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (index: number, event: ChangeEvent<HTMLInputElement>) => {
     const newQuestions = [...answers];
     newQuestions[index].value = event.target.value;
     setAnswers(newQuestions);
@@ -75,20 +69,29 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
     allQuestionsFilled &&
     selectedQuestionIndex !== null;
 
-  const handleSubmit = () => {
-    const newQuestion = {
-      quizId,
-      title: modalValues.title,
-      generateAnswers: answers.map((answer, index) => {
-        return {
-          content: answer.value,
-          isCorrect: index === selectedQuestionIndex,
-        };
-      }),
-    };
+  const handleSubmit = async () => {
+    if (isSubmitting) return; 
+    setIsSubmitting(true); 
 
-    setQuestions((prev: GeneratedQuestionT[]) => [...prev, newQuestion]);
-    closeModal();
+    try {
+      const newQuestion = {
+        quizId,
+        title: modalValues.title,
+        generateAnswers: answers.map((answer, index) => {
+          return {
+            content: answer.value,
+            isCorrect: index === selectedQuestionIndex,
+          };
+        }),
+      };
+
+      setQuestions((prev: GeneratedQuestionT[]) => [...prev, newQuestion]);
+      closeModal();
+    } catch (error) {
+      console.error("Failed to add question:", error);
+    } finally {
+      setIsSubmitting(false); 
+    }
   };
 
   return (
@@ -162,7 +165,7 @@ function AddQuestionGenerateModal({ setQuestions }: AddQuestionGenerateModalProp
           <Button
             color="primary"
             variant="solid"
-            isDisabled={!isReadyToSubmit}
+            isDisabled={!isReadyToSubmit || isSubmitting}
             onClick={handleSubmit}
           >
             {t("save")}
