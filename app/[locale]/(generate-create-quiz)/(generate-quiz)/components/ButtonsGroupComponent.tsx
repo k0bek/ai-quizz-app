@@ -12,7 +12,7 @@ import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { generateQuiz } from "@/utils/actions/quiz/generateQuiz";
-import BackButton from "./buttons/BackButton";
+
 
 function ButtonGroupComponent() {
   const searchParams = useSearchParams();
@@ -149,7 +149,7 @@ function ButtonGroupComponent() {
         </div>
       </div>
       <NavigationControls isPending={isPending}>
-        <BackButton />
+      
         <NextButton isPending={isPending} />
       </NavigationControls>
     </form>

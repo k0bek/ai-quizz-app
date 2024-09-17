@@ -13,7 +13,7 @@ import InsertFileButton from "../buttons/InsertFileButton";
 import { motion } from "framer-motion";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
 import { routes } from "@/routes";
-import BackButton from "../buttons/BackButton";
+
 
 const PromptForm = () => {
   const { setGenerateQuizData, generateQuizData } = useGenerateQuizStore();
@@ -70,7 +70,7 @@ const PromptForm = () => {
           </motion.div>
         )}
         <NavigationControls>
-          <BackButton />
+          
           <NextButton />
           <InsertFileButton />
         </NavigationControls>
