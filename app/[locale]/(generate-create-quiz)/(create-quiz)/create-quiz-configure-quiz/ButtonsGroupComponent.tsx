@@ -10,8 +10,6 @@ import NextButton from "@/generate-quiz-components/NextButton";
 import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import TickCircle from "@/generate-quiz-components/TickCircle";
 
-
-
 function ButtonGroupComponent() {
   const [selectedType, setSelectedType] = useState("multiple-choice");
   const [selectedQuantity, setSelectedQuantity] = useState("medium");
@@ -34,7 +32,7 @@ function ButtonGroupComponent() {
     if (!isPending) {
       setIsPending(true);
       try {
-        router.push(routes.createQuiz[2].route);
+        router.push(routes.quizPreview.pathname);
       } catch (error) {
         console.error("Błąd:", error);
       } finally {

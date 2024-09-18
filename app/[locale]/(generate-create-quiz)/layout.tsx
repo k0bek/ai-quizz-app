@@ -4,13 +4,11 @@ import Stepper from "./(generate-quiz)/components/StatusIndicator/Stepper";
 import StepperProvider from "@/app/context/StepContext";
 import BackButton from "./(generate-quiz)/components/buttons/BackButton";
 
-
 const layout = ({ children }: { children: ReactNode }) => {
   return (
     <StepperProvider>
       <main>
         <Header />
-      
         <div className="relative">
           <BackButton />
         </div>

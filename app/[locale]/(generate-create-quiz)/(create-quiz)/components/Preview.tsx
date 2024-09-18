@@ -48,7 +48,7 @@ function Preview() {
     onSuccess: (data) => {
       setGeneratedQuizData(data);
       toast.success(t("createdSuccessfullyMsg"));
-      router.push(routes.createQuiz[3].route);
+      router.push(routes.quizSuccess.pathname);
       setIsSubmitting(false);
     },
     onMutate: () => {

@@ -39,7 +39,7 @@ const PromptForm = () => {
   } = useForm<FormValue>({ resolver: zodResolver(promptSchema) });
 
   const onSubmit = (data: FormValue) => {
-    router.push(routes.createQuiz[1].route);
+    router.push(routes.configureQuiz.pathname);
     setGenerateQuizData({
       ...generateQuizData,
       Content: data.prompt,
