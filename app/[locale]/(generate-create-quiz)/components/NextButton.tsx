@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "@nextui-org/button";
 import { motion } from "framer-motion"; 
-import RightArrow from "./RightArrow";
+import RightArrow from "../(generate-quiz)/components/buttons/RightArrow";
 import { useTranslations } from "next-intl";
 
 interface NextButtonProps {

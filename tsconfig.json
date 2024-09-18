@@ -20,8 +20,9 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-       "@/generate-quiz-components/*": [
-        "./app/[locale]/(generate-create-quiz)/(generate-quiz)/components/*"]
+      "@/generate-quiz-components/*": [
+    "./app/[locale]/(generate-create-quiz)/components/*"
+  ]
 
     }
   },

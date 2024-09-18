@@ -6,8 +6,8 @@ import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 
 import EmptyCircle from "@/generate-quiz-components/EmptyCircle";
-import NextButton from "@/generate-quiz-components/buttons/NextButton";
-import NavigationControls from "@/generate-quiz-components/buttons/NavigationControls";
+import NextButton from "@/generate-quiz-components/NextButton";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
 import TickCircle from "@/generate-quiz-components/TickCircle";
 
 

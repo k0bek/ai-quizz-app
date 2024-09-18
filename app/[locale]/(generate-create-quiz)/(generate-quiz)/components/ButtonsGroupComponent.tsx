@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Button, ButtonGroup } from "@nextui-org/button";
-import TickCircle from "./TickCircle";
-import EmptyCircle from "./EmptyCircle";
-import NextButton from "./buttons/NextButton";
+import TickCircle from "../../components/TickCircle";
+import EmptyCircle from "../../components/EmptyCircle";
+import NextButton from "../../components/NextButton";
 import { useRouter, useSearchParams } from "next/navigation";
-import NavigationControls from "./buttons/NavigationControls";
+import NavigationControls from "../../components/NavigationControls";
 import { routes } from "@/routes";
 import { useTranslations } from "next-intl";
 import { useGenerateQuizStore } from "@/store/generateQuizStore";
