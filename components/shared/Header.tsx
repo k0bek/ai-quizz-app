@@ -27,6 +27,7 @@ const Header = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+
     onSuccess: () => {
       router.push(routes.signIn.pathname);
       toast.success(t("loggedOut"));
