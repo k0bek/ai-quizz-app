@@ -55,7 +55,8 @@
     "updatingQuizStatus": "Updating quiz status...",
     "statusUpdateError": "Error occured while updating quiz status",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "takeQuizBtn": "Take quiz"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -217,7 +218,22 @@
     "seeResults": "See results",
     "awesome": "Awesome!!!",
     "notYourDay": "This is not your day...",
-    "warningName": "Name must be at least 2 characters long"
+    "warningName": "Name must be at least 2 characters long",
+    "codeGeneratedSuccessfully": "Code generated successfully",
+    "enterQuizUrl": "Enter code to the quiz",
+    "generateCodeFirst": "Please generate code first",
+    "joiningQuiz": "Joining quiz with code: ",
+    "toImprove": "Take part in a quiz to improve your skills.",
+    "generateCode": "Generate Quiz Code",
+    "generateCode2": "Generate Code",
+    "join": "Join Quiz",
+    "willApearHere": "Your code will appear here",
+    "generatingQuizCode": "Generating quiz code...",
+    "charactersLong": "Quiz code must be exactly 8 characters long",
+    "joined": "Joined to the quiz",
+    "joining": "Joining...",
+    "calculating": "Calculating result...",
+    "quizResultSuccess": "Quiz result calculated successfully"
   },
   "NotFoundPage": {
     "goDashboard": "Go to dashboard",
