@@ -92,7 +92,7 @@ function ButtonGroupComponent() {
               <Button
                 key={type.value}
                 variant={selectedType === type.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" // Zwiększamy skalę do 125%
+                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
                 size="lg"
                 startContent={
                   selectedType === type.value ? <TickCircle /> : <EmptyCircle />
