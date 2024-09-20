@@ -12,6 +12,8 @@ import { signInUser } from "@/utils/actions/auth/sign-in";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import AuthSchemas from "../schemas/authSchemas";
+import { signIn } from "next-auth/react";
+import { FaGoogle } from "react-icons/fa";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -122,6 +124,22 @@ export default function LoginForm() {
       >
         {isPending ? t("pending") : t("login")}
       </Button>
+
+      <Button
+        variant="solid"
+        color="default"
+        size="lg"
+        radius="sm"
+        className="mt-4 w-full"
+        onClick={() => {
+          console.log("Redirecting to Google...");
+          signIn("google");
+        }}
+      >
+        <FaGoogle className="mr-2" />
+        {t("loginWithGoogle")}
+      </Button>
+
       <div className="flex justify-between mt-6 gap-2">
         <Button
           variant="ghost"
