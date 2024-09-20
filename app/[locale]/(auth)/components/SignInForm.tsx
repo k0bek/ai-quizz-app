@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import AuthSchemas from "../schemas/authSchemas";
 
+
 export default function LoginForm() {
   const router = useRouter();
   const { signInSchema } = AuthSchemas();
@@ -110,18 +111,8 @@ export default function LoginForm() {
         </p>
       )}
 
-      <Button
-        variant={isPending ? "bordered" : "solid"}
-        color="primary"
-        size="lg"
-        radius="sm"
-        type="submit"
-        disabled={isPending}
-        isLoading={isPending}
-        className="mt-5 w-full"
-      >
-        {isPending ? t("pending") : t("login")}
-      </Button>
+     
+
       <div className="flex justify-between mt-6 gap-2">
         <Button
           variant="ghost"
