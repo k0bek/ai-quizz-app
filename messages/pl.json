@@ -13,9 +13,9 @@
     "signUpEnterText": "Proszę wprowadzić swoje dane.",
     "pending": "Ładowanie",
     "signedIn": "Pomyślnie zalogowano!",
-    "signedUp": "Pomyslnie zarejestrowano uzytkownika!",
+    "signedUp": "Pomyslnie zarejestrowano uzytkownika!"
   
-    "loginWithGoogle": "Zaloguj się przez Google"
+   
   
   },
   "AuthSchemas": {
