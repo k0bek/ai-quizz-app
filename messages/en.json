@@ -116,7 +116,19 @@
     "changedQuestionSuccessfully": "Changed question successfully",
     "deletedQuestionSuccess": "Deleted question succesfully",
     "linkCopiedMsg": "Copied to clipboard",
-    "close": "Close"
+    "noQuizTakenDialogue": "You didn't take this quiz.",
+    "Chart": "Chart",
+    "close": "Close",
+    "Started": "Started",
+    "startDate": "Start date:",
+    "inProgress": "Quiz in progress",
+    "quizTitle": "Quiz title:",
+    "quizScore": "Score:",
+    "quizTotalQuestions": "Total Questions:",
+    "correctAnswers": "Correct answers",
+    "filterArrow": "Filter",
+    "correctAnswer": "Correct answer",
+    "incorrectAnswer": "Incorrect answer"
   },
   "Header": {
     "userAvatar": "User avatar",
@@ -260,6 +272,11 @@
     "embedWebsiteTitle": "Embed in your website",
     "embedWebsiteDesc": "Simply use the excercise on any website or platform",
     "copyToClipboard": "Copy to clipboard",
-    "close": "Close"
+    "closeButton": "Close"
+  },
+  "ChartModal": {
+    "title": "Quiz statistics",
+    "legend": "Score (%)",
+    "noDataAvailable": "No data available"
   }
 }

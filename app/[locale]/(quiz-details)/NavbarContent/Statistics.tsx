@@ -1,7 +1,5 @@
 "use client";
-import React from "react";
-import { format } from "date-fns";
-
+import React, { useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -11,76 +9,28 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import DetailsButton from "../components/statistics/buttons/DetailsButton";
-import StatusChip from "../components/statistics/StatusChip/StatusChip";
-import EventDuration from "../components/statistics/QuizDurationTIme/QuizDurationTime";
 import NavbarContentContainer from "@/components/NavbarContentContainer";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import ChartModal from "../modals/ChartModal";
+import { useStats } from "../quiz-details/hooks/useStats";
+import {
+  formatQuizResult,
+  formatParticipationDate,
+  formatParticipationTime,
+} from "@/utils/helpers";
+import StatusChip from "../components/statistics/StatusChip/StatusChip";
+import { QuizHistoryType } from "@/types";
+import DetailsModal from "../modals/DetailsModal";
+import { Skeleton } from "@nextui-org/react";
 
 function Statistics() {
-  const date = new Date();
-  const formatedDate = format(date, "dd.MM.yyyy");
   const t = useTranslations("quizDetails");
-  const finishedQuizzes = [
-    {
-      quizId: 1,
-      score: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={136} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 2,
-      score: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Stopped",
-      time: <EventDuration durationInSeconds={240} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 3,
-      score: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Stopped",
-      time: <EventDuration durationInSeconds={30} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 4,
-      score: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={140} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 5,
-      score: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={3600} />,
-      date: formatedDate,
-    },
-    {
-      quizId: 5,
-      score: 40,
-      name: "Random",
-      email: "user@example.com",
-      stat: "Finished",
-      time: <EventDuration durationInSeconds={3} />,
-      date: formatedDate,
-    },
-  ];
+  const { stats, isLoading } = useStats();
+
   const tableHeaders = [
     t("scoreTableHeader"),
     t("nameTableHeader"),
-    "E-mail",
     "Status",
     t("timeTableHeader"),
     t("dateTableHeader"),
@@ -97,11 +47,11 @@ function Statistics() {
         <Table
           removeWrapper
           color="default"
-          className=" overflow-x-auto bg-content2  gap-6 p-6 rounded-lg w-full"
+          className="overflow-x-auto bg-content2 gap-6 p-6 rounded-lg w-full"
         >
-          <TableHeader className=" flex justify-between rounded-lg ">
+          <TableHeader className="flex justify-between rounded-lg">
             {tableHeaders.map((tableHeader, index) => (
-              <TableColumn className="uppercase " key={index}>
+              <TableColumn className="uppercase" key={index}>
                 <div className="flex items-center justify-between gap-2">
                   <span>{tableHeader}</span>
                   <svg
@@ -110,6 +60,7 @@ function Statistics() {
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    aria-label={t("filterArrow")}
                   >
                     <path
                       d="M2.7193 10.0333L7.06596 5.68666C7.5793 5.17332 8.4193 5.17332 8.93263 5.68666L13.2793 10.0333"
@@ -124,37 +75,70 @@ function Statistics() {
             ))}
           </TableHeader>
           <TableBody
-            emptyContent={"You didn't take any quiz"}
+            emptyContent={t("noQuizTakenDialogue")}
             className="bg-white rounded-lg"
           >
-            {finishedQuizzes.map((finishedQuizz) => (
-              <TableRow
-                className="bg-white rounded-lg"
-                key={finishedQuizz.quizId}
-              >
-                <TableCell>{finishedQuizz.score}</TableCell>
-                <TableCell>{finishedQuizz.name}</TableCell>
-                <TableCell>{finishedQuizz.email}</TableCell>
-                <TableCell>
-                  {finishedQuizz.stat === "Stopped" && (
-                    <StatusChip status={"Stopped"}></StatusChip>
-                  )}
-                  {finishedQuizz.stat === "Finished" && (
-                    <StatusChip status={"Finished"}></StatusChip>
-                  )}
-                </TableCell>
-                <TableCell className="text-center md:text-start">
-                  {finishedQuizz.time}
-                </TableCell>
-                <TableCell>{finishedQuizz.date}</TableCell>
-                <TableCell>
-                  <DetailsButton />
-                </TableCell>
-              </TableRow>
-            ))}
+            {isLoading
+              ? [...Array(stats)].map((_, index) => (
+                  <TableRow className="bg-white rounded-lg" key={index}>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell className="text-center md:text-start">
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : stats &&
+                stats.map((stat: QuizHistoryType, index: number) => (
+                  <TableRow className="bg-white rounded-lg" key={index}>
+                    <TableCell>{formatQuizResult(stat.quizResult)}</TableCell>
+                    <TableCell>{stat.quizTitle}</TableCell>
+                    <TableCell>
+                      {stat.status === "Started" && (
+                        <StatusChip status={"Started"} />
+                      )}
+                      {stat.status === "Stopped" && (
+                        <StatusChip status={"Stopped"} />
+                      )}
+                      {stat.status === "Finished" && (
+                        <StatusChip status={"Finished"} />
+                      )}
+                    </TableCell>
+                    <TableCell className="text-center md:text-start">
+                      {formatParticipationTime(stat.participtionDateUtc)}
+                    </TableCell>
+                    <TableCell>
+                      {formatParticipationDate(stat.participtionDateUtc)}
+                    </TableCell>
+                    <TableCell>
+                      {stat.status === "Started" ? (
+                        <span className="text-foreground-600 text-small">
+                          {t("inProgress")}
+                        </span>
+                      ) : (
+                        <DetailsButton id={stat?.quizId} />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </NavbarContentContainer>
+      <DetailsModal quiz={stats} />
+      <ChartModal finishedQuiz={stats} />
     </motion.div>
   );
 }

@@ -86,7 +86,7 @@
     "private": "Prywatny",
     "scoreTableHeader": "Wynik",
     "nameTableHeader": "Nazwa",
-    "timeTableHeader": "Czas",
+    "timeTableHeader": "Czas rozpoczęcia",
     "dateTableHeader": "Data",
     "detailsTableHeader": "Szczegóły",
     "statusFinishedTableHeader": "Ukończony",
@@ -110,12 +110,25 @@
     "cancel": "Anuluj",
     "areYouSure": "Czy  jesteś pewien?",
     "delete": "Usuń",
+    "close": "Zamknij",
     "cannotUndo": "Wprowadzone zmiany nie można będzie cofnąć",
     "quizDetails": "Szczegóły quizu",
     "titleRequired": "Tytuł quizu jest wymagany",
     "dataUpdated": "Dane zostały zaktualizowane",
     "changedQuestionSuccessfully": "Pytanie zostało zmienione",
-    "deletedQuestionSuccess": "Usunięto pytanie"
+    "deletedQuestionSuccess": "Usunięto pytanie",
+    "noQuizTakenDialogue": "Nie wziąłeś udziału w tym quizie.",
+    "Chart": "Wizualizacja danych",
+    "Started": "Rozpoczęty",
+    "startDate": "Data rozpoczęcia",
+    "inProgress": "W trakcie ",
+    "quizTitle": "Tytuł",
+    "quizScore": "Wynik:",
+    "quizTotalQuestions": "Liczba pytań:",
+    "correctAnswers": "Poprawne odpowiedzi:",
+    "ariaLabel:": "Filtruj",
+    "correctAnswer": "Poprawna odpowiedź",
+    "incorrectAnswer": "Niepoprawna odpowiedź"
   },
   "Header": {
     "userAvatar": "Awatar użytkownika",
@@ -260,6 +273,11 @@
     "embedWebsiteDesc": "Wykorzystaj ćwiczenie na swojej stronie internetowej lub innej platformie",
     "copyToClipboard": "Skopiuj do schowka",
     "linkCopiedMsg": "Skopiowano link",
-    "close": "Zamknij"
+    "closeButton": "Zamknij"
+  },
+  "ChartModal": {
+    "noDataAvailable": "Brak dostępnych danych",
+    "title": "Statystyki quizu",
+    "legend": "Wynik (%)"
   }
 }

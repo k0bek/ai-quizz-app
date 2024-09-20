@@ -30,6 +30,7 @@ export const getQuizList = async (
       count: totalItemsCount,
       items,
     };
+    revalidatePath("/dashboard");
     return data;
   } catch (error) {
     if (error instanceof AxiosError) {
