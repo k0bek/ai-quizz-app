@@ -123,7 +123,7 @@ function ButtonGroupComponent() {
               <Button
                 key={quantity.value}
                 variant={selectedQuantity === quantity.value ? "solid" : "flat"}
-                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" // Zwiększamy skalę do 125%
+                className="w-full justify-start md:w-auto rounded-lg hover:scale-125 transition duration-300" 
                 size="lg"
                 isDisabled={isPending}
                 startContent={
