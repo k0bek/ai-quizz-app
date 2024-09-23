@@ -20,7 +20,7 @@ const BackButton = () => {
       transition={{ duration: 0.5 }}     
       whileHover={{ scale: 1.1 }}       
       whileTap={{ scale: 0.95 }}          
-      className="absolute top-4 left-6"
+      className="absolute top-4 left-6 sm:top-2 sm:left-4 md:top-6 md:left-8 hidden md:block"  
     >
       <Button
         onClick={handleBack}
@@ -28,9 +28,9 @@ const BackButton = () => {
         color="default"
         size="sm"
         radius="sm"
-        className="p-2 rounded-full bg-black text-white shadow-md flex items-center justify-center"
+        className="p-2 rounded-full bg-black text-white shadow-md flex items-center justify-center sm:p-1 md:p-2"  
       >
-        <FaArrowLeft size={20} />
+        <FaArrowLeft size={20} className="sm:text-[16px] md:text-[20px]" />
       </Button>
     </motion.div>
   );
