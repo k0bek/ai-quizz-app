@@ -56,7 +56,30 @@
     "statusUpdateError": "Error occured while updating quiz status",
     "active": "Active",
     "inactive": "Inactive",
-    "takeQuizBtn": "Take quiz"
+    "takeQuizBtn": "Take quiz",
+    "statistics": "Statistics",
+    "inProgress": "In Progress",
+    "scoreTableHeader": "Score",
+    "nameTableHeader": "Name",
+    "detailsTableHeader": "Details",
+    "statusFinishedTableHeader": "Finished",
+    "statusStoppedTableHeader": "Stopped",
+    "timeTableHeader": "Time",
+    "dateTableHeader": "Date",
+    "detailsButton": "Details",
+    "amountOfTakenQuizzes": "Amount of taken quizzes:",
+    "title": "Quiz Statistics",
+    "legend": "Score (%)",
+    "noDataAvailable": "No data available",
+    "incorrectAnswers": "Incorrect answers",
+    "correctAnswers": "Correct answers",
+    "noQuizTakenDialogue": "No quiz taken",
+    "answerDistribution": "Answers Distribution",
+    "avatar": "Profile image",
+    "avatarUploaded": "Avatar uploaded successfully",
+    "uploadError": "Error while uploading avatar",
+    "filterArrow": "Filter",
+    "status": "Status"
   },
   "quizDetails": {
     "availabilityUpdateSuccess": "Availability updated succesfully!",
@@ -137,7 +160,8 @@
     "loggedOut": "Logged out successfully"
   },
   "Navbar": {
-    "profile": "Profile"
+    "profile": "Profile",
+    "statistics": "Statistics"
   },
   "LanguageSwitcher": {
     "english": "English",
@@ -179,7 +203,7 @@
     "configureQuizHeading": "Configure Quiz",
     "configureQuizMessage": "    Here, you can create quizz based on your prompt",
     "questionsType": "What type of questions?",
-    "multipleChoice": "Multiple Choice",
+    "singleChoice": "Single Choice",
     "trueFalse": "True/False",
     "fillIn": "Fill in the blank",
     "howManyQuestions": "How many questions?",
@@ -188,7 +212,8 @@
     "high": "High",
     "man": "Manual",
     "generatedSuccessfullyMsg": "Quiz generated successfully",
-    "generating": "Generating quiz..."
+    "generating": "Generating quiz...",
+    "languages": "Which language?"
   },
   "QuizPreview": {
     "quizPreviewHeading": "Preview",
@@ -274,9 +299,26 @@
     "copyToClipboard": "Copy to clipboard",
     "closeButton": "Close"
   },
-  "ChartModal": {
-    "title": "Quiz statistics",
-    "legend": "Score (%)",
-    "noDataAvailable": "No data available"
+  "Guest": {
+    "convertedProperly": "Converted guest properly",
+    "signUp": "Sign up",
+    "tookPart": "You took part in the quiz as a guest. Now you can sign up or go back to the panel.",
+    "rememberMe": "Remember me",
+    "toAuthPage": "Go back to the auth page",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "password": "Password",
+    "nameValidMin": "Name must be at least 2 characters",
+    "nameValidMax": "Name must not exceed 50 characters",
+    "registrationFailed": "Registration failed. Please try again",
+    "failedToJoin": "Failed to join the quiz. Please try again",
+    "invalidQuizCode": "Invalid quiz code",
+    "unexpectedError": "An unexpected error occurred",
+    "takeQuiz": "Take quiz",
+    "dontHaveAnAccount": "We see that you don't have an account. To participate in the quiz, please provide your name.",
+    "name": "Name",
+    "enterName": "Enter your name",
+    "joinQuiz": "Join quiz",
+    "joining": "Joining..."
   }
 }
