@@ -75,14 +75,14 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
         case "Questions":
           return <Questions />;
         case "Settings":
-          return <Settings quizId={singleQuizData?.id} />;
+          return <Settings quizId={singleQuizData?.items?.id} />;
         case "Statistics":
           return <Statistics quiz={singleQuizData} />;
         case "General":
           return (
             <General
-              title={singleQuizData.title}
-              description={singleQuizData.description}
+              title={singleQuizData?.title}
+              description={singleQuizData?.description}
             />
           );
       }
@@ -120,7 +120,7 @@ const QuizDetailsPage = ({ params }: { params: { quizId: string } }) => {
           </div>
           <nav
             onClick={handleNavbarChange}
-            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 rounded-lg overflow-x-auto"
+            className="flex gap-2 w-full md:w-min space-x-6 mb-6 bg-default-100 p-2 roundA-lg overflow-x-auto"
           >
             {tabs.map((tab) => (
               <Link
