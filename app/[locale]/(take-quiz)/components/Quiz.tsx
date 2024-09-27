@@ -61,8 +61,8 @@ const Quiz = ({
             <li
               key={index}
               className={cn(
-                "flex flex-row justify-start gap-3 items-center w-full bg-white p-2 rounded-lg cursor-pointer hover:bg-primary transition-all group",
-                selectedAnswerIndex === index && "bg-primary"
+                "flex flex-row justify-start gap-3 items-center w-full  p-2 rounded-lg cursor-pointer hover:bg-primary transition-all group",
+                selectedAnswerIndex === index ? "bg-primary":'bg-Content-content1-light dark:bg-Content-content2-dark'
               )}
             >
               <span

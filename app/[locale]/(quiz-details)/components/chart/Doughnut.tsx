@@ -1,4 +1,3 @@
-"use client";
 import React, { useMemo } from "react";
 import { Doughnut } from "react-chartjs-2";
 import {
@@ -10,10 +9,13 @@ import {
 } from "chart.js";
 import { useTranslations } from "next-intl";
 import { QuizHistoryType } from "@/types";
+import { useTheme } from "next-themes";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
   const t = useTranslations("Dashboard");
+  const { theme } = useTheme();
 
   const { sumCorrectAnswers, sumIncorrectAnswers } = useMemo(() => {
     const correctAnswers = quiz.reduce(
@@ -52,8 +54,9 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: "bottom",
+          position: "bottom" as const,
           labels: {
+            color: theme === "light" ? "#404040" : "#e2e2e2",
             font: {
               size: 14,
             },
@@ -62,13 +65,14 @@ const DoughnutChart = ({ quiz }: { quiz: QuizHistoryType[] }) => {
         title: {
           display: true,
           text: t("answerDistribution"),
+          color: theme === "light" ? "#404040" : "#e2e2e2",
           font: {
             size: 24,
           },
         },
       },
     }),
-    [t]
+    [t, theme]
   );
 
   return (
