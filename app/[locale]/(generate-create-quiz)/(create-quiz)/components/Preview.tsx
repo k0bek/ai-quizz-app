@@ -1,0 +1,218 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import QuizItem from "./QuizItem";
+import { Switch } from "@nextui-org/switch";
+import { Button } from "@nextui-org/react";
+import SaveQuiz from "../../(generate-quiz)/components/buttons/SaveQuiz";
+import NavigationControls from "@/generate-quiz-components/NavigationControls";
+import { useRouter, useSearchParams } from "next/navigation";
+import { routes } from "@/routes";
+import { useTranslations } from "next-intl";
+import { useModalStore } from "@/store/modalStore";
+import { useGenerateQuizStore } from "@/store/generateQuizStore";
+import { useMutation } from "@tanstack/react-query";
+import { createQuiz } from "@/utils/actions/quiz/createQuiz";
+import toast from "react-hot-toast";
+import { GeneratedQuestionT } from "../../types";
+import AddQuestionGenerateModal from "../../(generate-quiz)/modals/AddQuestionGenerateModal";
+import DeleteQuestionGenerateModal from "../../(generate-quiz)/modals/DeleteQuestionGenerateModal";
+import EditQuestionGenerateModal from "../../(generate-quiz)/modals/EditQuestionGenerateModal";
+import { AnimatePresence } from "framer-motion";
+import RegenerateQuizModal from "../../(generate-quiz)/modals/RegenerateQuizModal";
+import { useStepperStore } from "@/store/stepperStore";
+
+function Preview() {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const selectedType = params.get("selectedType");
+
+  const { generatedQuizData, setGeneratedQuizData } = useGenerateQuizStore();
+  const t = useTranslations("QuizPreview");
+  const { closeModal, openModal, setModalData, type } = useModalStore();
+  const router = useRouter();
+  const { setCurrentRoute, addVisitedRoute } = useStepperStore();
+  const [questions, setQuestions] = useState<GeneratedQuestionT[]>(
+    generatedQuizData?.generateQuestions
+  );
+  const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<
+    number | null
+  >(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (generatedQuizData?.generateQuestions) {
+      setQuestions(generatedQuizData.generateQuestions);
+    }
+  }, [generatedQuizData]);
+
+  const { mutate } = useMutation({
+    mutationFn: createQuiz,
+    onError: (error) => {
+      toast.error(error.message);
+      setIsSubmitting(false);
+    },
+    onSuccess: (data) => {
+      setGeneratedQuizData(data);
+      setCurrentRoute(routes.quizSuccess.pathname);
+      addVisitedRoute(routes.quizSuccess.pathname);
+      toast.success(t("createdSuccessfullyMsg"));
+      router.push(routes.quizSuccess.pathname);
+      setIsSubmitting(false);
+    },
+    onMutate: () => {
+      toast.loading(t("creating"), { id: "loading-toast" });
+      setIsSubmitting(true);
+    },
+    onSettled() {
+      toast.dismiss("loading-toast");
+    },
+  });
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    mutate({
+      title: generatedQuizData.title,
+      description: generatedQuizData.description,
+      questionTypes: selectedType,
+      createQuizQuestions: questions.map((question) => {
+        return {
+          title: question.title,
+          createQuizAnswers: question.generateAnswers.map((answer) => {
+            return {
+              content: answer.content,
+              isCorrect: answer.isCorrect,
+            };
+          }),
+        };
+      }),
+    });
+  };
+
+  const handleDeleteQuestion = (index: number) => {
+    if (questions[index]) {
+      setCurrentQuestionIndex(index);
+      openModal("deleteQuestion");
+      setModalData({
+        title: questions[index].title,
+        description: questions[index].title,
+        status: "Error",
+        questions: 2,
+        onConfirmDelete: () => handleConfirmDelete(index),
+      });
+    }
+  };
+
+  const handleConfirmDelete = (index: number) => {
+    const updatedQuizData = questions.filter((_, i) => i !== index);
+    setQuestions(updatedQuizData);
+    if (updatedQuizData.length === 0) {
+      setCurrentQuestionIndex(null);
+      closeModal();
+    } else {
+      setCurrentQuestionIndex(
+        Math.min(currentQuestionIndex as number, updatedQuizData.length - 1)
+      );
+    }
+  };
+
+  const handleEditQuestion = (index: number) => {
+    if (questions[index]) {
+      setCurrentQuestionIndex(index);
+      openModal("editQuestion");
+    }
+  };
+
+  const handleOpenAddQuestion = () => {
+    openModal("addQuestion");
+  };
+
+  const handleOpenRegenerateQuestions = () => {
+    openModal("regenerateQuiz");
+  };
+
+  return (
+    <form onSubmit={onSubmit} className="flex-col flex rounded-lg">
+      <aside className="bg-Content-content2-light dark:bg-Content-content2-dark p-6 mt-5 gap-6 flex flex-col rounded-lg">
+        <div className="flex justify-between items-center mb-6 mt-2 px-2">
+          <div className="flex justify-end items-center">
+            <span className="bg-base-primary text-white py-2 px-2 rounded-lg ml-auto text-sm">
+              {t("total")} {questions?.length} {t("questions")}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <span className="light:text-black dark:text-white text-sm">{t("answers")}</span>
+            <Switch
+              className="order-0"
+              size="md"
+              checked={showCorrectAnswers}
+              onChange={(e) => setShowCorrectAnswers(e.target.checked)}
+              isDisabled={!questions}
+            />
+          </div>
+        </div>
+        <Button
+          color="primary"
+          className=" py-2 rounded-lg ml-auto disabled:bg-primary/50 w-36"
+          radius="md"
+          onClick={handleOpenAddQuestion}
+          isDisabled={!questions}
+        >
+          {t("addNewQuestionBtn")}
+        </Button>
+        <Button
+          color="default"
+          variant="solid"
+          className=" py-2 -mt-2 rounded-lg ml-auto disabled:bg-primary/50 w-36 dark:text-black"
+          radius="md"
+          onClick={handleOpenRegenerateQuestions}
+          isDisabled={!questions}
+        >
+          {t("regenerateButton")}
+        </Button>
+        <AnimatePresence>
+          {questions?.map((question, index) => (
+            <QuizItem
+              key={question.title}
+              questionId={index + 1}
+              number={index + 1}
+              question={question.title}
+              generateAnswers={question.generateAnswers}
+              showCorrectAnswers={showCorrectAnswers}
+              handleDelete={() => handleDeleteQuestion(index)}
+              handleEdit={() => handleEditQuestion(index)}
+            />
+          ))}
+        </AnimatePresence>
+      </aside>
+      <NavigationControls>
+        <SaveQuiz />
+      </NavigationControls>
+      <RegenerateQuizModal />
+      {type === "addQuestion" && (
+        <AddQuestionGenerateModal setQuestions={setQuestions} />
+      )}
+      {currentQuestionIndex !== null && questions[currentQuestionIndex] && (
+        <>
+          <DeleteQuestionGenerateModal
+            questionTitle={questions[currentQuestionIndex]?.title}
+            onConfirmDelete={() => handleConfirmDelete(currentQuestionIndex)}
+          />
+          <EditQuestionGenerateModal
+            questionData={{
+              questionTitle: questions[currentQuestionIndex].title,
+              options: questions[currentQuestionIndex].generateAnswers,
+            }}
+            setQuestions={setQuestions}
+            questions={questions}
+          />
+        </>
+      )}
+    </form>
+  );
+}
+
+export default Preview;
